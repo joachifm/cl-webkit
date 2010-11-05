@@ -54,7 +54,7 @@
 
 (defctype webkit-web-view :pointer)
 
-(defcfun "webkit_web_view_get_type" :g-type)
+(defcfun "webkit_web_view_get_type" g-type)
 
 (defcfun "webkit_web_view_new" webkit-web-view)
 
@@ -76,7 +76,7 @@
   (item webkit-web-history-item))
 
 (defcfun "webkit_web_view_can_go_back" gboolean
-  (view webkit-web-biew))
+  (view webkit-web-view))
 
 (defcfun "webkit_web_view_can_go_back_or_forward" gboolean
   (view webkit-web-view)
@@ -96,13 +96,13 @@
   (uri gchar))
 
 (defcfun "webkit_web_view_reload" :void
-  (view web-view))
+  (view webkit-web-view))
 
 (defcfun "webkit_web_view_reload_bypass_cache" :void
-  (view web-view))
+  (view webkit-web-view))
 
 (defcfun ("webkit_web_view_load_uri" %webkit-web-view-load-uri) :void
-  (view web-view)
+  (view webkit-web-view)
   (uri :string))
 
 (defun webkit-web-view-load-uri (view uri)
@@ -186,7 +186,7 @@
   (view webkit-web-view))
 
 (defcfun "webkit_web_view_set_editable" :void
-  (view web-view)
+  (view webkit-web-view)
   (mode gboolean))
 
 (defcfun "webkit_web_view_get_copy_target_list" gtk-target-list
