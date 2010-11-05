@@ -18,11 +18,30 @@
 (defctype g-type :pointer)
 (defctype gchar :string)
 (defctype gboolean :boolean)
+(defctype gtk-target-list :pointer)
+(defctype gfloat :float)
+(defctype gdouble :double)
+(defctype gtk-movement-step :int)
+(defctype gdk-event-button :pointer)
 
 ;;; ^L
 ;;;
 ;;; TODO: What does WEBKIT_API work
 ;;; TODO: How does the G-OBJECT thing works
+
+(defctype soup-session :pointer)
+
+(defctype webkit-hit-test-result :pointer)
+
+(defctype webkit-web-frame :pointer)
+
+(defctype webkit-load-status :pointer)
+
+(defctype webkit-web-window-features :pointer)
+
+(defctype webkit-web-inspector :pointer)
+
+(defctype webkit-web-settings :pointer)
 
 (defctype webkit-web-back-forward-list :pointer)
 
