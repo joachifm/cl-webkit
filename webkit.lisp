@@ -52,6 +52,18 @@
 (defctype webkit-network-request :pointer)
 
 ;;; ^L
+;;; webkitversion.h
+
+(defcfun "webkit_major_version" guint)
+(defcfun "webkit_minor_version" guint)
+(defcfun "webkit_micro_version" guint)
+
+(defcfun "webkit_check_version" gboolean
+  (major guint)
+  (minor guint)
+  (micro guint))
+
+;;; ^L
 ;;; webkitwebview.h
 
 (defctype webkit-web-view :pointer)
