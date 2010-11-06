@@ -17,6 +17,23 @@
  "-I/usr/include/libxml2")
 
 ;;; ^L
+;;; webkitdownload.h
+
+(include "/usr/include/webkit-1.0/webkit/webkitdownload.h")
+
+(cenum webkit-download-status
+       ((:webkit-download-status-error "WEBKIT_DOWNLOAD_STATUS_ERROR")
+        :documentation "?")
+       ((:webkit-download-status-created "WEBKIT_DOWNLOAD_STATUS_CREATED")
+        :documentation "?")
+       ((:webkit-download-status-started "WEBKIT_DOWNLOAD_STATUS_STARTED")
+        :documentation "?")
+       ((:webkit-download-status-cancelled "WEBKIT_DOWNLOAD_STATUS_CANCELLED")
+        :documentation "?")
+       ((:webkit-download-status-finished "WEBKIT_DOWNLOAD_STATUS_FINISHED")
+        :documentation "?"))
+
+;;; ^L
 ;;; webkitwebframe.h
 
 (include "/usr/include/webkit-1.0/webkit/webkitwebframe.h")
