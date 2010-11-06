@@ -21,8 +21,6 @@
 (defctype gtk-movement-step :int)
 (defctype gdk-event-button :pointer)
 
-;;; ^L
-
 (defctype soup-session :pointer)
 
 (defctype webkit-hit-test-result :pointer)
