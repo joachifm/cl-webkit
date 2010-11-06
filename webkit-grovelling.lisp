@@ -17,6 +17,30 @@
  "-I/usr/include/libxml2")
 
 ;;; ^L
+;;; webkitwebframe.h
+
+(include "/usr/include/webkit-1.0/webkit/webkitwebframe.h")
+
+(cenum webkit-load-status
+       ((:webkit-load-provisional "WEBKIT_LOAD_PROVISIONAL")
+        :documentation "No data has been received yet, empty structurs have
+been allocation to perform the load; the load may still fail for transport
+issues such as not being able to resolve a name, or connect to a port.")
+       ((:webkit-load-committed "WEBKIT_LOAD_COMMITTED")
+        :documentation "The first data chunk has arrived, meaning that the
+necessary transport requirements are established, and the load is being
+performed.")
+       ((:webkit-load-first-visually-non-empty-layout "WEBKIT_LOAD_FIRST_VISUALLY_NON_EMPTY_LAYOUT")
+        :documentation "The first layout with actual visible content happened;
+one or more layouts may have happened before tht caused nothing to be visible
+on the screen, because the data available at the time was not significant enough.")
+       ((:webkit-load-finished "WEBKIT_LOAD_FINISHED")
+        :documentation "Everything required to display the page has been loaded.")
+       ((:webkit-load-failed "WEBKIT_LOAD_FAILED")
+        :documentation "Page failed to load. Connect to the load-error signal
+if you want to know precisely what kind of error occurred."))
+
+;;; ^L
 ;;; webkitwebview.h
 
 (include "/usr/include/webkit-1.0/webkit/webkitwebview.h")
