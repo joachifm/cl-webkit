@@ -17,6 +17,23 @@
  "-I/usr/include/libxml2")
 
 ;;; ^L
+;;; webkiterror.h
+
+(include "/usr/include/webkit-1.0/webkit/webkiterror.h")
+
+(cenum webkit-network-error
+       ((:webkit-network-error-failed "WEBKIT_NETWORK_ERROR_FAILED")
+        :documentation "?")
+       ((:webkit-network-error-transport "WEBKIT_NETWORK_ERROR_TRANSPORT")
+        :documentation "?")
+       ((:webkit-network-error-unknown-protocol "WEBKIT_NETWORK_ERROR_UNKNOWN_PROTOCOL")
+        :documentation "?")
+       ((:webkit-network-error-cancelled "WEBKIT_NETWORK_ERROR_CANCELLED")
+        :documentation "?")
+       ((:webkit-network-error-file-does-not-exist "WEBKIT_NETWORK_ERROR_FILE_DOES_NOT_EXIST")
+        :documentation "?"))
+
+;;; ^L
 ;;; webkitdownload.h
 
 (include "/usr/include/webkit-1.0/webkit/webkitdownload.h")
