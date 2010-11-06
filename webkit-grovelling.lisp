@@ -33,6 +33,14 @@
        ((:webkit-download-status-finished "WEBKIT_DOWNLOAD_STATUS_FINISHED")
         :documentation "?"))
 
+(cenum webkit-download-error
+       ((:webkit-download-error-cancelled-by-user "WEBKIT_DOWNLOAD_ERROR_CANCELLED_BY_USER")
+        :documentation "?")
+       ((:webkit-download-error-destination "WEBKIT_DOWNLOAD_ERROR_DESTINATION")
+        :documentation "?")
+       ((:webkit-download-error-network "WEBKIT_DOWNLOAD_ERROR_NETWORK")
+        :documentation "?"))
+
 ;;; ^L
 ;;; webkitwebframe.h
 
