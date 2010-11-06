@@ -11,13 +11,8 @@
 
 ;;; ^L
 
-(defctype gint :int)
-(defctype guint :int)
 (defctype g-type :pointer)
-(defctype gboolean :boolean)
 (defctype gtk-target-list :pointer)
-(defctype gfloat :float)
-(defctype gdouble :double)
 (defctype gtk-movement-step :int)
 (defctype gdk-event-button :pointer)
 
@@ -42,14 +37,14 @@
 ;;; ^L
 ;;; webkitversion.h
 
-(defcfun "webkit_major_version" guint)
-(defcfun "webkit_minor_version" guint)
-(defcfun "webkit_micro_version" guint)
+(defcfun "webkit_major_version" :uint)
+(defcfun "webkit_minor_version" :uint)
+(defcfun "webkit_micro_version" :uint)
 
-(defcfun "webkit_check_version" gboolean
-  (major guint)
-  (minor guint)
-  (micro guint))
+(defcfun "webkit_check_version" :boolean
+  (major :uint)
+  (minor :uint)
+  (micro :uint))
 
 ;;; ^L
 ;;; webkitwebview.h
@@ -69,23 +64,23 @@
 
 (defcfun "webkit_web_view_set_maintains_back_forward_list" :void
   (web-view webkit-web-view)
-  (mode gboolean))
+  (mode :boolean))
 
 (defcfun "webkit_web_view_get_back_forward_list" webkit-web-back-forward-list
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_go_to_back_forward_item" gboolean
+(defcfun "webkit_web_view_go_to_back_forward_item" :boolean
   (web-view webkit-web-view)
   (item webkit-web-history-item))
 
-(defcfun "webkit_web_view_can_go_back" gboolean
+(defcfun "webkit_web_view_can_go_back" :boolean
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_can_go_back_or_forward" gboolean
+(defcfun "webkit_web_view_can_go_back_or_forward" :boolean
   (web-view webkit-web-view)
-  (steps gint))
+  (steps :int))
 
-(defcfun "webkit_web_view_can_go_forward" gboolean
+(defcfun "webkit_web_view_can_go_forward" :boolean
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_go_forward" :void
@@ -128,22 +123,22 @@
   (web-view webkit-web-view)
   (request webkit-network-request))
 
-(defcfun "webkit_web_view_search_text" gboolean
+(defcfun "webkit_web_view_search_text" :boolean
   (web-view webkit-web-view)
   (text glib:g-string)
-  (case-sensitive gboolean)
-  (forward gboolean)
-  (wrap gboolean))
+  (case-sensitive :boolean)
+  (forward :boolean)
+  (wrap :boolean))
 
-(defcfun "webkit_web_view_mark_text_matches" guint
+(defcfun "webkit_web_view_mark_text_matches" :uint
   (web-view webkit-web-view)
   (string glib:g-string)
-  (case-sensitive gboolean)
-  (limit guint))
+  (case-sensitive :boolean)
+  (limit :uint))
 
 (defcfun "webkit_web_view_set_highlight_text_matches" :void
   (web-view webkit-web-view)
-  (highlight gboolean))
+  (highlight :boolean))
 
 (defcfun "webkit_web_view_unmark_text_matches" :void
   (web-view webkit-web-view))
@@ -158,13 +153,13 @@
   (web-view webkit-web-view)
   (script glib:g-string))
 
-(defcfun "webkit_web_view_can_cut_clipboard" gboolean
+(defcfun "webkit_web_view_can_cut_clipboard" :boolean
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_can_copy_clipboard" gboolean
+(defcfun "webkit_web_view_can_copy_clipboard" :boolean
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_can_paste_clipboard" gboolean
+(defcfun "webkit_web_view_can_paste_clipboard" :boolean
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_cut_clipboard" :void
@@ -179,18 +174,18 @@
 (defcfun "webkit_web_view_delete_selection" :void
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_has_selection" gboolean
+(defcfun "webkit_web_view_has_selection" :boolean
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_select_all" :void
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_get_editable" gboolean
+(defcfun "webkit_web_view_get_editable" :boolean
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_set_editable" :void
   (web-view webkit-web-view)
-  (mode gboolean))
+  (mode :boolean))
 
 (defcfun "webkit_web_view_get_copy_target_list" gtk-target-list
   (web-view webkit-web-view))
@@ -211,20 +206,20 @@
 (defcfun "webkit_web_view_get_window_features" webkit-web-window-features
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_can_show_mime_type" gboolean
+(defcfun "webkit_web_view_can_show_mime_type" :boolean
   (web-view webkit-web-view)
   (mime-type glib:g-string))
 
 (defcfun "webkit_web_view_get_transparent" :void
   (web-view webkit-web-view)
-  (mode gboolean))
+  (mode :boolean))
 
-(defcfun "webkit_web_view_get_zoom_level" gfloat
+(defcfun "webkit_web_view_get_zoom_level" :float
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_set_zoom_level" :void
   (web-view webkit-web-view)
-  (level gfloat))
+  (level :float))
 
 (defcfun "webkit_web_view_zoom_in" :void
   (web-view webkit-web-view))
@@ -232,12 +227,12 @@
 (defcfun "webkit_web_view_zoom_out" :void
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_get_full_content_zoom" gboolean
+(defcfun "webkit_web_view_get_full_content_zoom" :boolean
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_set_full_content_zoom" :void
   (web-view webkit-web-view)
-  (full-content-zoom gboolean))
+  (full-content-zoom :boolean))
 
 (defcfun "webkit_get_default_session" soup-session)
 
@@ -251,31 +246,31 @@
 (defcfun "webkit_web_view_move_cursor" :void
   (web-view webkit-web-view)
   (step gtk-movement-step)
-  (count gint))
+  (count :int))
 
 (defcfun "webkit_web_view_get_load_status" webkit-load-status
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_get_progress" gdouble
+(defcfun "webkit_web_view_get_progress" :double
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_undo" :void
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_can_undo" gboolean
+(defcfun "webkit_web_view_can_undo" :boolean
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_redo" :void
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_can_redo" gboolean
+(defcfun "webkit_web_view_can_redo" :boolean
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_set_view_source_mode" :void
   (web-view webkit-web-view)
-  (view-source-mode gboolean))
+  (view-source-mode :boolean))
 
-(defcfun "webkit_web_view_get_view_source_mode" gboolean
+(defcfun "webkit_web_view_get_view_source_mode" :boolean
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_get_hit_test_result" webkit-hit-test-result
