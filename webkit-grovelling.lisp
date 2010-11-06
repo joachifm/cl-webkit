@@ -61,6 +61,25 @@
         :documentation "?"))
 
 ;;; ^L
+;;; webkitwebnavigationaction.h
+
+(include "webkit/webkitwebnavigationaction.h")
+
+(cenum webkit-web-navigation-reason
+       ((:webkit-web-navigation-reason-link-clicked "WEBKIT_WEB_NAVIGATION_REASON_LINK_CLICKED")
+        :documentation "?")
+       ((:webkit-web-navigation-reason-form-submitted "WEBKIT_WEB_NAVIGATION_REASON_FORM_SUBMITTED")
+        :documentation "?")
+       ((:webkit-web-navigation-reason-back-forward "WEBKIT_WEB_NAVIGATION_REASON_BACK_FORWARD")
+        :documentation "?")
+       ((:webkit-web-navigation-reason-reload "WEBKIT_WEB_NAVIGATION_REASON_RELOAD")
+        :documentation "?")
+       ((:webkit-web-navigation-reason-form-resubmitted "WEBKIT_WEB_NAVIGATION_REASON_FORM_RESUBMITTED")
+        :documentation "?")
+       ((:webkit-web-navigation-reason-other "WEBKIT_WEB_NAVIGATION_REASON_OTHER")
+        :documentation "?"))
+
+;;; ^L
 ;;; webkitdownload.h
 
 (include "webkit/webkitdownload.h")
