@@ -41,11 +41,6 @@
 (defcfun "webkit_minor_version" :uint)
 (defcfun "webkit_micro_version" :uint)
 
-(defcfun "webkit_check_version" :boolean
-  (major :uint)
-  (minor :uint)
-  (micro :uint))
-
 ;;; ^L
 ;;; webkitwebview.h
 
