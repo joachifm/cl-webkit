@@ -22,4 +22,4 @@
   :components ((:file "packages")
                (cffi-grovel:grovel-file "webkit-grovelling")
                (:file "webkit"))
-  :depends-on (:cffi))
+  :depends-on (:cffi :cl-gtk2-glib))

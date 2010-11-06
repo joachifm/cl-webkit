@@ -14,7 +14,6 @@
 (defctype gint :int)
 (defctype guint :int)
 (defctype g-type :pointer)
-(defctype gchar :string)
 (defctype gboolean :boolean)
 (defctype gtk-target-list :pointer)
 (defctype gfloat :float)
@@ -64,10 +63,10 @@
 ;; TODO: this needs to be initialized!
 (defcfun "webkit_web_view_new" webkit-web-view)
 
-(defcfun "webkit_web_view_get_title" gchar
+(defcfun "webkit_web_view_get_title" glib:g-string
   (web-view webkit-web-view))
 
-(defcfun "webkit_web_view_get_uri" gchar
+(defcfun "webkit_web_view_get_uri" glib:g-string
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_set_maintains_back_forward_list" :void
@@ -99,7 +98,7 @@
 
 (defcfun "webkit_web_view_open" :void
   (web-view webkit-web-view)
-  (uri gchar))
+  (uri glib:g-string))
 
 (defcfun "webkit_web_view_reload" :void
   (web-view webkit-web-view))
@@ -117,15 +116,15 @@
 
 (defcfun "webkit_web_view_load_string" :void
   (web-view webkit-web-view)
-  (content gchar)
-  (mime-type gchar)
-  (encoding gchar)
-  (base-uri gchar))
+  (content glib:g-string)
+  (mime-type glib:g-string)
+  (encoding glib:g-string)
+  (base-uri glib:g-string))
 
 (defcfun "webkit_web_view_load_html_string" :void
   (web-view webkit-web-view)
-  (content gchar)
-  (base-uri gchar))
+  (content glib:g-string)
+  (base-uri glib:g-string))
 
 (defcfun "webkit_web_view_load_request" :void
   (web-view webkit-web-view)
@@ -133,14 +132,14 @@
 
 (defcfun "webkit_web_view_search_text" gboolean
   (web-view webkit-web-view)
-  (text gchar)
+  (text glib:g-string)
   (case-sensitive gboolean)
   (forward gboolean)
   (wrap gboolean))
 
 (defcfun "webkit_web_view_mark_text_matches" guint
   (web-view webkit-web-view)
-  (string gchar)
+  (string glib:g-string)
   (case-sensitive gboolean)
   (limit guint))
 
@@ -159,7 +158,7 @@
 
 (defcfun "webkit_web_view_execute_script" :void
   (web-view webkit-web-view)
-  (script gchar))
+  (script glib:g-string))
 
 (defcfun "webkit_web_view_can_cut_clipboard" gboolean
   (web-view webkit-web-view))
@@ -216,7 +215,7 @@
 
 (defcfun "webkit_web_view_can_show_mime_type" gboolean
   (web-view webkit-web-view)
-  (mime-type gchar))
+  (mime-type glib:g-string))
 
 (defcfun "webkit_web_view_get_transparent" :void
   (web-view webkit-web-view)
@@ -244,12 +243,12 @@
 
 (defcfun "webkit_get_default_session" soup-session)
 
-(defcfun "webkit_web_view_get_encoding" gchar
+(defcfun "webkit_web_view_get_encoding" glib:g-string
   (web-view webkit-web-view))
 
 (defcfun "webkit_web_view_set_custom_encoding" :void
   (web-view webkit-web-view)
-  (encoding gchar))
+  (encoding glib:g-string))
 
 (defcfun "webkit_web_view_move_cursor" :void
   (web-view webkit-web-view)
@@ -285,7 +284,7 @@
   (web-view webkit-web-view)
   (event gdk-event-button))
 
-(defcfun "webkit_web_view_get_icon_uri" gchar
+(defcfun "webkit_web_view_get_icon_uri" glib:g-string
   (web-view webkit-web-view))
 
 (defcfun "webkit_set_cache_model" :void
