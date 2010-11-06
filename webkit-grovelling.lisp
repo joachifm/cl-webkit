@@ -1,5 +1,6 @@
 (in-package :webkit)
 
+;; XXX: this should be auto-generated
 (cc-flags
  "-I/usr/include/webkit-1.0"
  "-I/usr/include/glib-2.0"
@@ -19,7 +20,7 @@
 ;;; ^L
 ;;; webkiterror.h
 
-(include "/usr/include/webkit-1.0/webkit/webkiterror.h")
+(include "webkit/webkiterror.h")
 
 (cenum webkit-network-error
        ((:webkit-network-error-failed "WEBKIT_NETWORK_ERROR_FAILED")
@@ -62,7 +63,7 @@
 ;;; ^L
 ;;; webkitdownload.h
 
-(include "/usr/include/webkit-1.0/webkit/webkitdownload.h")
+(include "webkit/webkitdownload.h")
 
 (cenum webkit-download-status
        ((:webkit-download-status-error "WEBKIT_DOWNLOAD_STATUS_ERROR")
@@ -87,7 +88,7 @@
 ;;; ^L
 ;;; webkitwebframe.h
 
-(include "/usr/include/webkit-1.0/webkit/webkitwebframe.h")
+(include "webkit/webkitwebframe.h")
 
 (cenum webkit-load-status
        ((:webkit-load-provisional "WEBKIT_LOAD_PROVISIONAL")
@@ -111,7 +112,7 @@ if you want to know precisely what kind of error occurred."))
 ;;; ^L
 ;;; webkitwebview.h
 
-(include "/usr/include/webkit-1.0/webkit/webkitwebview.h")
+(include "webkit/webkitwebview.h")
 
 (cenum webkit-navigation-response
        ((:webkit-navigation-response-accept "WEBKIT_NAVIGATION_RESPONSE_ACCEPT")
