@@ -70,6 +70,7 @@
 
 (defcfun "webkit_web_view_get_type" g-type)
 
+;; TODO: this needs to be initialized!
 (defcfun "webkit_web_view_new" webkit-web-view)
 
 (defcfun "webkit_web_view_get_title" gchar
