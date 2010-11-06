@@ -33,6 +33,32 @@
        ((:webkit-network-error-file-does-not-exist "WEBKIT_NETWORK_ERROR_FILE_DOES_NOT_EXIST")
         :documentation "?"))
 
+(cenum webkit-policy-error
+       ((:webkit-policy-error-failed "WEBKIT_POLICY_ERROR_FAILED")
+        :documentation "?")
+       ((:webkit-policy-error-cannot-show-mime-type "WEBKIT_POLICY_ERROR_CANNOT_SHOW_MIME_TYPE")
+        :documentation "?")
+       ((:webkit-policy-error-cannot-show-url "WEBKIT_POLICY_ERROR_CANNOT_SHOW_URL")
+        :documentation "?")
+       ((:webkit-policy-error-frame-load-interrupted-by-policy-change "WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE")
+        :documentation "?")
+       ((:webkit-policy-error-cannot-use-restricted-port "WEBKIT_POLICY_ERROR_CANNOT_USE_RESTRICTED_PORT")
+        :documentation "?"))
+
+(cenum webkit-plugin-error
+       ((:webkit-plugin-error-failed "WEBKIT_PLUGIN_ERROR_FAILED")
+        :documentation "?")
+       ((:webkit-plugin-error-cannot-find-plugin "WEBKIT_PLUGIN_ERROR_CANNOT_FIND_PLUGIN")
+        :documentation "?")
+       ((:webkit-plugin-error-cannot-load-plugin "WEBKIT_PLUGIN_ERROR_CANNOT_LOAD_PLUGIN")
+        :documentation "?")
+       ((:webkit-plugin-error-java-unavailable "WEBKIT_PLUGIN_ERROR_JAVA_UNAVAILABLE")
+        :documentation "?")
+       ((:webkit-plugin-error-connection-cancelled "WEBKIT_PLUGIN_ERROR_CONNECTION_CANCELLED")
+        :documentation "?")
+       ((:webkit-plugin-error-will-handle-load "WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD")
+        :documentation "?"))
+
 ;;; ^L
 ;;; webkitdownload.h
 
