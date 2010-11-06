@@ -10,10 +10,6 @@
 (use-foreign-library libwebkit)
 
 ;;; ^L
-;;; Dummies
-;;;
-;;; TODO: is this necessary?
-;;; TODO: does cl-gtk2-glib provide foreign types that should be used?
 
 (defctype gint :int)
 (defctype guint :int)
@@ -27,9 +23,6 @@
 (defctype gdk-event-button :pointer)
 
 ;;; ^L
-;;;
-;;; TODO: What does WEBKIT_API work
-;;; TODO: How does the G-OBJECT thing works
 
 (defctype soup-session :pointer)
 

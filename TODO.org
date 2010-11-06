@@ -1,0 +1,2 @@
+* TODO Add Webkit types to the g-object hierarchy?
+* TODO Use types like gint gboolean, etc from GLIB?
