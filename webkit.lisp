@@ -44,6 +44,13 @@
 ;;; ^L
 ;;; webkitwebview.h
 
+;; This is the central class of the WebKit API. It's a widget implementing the
+;; scrolling interface.
+;;
+;; It is responsible for managing the drawing of content and forwarding of
+;; events.
+;;
+;; Each WebkitWebView has exactly one WebKitWebFrame as main frame.
 (defctype webkit-web-view :pointer)
 
 (defcfun "webkit_web_view_get_type" g-type)
@@ -73,7 +80,7 @@
 
 (defcfun "webkit_web_view_can_go_back_or_forward" :boolean
   (web-view webkit-web-view)
-  (steps :int))
+  (steps :int)) ;; Negative means backward, positive forward
 
 (defcfun "webkit_web_view_can_go_forward" :boolean
   (web-view webkit-web-view))
