@@ -30,8 +30,6 @@
 
 (defctype webkit-web-frame :pointer)
 
-(defctype webkit-load-status :pointer)
-
 (defctype webkit-web-window-features :pointer)
 
 (defctype webkit-web-inspector :pointer)
