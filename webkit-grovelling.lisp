@@ -105,6 +105,36 @@
         :documentation "?"))
 
 ;;; ^L
+;;; webkitwebsettings.h
+
+(include "webkit/webkitwebsettings.h")
+
+(cenum webkit-editing-behavior
+       ((:webkit-editing-behavior-mac "WEBKIT_EDITING_BEHAVIOR_MAC")
+        :documentation "?")
+       ((:webkit-editing-behavior-windows "WEBKIT_EDITING_BEHAVIOR_WINDOWS")
+        :documentation "?"))
+
+;;; ^L
+;;; webkithittestresult.h
+
+(include "webkit/webkithittestresult.h")
+
+(cenum webkit-hit-test-result-context
+       ((:webkit-hit-test-result-context-document "WEBKIT_HIT_TEST_RESULT_CONTEXT_DOCUMENT")
+        :documentation "Anywhere in the document.")
+       ((:webkit-hit-test-result-context-link "WEBKIT_HIT_TEST_RESULT_CONTEXT_LINK")
+        :documentation "A hyperlink element.")
+       ((:webkit-hit-test-result-context-image "WEBKIT_HIT_TEST_RESULT_CONTEXT_IMAGE")
+        :documentation "An image element.")
+       ((:webkit-hit-test-result-context-media "WEBKIT_HIT_TEST_RESULT_CONTEXT_MEDIA")
+        :documentation "A video or audio element.")
+       ((:webkit-hit-test-result-context-selection "WEBKIT_HIT_TEST_RESULT_CONTEXT_SELECTION")
+        :documentation "The area is selected by the user.")
+       ((:webkit-hit-test-result-context-editable "WEBKIT_HIT_TEST_RESULT_CONTEXT_EDITABLE")
+        :documentation "The area is editable by the user."))
+
+;;; ^L
 ;;; webkitwebframe.h
 
 (include "webkit/webkitwebframe.h")
