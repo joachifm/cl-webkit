@@ -23,4 +23,4 @@ Use [Quicklisp] to install any missing dependencies.
 ## Copying
 (c) 2010 Joachim Fasting <joachim.fasting@gmail.com>
 
-Distributing under a 2-clause BSD license, see `COPYING`.
+Distributed under a 2-clause BSD license, see `COPYING`.
