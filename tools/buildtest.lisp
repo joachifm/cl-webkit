@@ -8,6 +8,9 @@
   (when (probe-file quicklisp-init)
     (load quicklisp-init)))
 
+#-asdf
+(require :asdf)
+
 ;; Load the system, signal error on failure.
 ;; Note that warnings and so on are ignored.
 ;; All other output is redirected to /dev/null.
