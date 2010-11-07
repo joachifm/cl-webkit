@@ -103,7 +103,7 @@
 
 (defcfun ("webkit_web_view_load_uri" %webkit-web-view-load-uri) :void
   (web-view webkit-web-view)
-  (uri :string))
+  (uri glib:g-string))
 
 (defun webkit-web-view-load-uri (view uri)
   (with-foreign-string (c-uri uri)
