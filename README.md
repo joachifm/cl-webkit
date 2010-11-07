@@ -14,7 +14,7 @@ cl-webkit should work on all platforms where [CFFI] is supported.
 [CFFI]: http://common-lisp.net/projects/cffi/
 
 ## Dependencies
-* [libwebkit](http://webkit.org/)
+* [libwebkit](http://webkitgtk.org/)
 * [CFFI]
 
 Use [Quicklisp] to install any missing dependencies.
