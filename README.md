@@ -21,6 +21,9 @@ Use [Quicklisp] to install any missing dependencies.
 
 [Quicklisp]: http://www.quicklisp.org/
 
+## Hacking
+* [WebKitGTK+ API reference](http://webkitgtk.org/reference/index.html)
+
 ## Copying
 (c) 2010 Joachim Fasting <joachim.fasting@gmail.com>
 
