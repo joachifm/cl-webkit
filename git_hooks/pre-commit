@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Pre-commit checks
+
+topdir=`git rev-parse --show-toplevel`
+
+## Check that the package still loads
+run_build_test=false
+
+cd "$topdir"
+for x in `git diff-index --cached --name-only HEAD` ; do
+    case "$x" in
+        tools/*) continue ;;
+        *.lisp|*.asd) run_build_test=true ;;
+    esac
+done
+
+if $run_build_test ; then
+    echo "Running build test"
+
+    env sbcl --noinform --no-userinit --load tools/buildtest.lisp
+    if [ $? -ne 0 ] ; then
+        echo "Commit rejected: build failed"
+        exit 1
+    fi
+fi
