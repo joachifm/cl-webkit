@@ -53,8 +53,6 @@
 ;; Each WebkitWebView has exactly one WebKitWebFrame as main frame.
 (defctype webkit-web-view :pointer)
 
-(defcfun "webkit_web_view_get_type" g-type)
-
 ;; TODO: this needs to be initialized!
 (defcfun "webkit_web_view_new" webkit-web-view)
 
