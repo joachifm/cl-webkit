@@ -7,6 +7,7 @@ cl-webkit has been confirmed to work (as in compile/load) on:
 * [SBCL](http://www.sbcl.org/)
 * [Clozure CL](http://ccl.clozure.com/)
 * [CLISP](http://clisp.sourceforge.net/)
+* [ECL](http://sourceforge.net/projects/ecls/)
 
 cl-webkit should work on all platforms where [CFFI] is supported.
 
