@@ -77,6 +77,52 @@
 ;;; ^L
 ;;; webkitwebsettings.h
 
+;; Control the behaviour of a webkit-web-view
+;;
+;; Properties:
+;;
+;; auto-load-images boolean
+;; auto-resize-window boolean
+;; auto-shrink-images boolean
+;; cursive-font-family string
+;; default-encoding string
+;; default-font-family string
+;; default-font-size int
+;; default-monospace-font-size int
+;; editing-behavior webkit-editing-behavior
+;; enable-caret-browsing boolean
+;; enable-default-context-menu boolean
+;; enable-developer-extras boolean
+;; enable-dom-paste boolean
+;; enable-file-access-from-file-uris boolean
+;; enable-html5-database boolean
+;; enable-html5-local-storage boolean
+;; enable-java-applet boolean
+;; enable-offline-web-application-cache boolean
+;; enable-page-cache boolean
+;; enable-scripts boolean
+;; enable-site-specific-quirks boolean
+;; enable-spatial-navigation boolean
+;; enable-spell-checking boolean
+;; enable-universal-access-from-file-uris boolean
+;; enable-xss-auditor boolean
+;; enforce-96-dpi boolean
+;; fantasy-font-family string
+;; javascript-can-access-clipboard boolean
+;; javascript-can-open-windows-automatically boolean
+;; minimum-font-size int
+;; minimum-logical-font-size int
+;; monospace-font-family string
+;; print-backgrounds boolean
+;; resizable-text-areas boolean
+;; sans-serif-font-family string
+;; serif-font-family string
+;; spell-checking-languages string
+;; tab-key-cycles-through-elements boolean
+;; user-agent string
+;; user-stylesheet-uri string
+;; zoom-step float
+
 (defctype webkit-web-settings :pointer)
 (export 'webkit-web-settings)
 
@@ -94,13 +140,22 @@
 ;;; ^L
 ;;; webkitnetworkrequest.h
 
+;; Represents the network related aspects of navigation request. Used whenever
+;; WebKit wants to provide information about a request that will be sent, or has
+;; been sent.
+;;
+;; For valid URIs, you also get a soup-message object, which provides access to
+;; further information such as headers.
 (defctype webkit-network-request :pointer)
 (export 'webkit-network-request)
 
+;; NOTE: returns NULL if the URI is invalid
 (defcfun "webkit_network_request_new" webkit-network-request
   (uri :string))
 (export 'webkit-network-request-new)
 
+;; NOTE: if the request has an associated soup-message, its URI will also be set
+;; by this call.
 (defcfun "webkit_network_request_set_uri" :void
   (request webkit-network-request)
   (uri :string))
@@ -117,6 +172,7 @@
 ;;; ^L
 ;;; webkitnetworkresponse.h
 
+;; Represents the network related aspects of navigation response
 (defctype webkit-network-response :pointer)
 (export 'webkit-network-response)
 
@@ -124,6 +180,8 @@
   (uri :string))
 (export 'webkit-network-response-new)
 
+;; NOTE: when the response has an associated soup-message, its URI will also
+;; be set by this call
 (defcfun "webkit_network_response_set_uri" :void
   (response webkit-network-response)
   (uri :string))
@@ -140,9 +198,14 @@
 ;;; ^L
 ;;; webkitwebresource.h
 
+;; Represents a downloaded URI, encapsulates the data of the download as well
+;; as the URI, MIME type and frame name of the resource.
 (defctype webkit-web-resource :pointer)
 (export 'webkit-web-resource)
 
+;; NOTE: encoding can be NULL
+;; NOTE: frame_name can be used if the resource represents contents of an entire HTML
+;; frame, otherwise pass NULL
 (defcfun "webkit_web_resource_new" webkit-web-resource
   (data :string)
   (size :int) ; is really `gssize'
@@ -152,6 +215,7 @@
   (frame-name :string))
 (export 'webkit-web-resource-new)
 
+;; NOTE: the web-resource is owned by WebKit and should not be freed
 (defcfun "webkit_web_resource_get_data" glib:g-string ; this is GString
   (web-resource webkit-web-resource))
 (export 'webkit-web-resource-get-data)
@@ -175,9 +239,11 @@
 ;;; ^L
 ;;; webkitwebnavigationaction.h
 
+;; Used in signals to provide details about what led the navigation to happen.
 (defctype webkit-web-navigation-action :pointer)
 (export 'webkit-web-navigation-action)
 
+;; The reason why WebKit is requesting a navigation.
 (defcfun "webkit_web_navigation_action_get_reason" webkit-web-navigation-reason
   (navigation-action webkit-web-navigation-action))
 (export 'webkit-web-navigation-action-get-reason)
@@ -187,6 +253,7 @@
   (reason webkit-web-navigation-reason))
 (export 'webkit-web-navigation-action-set-reason)
 
+;; The URI that was originally requested. May differ from navigation target (due to redirects).
 (defcfun "webkit_web_navigation_action_get_original_uri" :string
   (navigation-action webkit-web-navigation-action))
 (export 'webkit-web-navigation-action-get-original-uri)
@@ -196,10 +263,14 @@
   (uri :string))
 (export 'webkit-web-navigation-action-set-original-uri)
 
+;; The DOM identifier for the mouse button used to click.
+;; Values are 0, 1 and 2 for left, middle and right buttons.
+;; Actions not initiated by a mouse click are denoted by -1.
 (defcfun "webkit_web_navigation_action_get_button" :int
   (navigation-action webkit-web-navigation-action))
 (export 'webkit-web-navigation-action-get-button)
 
+;; The bitmask with the state of the modifier keys.
 (defcfun "webkit_web_navigation_action_get_modifier_state" :int
   (navigation-action webkit-web-navigation-action))
 (export 'webkit-web-navigation-action-get-modifier-state)
@@ -210,6 +281,11 @@
 
 ;;; ^L
 ;;; webkitdownload.h
+;;;
+
+;;; A class that carries with it information about a download request.
+;;; Use this to control the download process, or to simply figure out what is
+;;; to be downlaoded, and do it yourself.
 
 (defctype webkit-download :pointer)
 (export 'webkit-download)
@@ -218,10 +294,15 @@
   (request webkit-network-request))
 (export 'webkit-download-new)
 
+;; Initiate the download.
 (defcfun "webkit_download_start" :void
   (download webkit-download))
 (export 'webkit-download-start)
 
+;; Cancel the download.
+;;
+;; TODO: this will not free the download object, it must be freed with `g_object_unref()'
+;; NOTE: this emits a WebKitDownload::error signal
 (defcfun "webkit_download_cancel" :void
   (download webkit-download))
 (export 'webkit-download-cancel)
@@ -238,6 +319,7 @@
   (download webkit-download))
 (export 'webkit-download-get-network-response)
 
+;; The filename that was suggested by the server, or the one derived by WebKit from the URI.
 (defcfun "webkit_download_get_suggested_filename" :string
   (download webkit-download))
 (export 'webkit-download-get-suggested-filename)
@@ -246,19 +328,27 @@
   (download webkit-download))
 (export 'webkit-download-get-destination-uri)
 
+;; Obtain the URI to which the downloaded file will be written.
+;;
+;; NOTE: must be set before calling `webkit_download_start()'
+;; NOTE: may be NULL
 (defcfun "webkit_download_set_destination_uri" :void
   (download webkit-download)
   (destination-uri :string))
 (export 'webkit-download-set-destination-uri)
 
+;; Determine the current progress of the download. Returns a number ranging
+;; from 0.0 to 1.0
 (defcfun "webkit_download_get_progress" :double
   (download webkit-download))
 (export 'webkit-download-get-progress)
 
+;; Returns the number of seconds since the download was started.
 (defcfun "webkit_download_get_elapsed_time" :double
   (download webkit-download))
 (export 'webkit-download-get-elapsed-time)
 
+;; The expected total size of the download. May be incorrect.
 (defcfun "webkit_download_get_total_size" :uint64
   (download webkit-download))
 (export 'webkit-download-get-total-size)
@@ -269,6 +359,11 @@
 ;;; ^L
 ;;; webkitwebpolicydecision.h
 
+;; Liason between WebKit and the application regarding asynchronous policy decisions,
+;; like opening new windows, redirection, etc.
+;;
+;; These objects are passed to the application on signal emissions that deal with
+;; policy decision. They are used by the application to tell the engine what to do.
 (defctype webkit-web-policy-decision :pointer)
 (export 'webkit-web-policy-decision)
 
