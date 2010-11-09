@@ -44,7 +44,6 @@
 
 ;;; ^L
 
-(defctype g-type :pointer)
 (defctype gtk-target-list :pointer)
 (defctype gtk-movement-step :int)
 (defctype gdk-event-button :pointer)
