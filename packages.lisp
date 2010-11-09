@@ -33,5 +33,8 @@
 
 (in-package :cl-user)
 
-(defpackage :webkit
+(defpackage :webkit.foreign
   (:use :cl :cffi))
+
+(defpackage :webkit
+  (:use :cl :webkit.foreign))

@@ -32,7 +32,7 @@
 ;;
 ;; Code:
 
-(in-package :webkit)
+(in-package :webkit.foreign)
 
 ;; XXX: this should be auto-generated
 (cc-flags

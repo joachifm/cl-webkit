@@ -21,5 +21,5 @@
   :serial t
   :components ((:file "packages")
                (cffi-grovel:grovel-file "webkit-grovelling")
-               (:file "webkit"))
+               (:file "webkit.foreign"))
   :depends-on (:cffi :cl-gtk2-glib))
