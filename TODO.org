@@ -1,2 +1,25 @@
 * TODO Add Webkit types to the g-object hierarchy?
 * TODO Use types like gint gboolean, etc from GLIB?
+* TODO Full API coverage
+** TODO webkitdefines.h
+** DONE webkitdownload.h
+** TODO webkiterror.h
+** TODO webkitgeolocationpolicydecision.h
+** TODO webkithittestresult.h
+** DONE webkitnetworkrequest.h
+** DONE webkitnetworkresponse.h
+** TODO webkitsecurityorigin.h
+** TODO webkitsoupauthdialog.h
+** DONE webkitversion.h
+** TODO webkitwebbackforwardlist.h
+** TODO webkitdatabase.h
+** TODO webkitdatasource.h
+** TODO webkitwebframe.h
+** DONE webkitwebhistoryitem.h
+** TODO webkitwebinspector.h
+** DONE webkitwebnavigationaction.h
+** DONE webkitwebpolicydecision.h
+** DONE webkitwebresource.h
+** DONE webkitwebsettings.h
+** DONE webkitwebivew.h
+** TODO webkitwebwindowfeatures.h
