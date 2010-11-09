@@ -51,6 +51,8 @@
 
 (defctype soup-session :pointer)
 
+(defctype soup-message :pointer)
+
 (defctype webkit-hit-test-result :pointer)
 
 (defctype webkit-web-frame :pointer)
@@ -59,13 +61,7 @@
 
 (defctype webkit-web-inspector :pointer)
 
-(defctype webkit-web-settings :pointer)
-
 (defctype webkit-web-back-forward-list :pointer)
-
-(defctype webkit-web-history-item :pointer)
-
-(defctype webkit-network-request :pointer)
 
 ;;; ^L
 ;;; webkitversion.h
@@ -78,6 +74,259 @@
 
 (defcfun "webkit_micro_version" :uint)
 (export 'webkit-micro-version)
+
+;;; ^L
+;;; webkitwebsettings.h
+
+(defctype webkit-web-settings :pointer)
+(export 'webkit-web-settings)
+
+(defcfun "webkit_web_settings_new" webkit-web-settings)
+(export 'webkit-web-settings-new)
+
+(defcfun "webkit_web_settings_copy" webkit-web-settings
+  (web-settings webkit-web-settings))
+(export 'webkit-web-settings-copy)
+
+(defcfun "webkit_web_settings_get_user_agent" glib:g-string
+  (web-settings webkit-web-settings))
+(export 'webkit-web-settings-get-user-agent)
+
+;;; ^L
+;;; webkitnetworkrequest.h
+
+(defctype webkit-network-request :pointer)
+(export 'webkit-network-request)
+
+(defcfun "webkit_network_request_new" webkit-network-request
+  (uri glib:g-string))
+(export 'webkit-network-request-new)
+
+(defcfun "webkit_network_request_set_uri" :void
+  (request webkit-network-request)
+  (uri glib:g-string))
+(export 'webkit-network-request-set-uri)
+
+(defcfun "webkit_network_request_get_uri" glib:g-string
+  (request webkit-network-request))
+(export 'webkit-network-request-get-uri)
+
+(defcfun "webkit_network_request_get_message" soup-message
+  (request webkit-network-request))
+(export 'webkit-network-request-get-message)
+
+;;; ^L
+;;; webkitnetworkresponse.h
+
+(defctype webkit-network-response :pointer)
+(export 'webkit-network-response)
+
+(defcfun "webkit_network_response_new" webkit-network-response
+  (uri glib:g-string))
+(export 'webkit-network-response-new)
+
+(defcfun "webkit_network_response_set_uri" :void
+  (response webkit-network-response)
+  (uri glib:g-string))
+(export 'webkit-network-response-set-uri)
+
+(defcfun "webkit_network_response_get_uri" glib:g-string
+  (response webkit-network-response))
+(export 'webkit-network-response-get-uri)
+
+(defcfun "webkit_network_response_get_message" soup-message
+  (response webkit-network-response))
+(export 'webkit-network-response-get-message)
+
+;;; ^L
+;;; webkitwebresource.h
+
+(defctype webkit-web-resource :pointer)
+(export 'webkit-web-resource)
+
+(defcfun "webkit_web_resource_new" webkit-web-resource
+  (data glib:g-string)
+  (size :int) ; is really `gssize'
+  (uri glib:g-string)
+  (mime-type glib:g-string)
+  (encoding glib:g-string)
+  (frame-name glib:g-string))
+(export 'webkit-web-resource-new)
+
+(defcfun "webkit_web_resource_get_data" glib:g-string ; this is GString
+  (web-resource webkit-web-resource))
+(export 'webkit-web-resource-get-data)
+
+(defcfun "webkit_web_resource_get_uri" glib:g-string
+  (web-resource webkit-web-resource))
+(export 'webkit-web-resource-get-uri)
+
+(defcfun "webkit_web_resource_get_mime_type" glib:g-string
+  (web-resource webkit-web-resource))
+(export 'webkit-web-resource-get-mime-type)
+
+(defcfun "webkit_web_resource_get_encoding" glib:g-string
+  (web-resource webkit-web-resource))
+(export 'webkit-web-resource-get-encoding)
+
+(defcfun "webkit_web_resource_get_frame_name" glib:g-string
+  (web-resource webkit-web-resource))
+(export 'webkit-web-resource-get-frame-name)
+
+;;; ^L
+;;; webkitwebnavigationaction.h
+
+(defctype webkit-web-navigation-action :pointer)
+(export 'webkit-web-navigation-action)
+
+(defcfun "webkit_web_navigation_action_get_reason" webkit-web-navigation-reason
+  (navigation-action webkit-web-navigation-action))
+(export 'webkit-web-navigation-action-get-reason)
+
+(defcfun "webkit_web_navigation_action_set_reason" :void
+  (navigation-action webkit-web-navigation-action)
+  (reason webkit-web-navigation-reason))
+(export 'webkit-web-navigation-action-set-reason)
+
+(defcfun "webkit_web_navigation_action_get_original_uri" glib:g-string
+  (navigation-action webkit-web-navigation-action))
+(export 'webkit-web-navigation-action-get-original-uri)
+
+(defcfun "webkit_web_navigation_action_set_original_uri" :void
+  (navigation-action webkit-web-navigation-action)
+  (uri glib:g-string))
+(export 'webkit-web-navigation-action-set-original-uri)
+
+(defcfun "webkit_web_navigation_action_get_button" :int
+  (navigation-action webkit-web-navigation-action))
+(export 'webkit-web-navigation-action-get-button)
+
+(defcfun "webkit_web_navigation_action_get_modifier_state" :int
+  (navigation-action webkit-web-navigation-action))
+(export 'webkit-web-navigation-action-get-modifier-state)
+
+(defcfun "webkit_web_navigation_action_get_target_frame" glib:g-string
+  (navigation-action webkit-web-navigation-action))
+(export 'webkit-web-navigation-action-get-target-frame)
+
+;;; ^L
+;;; webkitdownload.h
+
+(defctype webkit-download :pointer)
+(export 'webkit-download)
+
+(defcfun "webkit_download_new" webkit-download
+  (request webkit-network-request))
+(export 'webkit-download-new)
+
+(defcfun "webkit_download_start" :void
+  (download webkit-download))
+(export 'webkit-download-start)
+
+(defcfun "webkit_download_cancel" :void
+  (download webkit-download))
+(export 'webkit-download-cancel)
+
+(defcfun "webkit_download_get_uri" glib:g-string
+  (download webkit-download))
+(export 'webkit-download-get-uri)
+
+(defcfun "webkit_download_get_network_request" webkit-network-request
+  (download webkit-download))
+(export 'webkit-download-get-network-request)
+
+(defcfun "webkit_download_get_network_response" webkit-network-response
+  (download webkit-download))
+(export 'webkit-download-get-network-response)
+
+(defcfun "webkit_download_get_suggested_filename" glib:g-string
+  (download webkit-download))
+(export 'webkit-download-get-suggested-filename)
+
+(defcfun "webkit_download_get_destination_uri" glib:g-string
+  (download webkit-download))
+(export 'webkit-download-get-destination-uri)
+
+(defcfun "webkit_download_set_destination_uri" :void
+  (download webkit-download)
+  (destination-uri glib:g-string))
+(export 'webkit-download-set-destination-uri)
+
+(defcfun "webkit_download_get_progress" :double
+  (download webkit-download))
+(export 'webkit-download-get-progress)
+
+(defcfun "webkit_download_get_elapsed_time" :double
+  (download webkit-download))
+(export 'webkit-download-get-elapsed-time)
+
+(defcfun "webkit_download_get_total_size" :uint64
+  (download webkit-download))
+(export 'webkit-download-get-total-size)
+
+(defcfun "webkit_download_get_status" webkit-download-status
+  (download webkit-download))
+
+;;; ^L
+;;; webkitwebpolicydecision.h
+
+(defctype webkit-web-policy-decision :pointer)
+(export 'webkit-web-policy-decision)
+
+(defcfun "webkit_web_policy_decision_use" :void
+  (decision webkit-web-policy-decision))
+(export 'webkit-web-policy-decision-use)
+
+(defcfun "webkit_web_policy_decision_ignore" :void
+  (decision webkit-web-policy-decision))
+(export 'webkit-web-policy-decision-ignore)
+
+(defcfun "webkit_web_policy_decision_download" :void
+  (decision webkit-web-policy-decision))
+(export 'webkit-web-policy-decision-download)
+
+;;; ^L
+;;; webkitwebhistoryitem.h
+
+(defctype webkit-web-history-item :pointer)
+(export 'webkit-web-history-item)
+
+(defcfun "webkit_web_history_item_new" webkit-web-history-item)
+(export 'webkit-web-history-item-new)
+
+(defcfun "webkit_web_history_item_new_with_data" webkit-web-history-item
+  (uri glib:g-string)
+  (title glib:g-string))
+(export 'webkit-web-history-item-new-with-data)
+
+(defcfun "webkit_web_history_item_get_title" glib:g-string
+  (web-history-item webkit-web-history-item))
+(export 'webkit-web-history-item-get-title)
+
+(defcfun "webkit_web_history_item_get_alternate_title" glib:g-string
+  (web-history-item webkit-web-history-item))
+(export 'webkit-web-history-item-get-alternate-title)
+
+(defcfun "webkit_web_history_item_set_alternate_title" :void
+  (web-history-item webkit-web-history-item)
+  (title glib:g-string))
+(export 'webkit-web-history-item-set-alternate-title)
+
+(defcfun "webkit_web_history_item_get_uri" glib:g-string
+  (web-history-item webkit-web-history-item))
+(export 'webkit-web-history-item-get-uri)
+
+(defcfun "webkit_web_history_item_get_original_uri" glib:g-string
+  (web-history-item webkit-web-history-item))
+(export 'webkit-web-history-item-get-original-uri)
+
+(defcfun "webkit_web_history_item_get_last_visited_time" :double
+  (web-history-item webkit-web-history-item))
+(export 'webkit-web-history-item-get-last-visited-time)
+
+(defcfun "webkit_web_history_item_copy" webkit-web-history-item
+  (web-history-item webkit-web-history-item))
+(export 'webkit-web-history-item-copy)
 
 ;;; ^L
 ;;; webkitwebview.h
