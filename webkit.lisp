@@ -87,7 +87,7 @@
   (web-settings webkit-web-settings))
 (export 'webkit-web-settings-copy)
 
-(defcfun "webkit_web_settings_get_user_agent" glib:g-string
+(defcfun "webkit_web_settings_get_user_agent" :string ; *gchar
   (web-settings webkit-web-settings))
 (export 'webkit-web-settings-get-user-agent)
 
@@ -98,15 +98,15 @@
 (export 'webkit-network-request)
 
 (defcfun "webkit_network_request_new" webkit-network-request
-  (uri glib:g-string))
+  (uri :string))
 (export 'webkit-network-request-new)
 
 (defcfun "webkit_network_request_set_uri" :void
   (request webkit-network-request)
-  (uri glib:g-string))
+  (uri :string))
 (export 'webkit-network-request-set-uri)
 
-(defcfun "webkit_network_request_get_uri" glib:g-string
+(defcfun "webkit_network_request_get_uri" :string
   (request webkit-network-request))
 (export 'webkit-network-request-get-uri)
 
@@ -121,15 +121,15 @@
 (export 'webkit-network-response)
 
 (defcfun "webkit_network_response_new" webkit-network-response
-  (uri glib:g-string))
+  (uri :string))
 (export 'webkit-network-response-new)
 
 (defcfun "webkit_network_response_set_uri" :void
   (response webkit-network-response)
-  (uri glib:g-string))
+  (uri :string))
 (export 'webkit-network-response-set-uri)
 
-(defcfun "webkit_network_response_get_uri" glib:g-string
+(defcfun "webkit_network_response_get_uri" :string
   (response webkit-network-response))
 (export 'webkit-network-response-get-uri)
 
@@ -144,31 +144,31 @@
 (export 'webkit-web-resource)
 
 (defcfun "webkit_web_resource_new" webkit-web-resource
-  (data glib:g-string)
+  (data :string)
   (size :int) ; is really `gssize'
-  (uri glib:g-string)
-  (mime-type glib:g-string)
-  (encoding glib:g-string)
-  (frame-name glib:g-string))
+  (uri :string)
+  (mime-type :string)
+  (encoding :string)
+  (frame-name :string))
 (export 'webkit-web-resource-new)
 
 (defcfun "webkit_web_resource_get_data" glib:g-string ; this is GString
   (web-resource webkit-web-resource))
 (export 'webkit-web-resource-get-data)
 
-(defcfun "webkit_web_resource_get_uri" glib:g-string
+(defcfun "webkit_web_resource_get_uri" :string
   (web-resource webkit-web-resource))
 (export 'webkit-web-resource-get-uri)
 
-(defcfun "webkit_web_resource_get_mime_type" glib:g-string
+(defcfun "webkit_web_resource_get_mime_type" :string
   (web-resource webkit-web-resource))
 (export 'webkit-web-resource-get-mime-type)
 
-(defcfun "webkit_web_resource_get_encoding" glib:g-string
+(defcfun "webkit_web_resource_get_encoding" :string
   (web-resource webkit-web-resource))
 (export 'webkit-web-resource-get-encoding)
 
-(defcfun "webkit_web_resource_get_frame_name" glib:g-string
+(defcfun "webkit_web_resource_get_frame_name" :string
   (web-resource webkit-web-resource))
 (export 'webkit-web-resource-get-frame-name)
 
@@ -187,13 +187,13 @@
   (reason webkit-web-navigation-reason))
 (export 'webkit-web-navigation-action-set-reason)
 
-(defcfun "webkit_web_navigation_action_get_original_uri" glib:g-string
+(defcfun "webkit_web_navigation_action_get_original_uri" :string
   (navigation-action webkit-web-navigation-action))
 (export 'webkit-web-navigation-action-get-original-uri)
 
 (defcfun "webkit_web_navigation_action_set_original_uri" :void
   (navigation-action webkit-web-navigation-action)
-  (uri glib:g-string))
+  (uri :string))
 (export 'webkit-web-navigation-action-set-original-uri)
 
 (defcfun "webkit_web_navigation_action_get_button" :int
@@ -204,7 +204,7 @@
   (navigation-action webkit-web-navigation-action))
 (export 'webkit-web-navigation-action-get-modifier-state)
 
-(defcfun "webkit_web_navigation_action_get_target_frame" glib:g-string
+(defcfun "webkit_web_navigation_action_get_target_frame" :string
   (navigation-action webkit-web-navigation-action))
 (export 'webkit-web-navigation-action-get-target-frame)
 
@@ -226,7 +226,7 @@
   (download webkit-download))
 (export 'webkit-download-cancel)
 
-(defcfun "webkit_download_get_uri" glib:g-string
+(defcfun "webkit_download_get_uri" :string
   (download webkit-download))
 (export 'webkit-download-get-uri)
 
@@ -238,17 +238,17 @@
   (download webkit-download))
 (export 'webkit-download-get-network-response)
 
-(defcfun "webkit_download_get_suggested_filename" glib:g-string
+(defcfun "webkit_download_get_suggested_filename" :string
   (download webkit-download))
 (export 'webkit-download-get-suggested-filename)
 
-(defcfun "webkit_download_get_destination_uri" glib:g-string
+(defcfun "webkit_download_get_destination_uri" :string
   (download webkit-download))
 (export 'webkit-download-get-destination-uri)
 
 (defcfun "webkit_download_set_destination_uri" :void
   (download webkit-download)
-  (destination-uri glib:g-string))
+  (destination-uri :string))
 (export 'webkit-download-set-destination-uri)
 
 (defcfun "webkit_download_get_progress" :double
@@ -294,28 +294,28 @@
 (export 'webkit-web-history-item-new)
 
 (defcfun "webkit_web_history_item_new_with_data" webkit-web-history-item
-  (uri glib:g-string)
-  (title glib:g-string))
+  (uri :string)
+  (title :string))
 (export 'webkit-web-history-item-new-with-data)
 
-(defcfun "webkit_web_history_item_get_title" glib:g-string
+(defcfun "webkit_web_history_item_get_title" :string
   (web-history-item webkit-web-history-item))
 (export 'webkit-web-history-item-get-title)
 
-(defcfun "webkit_web_history_item_get_alternate_title" glib:g-string
+(defcfun "webkit_web_history_item_get_alternate_title" :string
   (web-history-item webkit-web-history-item))
 (export 'webkit-web-history-item-get-alternate-title)
 
 (defcfun "webkit_web_history_item_set_alternate_title" :void
   (web-history-item webkit-web-history-item)
-  (title glib:g-string))
+  (title :string))
 (export 'webkit-web-history-item-set-alternate-title)
 
-(defcfun "webkit_web_history_item_get_uri" glib:g-string
+(defcfun "webkit_web_history_item_get_uri" :string
   (web-history-item webkit-web-history-item))
 (export 'webkit-web-history-item-get-uri)
 
-(defcfun "webkit_web_history_item_get_original_uri" glib:g-string
+(defcfun "webkit_web_history_item_get_original_uri" :string
   (web-history-item webkit-web-history-item))
 (export 'webkit-web-history-item-get-original-uri)
 
@@ -344,11 +344,11 @@
 (defcfun "webkit_web_view_new" webkit-web-view)
 (export 'webkit-web-view-new)
 
-(defcfun "webkit_web_view_get_title" glib:g-string
+(defcfun "webkit_web_view_get_title" :string
   (web-view webkit-web-view))
 (export 'webkit-web-view-get-title)
 
-(defcfun "webkit_web_view_get_uri" glib:g-string
+(defcfun "webkit_web_view_get_uri" :string
   (web-view webkit-web-view))
 (export 'webkit-web-view-get-uri)
 
@@ -389,7 +389,7 @@
 
 (defcfun "webkit_web_view_open" :void
   (web-view webkit-web-view)
-  (uri glib:g-string))
+  (uri :string))
 (export 'webkit-web-view-open)
 
 (defcfun "webkit_web_view_reload" :void
@@ -402,7 +402,7 @@
 
 (defcfun ("webkit_web_view_load_uri" %webkit-web-view-load-uri) :void
   (web-view webkit-web-view)
-  (uri glib:g-string))
+  (uri :string))
 
 (defun webkit-web-view-load-uri (view uri)
   (with-foreign-string (c-uri uri)
@@ -411,16 +411,16 @@
 
 (defcfun "webkit_web_view_load_string" :void
   (web-view webkit-web-view)
-  (content glib:g-string)
-  (mime-type glib:g-string)
-  (encoding glib:g-string)
-  (base-uri glib:g-string))
+  (content :string)
+  (mime-type :string)
+  (encoding :string)
+  (base-uri :string))
 (export 'webkit-web-view-load-string)
 
 (defcfun "webkit_web_view_load_html_string" :void
   (web-view webkit-web-view)
-  (content glib:g-string)
-  (base-uri glib:g-string))
+  (content :string)
+  (base-uri :string))
 (export 'webkit-web-view-load-html-string)
 
 (defcfun "webkit_web_view_load_request" :void
@@ -430,7 +430,7 @@
 
 (defcfun "webkit_web_view_search_text" :boolean
   (web-view webkit-web-view)
-  (text glib:g-string)
+  (text :string)
   (case-sensitive :boolean)
   (forward :boolean)
   (wrap :boolean))
@@ -438,7 +438,7 @@
 
 (defcfun "webkit_web_view_mark_text_matches" :uint
   (web-view webkit-web-view)
-  (string glib:g-string)
+  (string :string)
   (case-sensitive :boolean)
   (limit :uint))
 (export 'webkit-web-view-mark-text-matches)
@@ -462,7 +462,7 @@
 
 (defcfun "webkit_web_view_execute_script" :void
   (web-view webkit-web-view)
-  (script glib:g-string))
+  (script :string))
 (export 'webkit-web-view-execute-script)
 
 (defcfun "webkit_web_view_can_cut_clipboard" :boolean
@@ -537,7 +537,7 @@
 
 (defcfun "webkit_web_view_can_show_mime_type" :boolean
   (web-view webkit-web-view)
-  (mime-type glib:g-string))
+  (mime-type :string))
 (export 'webkit-web-view-can-show-mime-type)
 
 (defcfun "webkit_web_view_get_transparent" :void
@@ -574,13 +574,13 @@
 (defcfun "webkit_get_default_session" soup-session)
 (export 'webkit-get-default-session)
 
-(defcfun "webkit_web_view_get_encoding" glib:g-string
+(defcfun "webkit_web_view_get_encoding" :string
   (web-view webkit-web-view))
 (export 'webkit-web-view-get-encoding)
 
 (defcfun "webkit_web_view_set_custom_encoding" :void
   (web-view webkit-web-view)
-  (encoding glib:g-string))
+  (encoding :string))
 (export 'webkit-web-view-set-custom-encoding)
 
 (defcfun "webkit_web_view_move_cursor" :void
@@ -627,7 +627,7 @@
   (event gdk-event-button))
 (export 'webkit-web-view-get-hit-test-result)
 
-(defcfun "webkit_web_view_get_icon_uri" glib:g-string
+(defcfun "webkit_web_view_get_icon_uri" :string
   (web-view webkit-web-view))
 (export 'webkit-web-view-get-icon-uri)
 
