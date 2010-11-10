@@ -60,7 +60,18 @@
 
 (defctype webkit-web-inspector :pointer)
 
+;; ^L
+
+;; This is the central class of the WebKit API. It's a widget implementing the
+;; scrolling interface.
+;;
+;; It is responsible for managing the drawing of content and forwarding of
+;; events.
+(defctype webkit-web-view :pointer)
+(export 'webkit-web-view)
+
 (defctype webkit-web-back-forward-list :pointer)
+(export 'webkit-web-back-forward-list)
 
 ;;; ^L
 ;;; webkitversion.h
@@ -423,17 +434,87 @@
 (export 'webkit-web-history-item-copy)
 
 ;;; ^L
-;;; webkitwebview.h
+;;; webkitwebbackforwardlist.h
 
-;; This is the central class of the WebKit API. It's a widget implementing the
-;; scrolling interface.
-;;
-;; It is responsible for managing the drawing of content and forwarding of
-;; events.
-;;
-;; Each WebkitWebView has exactly one WebKitWebFrame as main frame.
-(defctype webkit-web-view :pointer)
-(export 'webkit-web-view)
+(defcfun "webkit_web_back_forward_list_new_with_web_view" webkit-web-back-forward-list
+  (web-view webkit-web-view))
+(export 'webkit-web-back-forward-list-new-with-web-view)
+
+(defcfun "webkit_web_back_forward_list_go_forward" :void
+  (web-back-forward-list webkit-web-back-forward-list))
+(export 'webkit-web-back-forward-list-go-forward)
+
+(defcfun "webkit_web_back_forward_list_go_back" :void
+  (web-back-forward-list webkit-web-back-forward-list))
+(export 'webkit-web-back-forward-list-go-back)
+
+(defcfun "webkit_web_back_forward_list_contains_item" :boolean
+  (web-back-forward-list webkit-web-back-forward-list)
+  (history-item webkit-web-history-item))
+(export 'webkit-web-back-forward-list-contains-item)
+
+(defcfun "webkit_web_back_forward_list_go_to_item" :void
+  (web-back-forward-list webkit-web-back-forward-list)
+  (history-item webkit-web-history-item))
+(export 'webkit-web-back-forward-list-go-to-item)
+
+;; XXX: why do we get errors with glib:glist as the return type?
+(defcfun "webkit_web_back_forward_list_get_forward_list_with_limit" :pointer ; GList
+  (web-back-forward-list webkit-web-back-forward-list)
+  (limit :int))
+(export 'webkit-web-back-forward-list-get-forward-list-with-limit)
+
+;; XXX: why do we get errors with glib:glist as the return type?
+(defcfun "webkit_web_back_forward_list_get_back_list_with_limit" :pointer ; GList
+  (web-back-forward-list webkit-web-back-forward-list)
+  (limit :int))
+(export 'webkit-web-back-forward-list-get-back-list-with-limit)
+
+(defcfun "webkit_web_back_forward_list_get_back_item" webkit-web-history-item
+  (web-back-forward-list webkit-web-back-forward-list))
+(export 'webkit-web-back-forward-list-get-back-item)
+
+(defcfun "webkit_web_back_forward_list_get_current_item" webkit-web-history-item
+  (web-back-forward-list webkit-web-back-forward-list))
+(export 'webkit-web-back-forward-list-get-current-item)
+
+(defcfun "webkit_web_back_forward_list_get_forward_item" webkit-web-history-item
+  (web-back-forward-list webkit-web-back-forward-list))
+(export 'webkit-web-back-forward-list-get-forward-item)
+
+(defcfun "webkit_web_back_forward_list_get_nth_item" webkit-web-history-item
+  (web-back-forward-list webkit-web-back-forward-list)
+  (index :int))
+(export 'webkit-web-back-forward-list-get-nth-item)
+
+(defcfun "webkit_web_back_forward_list_get_back_length" :int
+  (web-back-forward-list webkit-web-back-forward-list))
+(export 'webkit-web-back-forward-list-get-back-length)
+
+(defcfun "webkit_web_back_forward_list_get_forward_length" :int
+  (web-back-forward-list webkit-web-back-forward-list))
+(export 'webkit-web-back-forward-list-get-forward-length)
+
+(defcfun "webkit_web_back_forward_list_get_limit" :int
+  (web-back-forward-list webkit-web-back-forward-list))
+(export 'webkit-web-back-forward-list-get-limit)
+
+(defcfun "webkit_web_back_forward_list_set_limit" :void
+  (web-back-forward-list webkit-web-back-forward-list)
+  (limit :int))
+(export 'webkit-web-back-forward-list-set-limit)
+
+(defcfun "webkit_web_back_forward_list_add_item" :void
+  (web-back-forward-list webkit-web-back-forward-list)
+  (history-item webkit-web-history-item))
+(export 'webkit-web-back-forward-list-add-item)
+
+(defcfun "webkit_web_back_forward_list_clear" :void
+  (web-back-forward-list webkit-web-back-forward-list))
+(export 'webkit-web-back-forward-list-clear)
+
+;;; ^L
+;;; webkitwebview.h
 
 ;; TODO: this needs to be initialized!
 (defcfun "webkit_web_view_new" webkit-web-view)
