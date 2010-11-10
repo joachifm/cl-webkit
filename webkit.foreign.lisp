@@ -73,21 +73,6 @@
 (defctype webkit-web-back-forward-list :pointer)
 (export 'webkit-web-back-forward-list)
 
-;;; ^L
-;;; webkitversion.h
-
-(defcfun "webkit_major_version" :uint)
-(export 'webkit-major-version)
-
-(defcfun "webkit_minor_version" :uint)
-(export 'webkit-minor-version)
-
-(defcfun "webkit_micro_version" :uint)
-(export 'webkit-micro-version)
-
-;;; ^L
-;;; webkitwebsettings.h
-
 ;; Control the behaviour of a webkit-web-view
 ;;
 ;; Properties:
@@ -133,9 +118,62 @@
 ;; user-agent string
 ;; user-stylesheet-uri string
 ;; zoom-step float
-
 (defctype webkit-web-settings :pointer)
 (export 'webkit-web-settings)
+
+;; Represents the network related aspects of navigation request. Used whenever
+;; WebKit wants to provide information about a request that will be sent, or has
+;; been sent.
+;;
+;; For valid URIs, you also get a soup-message object, which provides access to
+;; further information such as headers.
+(defctype webkit-network-request :pointer)
+(export 'webkit-network-request)
+
+;; Represents the network related aspects of navigation response
+(defctype webkit-network-response :pointer)
+(export 'webkit-network-response)
+
+;; Represents a downloaded URI, encapsulates the data of the download as well
+;; as the URI, MIME type and frame name of the resource.
+(defctype webkit-web-resource :pointer)
+(export 'webkit-web-resource)
+
+;; Used in signals to provide details about what led the navigation to happen.
+(defctype webkit-web-navigation-action :pointer)
+(export 'webkit-web-navigation-action)
+
+;; A class that carries with it information about a download request.
+;; Use this to control the download process, or to simply figure out what is
+;; to be downlaoded, and do it yourself.
+(defctype webkit-download :pointer)
+(export 'webkit-download)
+
+;; Liason between WebKit and the application regarding asynchronous policy decisions,
+;; like opening new windows, redirection, etc.
+;;
+;; These objects are passed to the application on signal emissions that deal with
+;; policy decision. They are used by the application to tell the engine what to do.
+(defctype webkit-web-policy-decision :pointer)
+(export 'webkit-web-policy-decision)
+
+(defctype webkit-web-history-item :pointer)
+(export 'webkit-web-history-item)
+
+;;; ^L
+;;; webkitversion.h
+
+(defcfun "webkit_major_version" :uint)
+(export 'webkit-major-version)
+
+(defcfun "webkit_minor_version" :uint)
+(export 'webkit-minor-version)
+
+(defcfun "webkit_micro_version" :uint)
+(export 'webkit-micro-version)
+
+;;; ^L
+;;; webkitwebsettings.h
 
 (defcfun "webkit_web_settings_new" webkit-web-settings)
 (export 'webkit-web-settings-new)
@@ -150,15 +188,6 @@
 
 ;;; ^L
 ;;; webkitnetworkrequest.h
-
-;; Represents the network related aspects of navigation request. Used whenever
-;; WebKit wants to provide information about a request that will be sent, or has
-;; been sent.
-;;
-;; For valid URIs, you also get a soup-message object, which provides access to
-;; further information such as headers.
-(defctype webkit-network-request :pointer)
-(export 'webkit-network-request)
 
 ;; NOTE: returns NULL if the URI is invalid
 (defcfun "webkit_network_request_new" webkit-network-request
@@ -183,10 +212,6 @@
 ;;; ^L
 ;;; webkitnetworkresponse.h
 
-;; Represents the network related aspects of navigation response
-(defctype webkit-network-response :pointer)
-(export 'webkit-network-response)
-
 (defcfun "webkit_network_response_new" webkit-network-response
   (uri :string))
 (export 'webkit-network-response-new)
@@ -208,11 +233,6 @@
 
 ;;; ^L
 ;;; webkitwebresource.h
-
-;; Represents a downloaded URI, encapsulates the data of the download as well
-;; as the URI, MIME type and frame name of the resource.
-(defctype webkit-web-resource :pointer)
-(export 'webkit-web-resource)
 
 ;; NOTE: encoding can be NULL
 ;; NOTE: frame_name can be used if the resource represents contents of an entire HTML
@@ -249,10 +269,6 @@
 
 ;;; ^L
 ;;; webkitwebnavigationaction.h
-
-;; Used in signals to provide details about what led the navigation to happen.
-(defctype webkit-web-navigation-action :pointer)
-(export 'webkit-web-navigation-action)
 
 ;; The reason why WebKit is requesting a navigation.
 (defcfun "webkit_web_navigation_action_get_reason" webkit-web-navigation-reason
@@ -293,13 +309,6 @@
 ;;; ^L
 ;;; webkitdownload.h
 ;;;
-
-;;; A class that carries with it information about a download request.
-;;; Use this to control the download process, or to simply figure out what is
-;;; to be downlaoded, and do it yourself.
-
-(defctype webkit-download :pointer)
-(export 'webkit-download)
 
 (defcfun "webkit_download_new" webkit-download
   (request webkit-network-request))
@@ -370,14 +379,6 @@
 ;;; ^L
 ;;; webkitwebpolicydecision.h
 
-;; Liason between WebKit and the application regarding asynchronous policy decisions,
-;; like opening new windows, redirection, etc.
-;;
-;; These objects are passed to the application on signal emissions that deal with
-;; policy decision. They are used by the application to tell the engine what to do.
-(defctype webkit-web-policy-decision :pointer)
-(export 'webkit-web-policy-decision)
-
 (defcfun "webkit_web_policy_decision_use" :void
   (decision webkit-web-policy-decision))
 (export 'webkit-web-policy-decision-use)
@@ -392,9 +393,6 @@
 
 ;;; ^L
 ;;; webkitwebhistoryitem.h
-
-(defctype webkit-web-history-item :pointer)
-(export 'webkit-web-history-item)
 
 (defcfun "webkit_web_history_item_new" webkit-web-history-item)
 (export 'webkit-web-history-item-new)
