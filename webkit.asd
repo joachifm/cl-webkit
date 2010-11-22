@@ -12,7 +12,7 @@
 (in-package :webkit-asd)
 
 (defsystem :webkit
-  :description "A simple FFI for webkit"
+  :description "A simple FFI for WebKitGtk+"
   :author "Joachim Fasting <joachim.fasting@gmail.com>"
   :licence "BSD"
   :version "0.0"

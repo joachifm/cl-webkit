@@ -1,4 +1,4 @@
-# cl-webkit - a binding to libwebkit for Common Lisp
+# cl-webkit - a binding to WebKitGtk+ for Common Lisp
 Note, this is alpha software. Do not use.
 
 ## Compatbility
@@ -14,7 +14,7 @@ cl-webkit should work on all platforms where [CFFI] is supported.
 [CFFI]: http://common-lisp.net/projects/cffi/
 
 ## Dependencies
-* [libwebkit](http://webkitgtk.org/)
+* [WebKitGtk+](http://webkitgtk.org/)
 * [CFFI]
 
 Use [Quicklisp] to install any missing dependencies.
