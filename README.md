@@ -23,6 +23,7 @@ Use [Quicklisp] to install any missing dependencies.
 
 ## Hacking
 * [WebKitGTK+ API reference](http://webkitgtk.org/reference/index.html)
+* [cl-webkit repository](git://repo.or.cz/cl-webkit.git)
 
 ## Copying
 (c) 2010 Joachim Fasting <joachim.fasting@gmail.com>
