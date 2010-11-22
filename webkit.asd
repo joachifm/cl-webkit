@@ -1,8 +1,6 @@
 ;;;; ^L
 ;;;; WEBKIT system definition
 
-(declaim (optimize (debug 3) (compilation-speed 3)))
-
 (in-package :cl-user)
 
 (eval-when (:load-toplevel :execute)

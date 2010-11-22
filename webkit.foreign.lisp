@@ -31,8 +31,6 @@
 ;;
 ;; Code:
 
-(declaim (optimize (speed 0) (debug 3) (safety 3)))
-
 (in-package :webkit.foreign)
 
 ;;; ^L
