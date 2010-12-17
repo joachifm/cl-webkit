@@ -22,3 +22,6 @@
 ** DONE webkitwebsettings.h
 ** DONE webkitwebivew.h
 ** TODO webkitwebwindowfeatures.h
+* TODO Support for checking what version of webkit we are building against
+* TODO Store the full contents of the .so in the image
+  Makes distribution easier
