@@ -1,3 +1,4 @@
+;;; foreign.lisp - low-level bindings
 ;; Copyright (C) 2010, Joachim Fasting
 ;;
 ;;   This file is part of cl-webkit
@@ -25,27 +26,23 @@
 ;; OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ;; OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-;; Commentary:
-;;
-;; Low-level bindings
-;;
-;; Code:
+;;; Code:
 
-(in-package :webkit.foreign)
+(in-package :cl-webkit.foreign)
 
-;;; ^L
-
+;;; Load foreign library
 (define-foreign-library libwebkit
   (:unix (:or "libwebkit-1.0.so")))
 
 (use-foreign-library libwebkit)
 
-;;; ^L
+;;; Dummies
 
 (defctype gtk-target-list :pointer)
 (defctype gtk-movement-step :int)
 (defctype gdk-event-button :pointer)
 
+;; XXX: the following should be implemented
 (defctype soup-session :pointer)
 
 (defctype soup-message :pointer)
@@ -58,7 +55,7 @@
 
 (defctype webkit-web-inspector :pointer)
 
-;; ^L
+;;; Foreign structures
 
 ;; This is the central class of the WebKit API. It's a widget implementing the
 ;; scrolling interface.
@@ -158,7 +155,6 @@
 (defctype webkit-web-history-item :pointer)
 (export 'webkit-web-history-item)
 
-;;; ^L
 ;;; webkitversion.h
 
 (defcfun "webkit_major_version" :uint)
@@ -170,7 +166,6 @@
 (defcfun "webkit_micro_version" :uint)
 (export 'webkit-micro-version)
 
-;;; ^L
 ;;; webkitwebsettings.h
 
 (defcfun "webkit_web_settings_new" webkit-web-settings)
@@ -184,7 +179,6 @@
   (web-settings webkit-web-settings))
 (export 'webkit-web-settings-get-user-agent)
 
-;;; ^L
 ;;; webkitnetworkrequest.h
 
 ;; NOTE: returns NULL if the URI is invalid
@@ -207,7 +201,6 @@
   (request webkit-network-request))
 (export 'webkit-network-request-get-message)
 
-;;; ^L
 ;;; webkitnetworkresponse.h
 
 (defcfun "webkit_network_response_new" webkit-network-response
@@ -229,7 +222,6 @@
   (response webkit-network-response))
 (export 'webkit-network-response-get-message)
 
-;;; ^L
 ;;; webkitwebresource.h
 
 ;; NOTE: encoding can be NULL
@@ -265,7 +257,6 @@
   (web-resource webkit-web-resource))
 (export 'webkit-web-resource-get-frame-name)
 
-;;; ^L
 ;;; webkitwebnavigationaction.h
 
 ;; The reason why WebKit is requesting a navigation.
@@ -304,9 +295,7 @@
   (navigation-action webkit-web-navigation-action))
 (export 'webkit-web-navigation-action-get-target-frame)
 
-;;; ^L
 ;;; webkitdownload.h
-;;;
 
 (defcfun "webkit_download_new" webkit-download
   (request webkit-network-request))
@@ -374,7 +363,6 @@
 (defcfun "webkit_download_get_status" webkit-download-status
   (download webkit-download))
 
-;;; ^L
 ;;; webkitwebpolicydecision.h
 
 (defcfun "webkit_web_policy_decision_use" :void
@@ -389,7 +377,6 @@
   (decision webkit-web-policy-decision))
 (export 'webkit-web-policy-decision-download)
 
-;;; ^L
 ;;; webkitwebhistoryitem.h
 
 (defcfun "webkit_web_history_item_new" webkit-web-history-item)
@@ -429,7 +416,6 @@
   (web-history-item webkit-web-history-item))
 (export 'webkit-web-history-item-copy)
 
-;;; ^L
 ;;; webkitwebbackforwardlist.h
 
 (defcfun "webkit_web_back_forward_list_new_with_web_view" webkit-web-back-forward-list
@@ -509,7 +495,6 @@
   (web-back-forward-list webkit-web-back-forward-list))
 (export 'webkit-web-back-forward-list-clear)
 
-;;; ^L
 ;;; webkitwebview.h
 
 ;; TODO: this needs to be initialized!

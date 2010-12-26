@@ -18,7 +18,7 @@ done
 if $run_build_test ; then
     echo "Running build test"
 
-    env sbcl --noinform --load tools/buildtest.lisp --eval '(buildtest :webkit)'
+    env sbcl --noinform --load tools/buildtest.lisp --eval '(buildtest :cl-webkit)'
     if [ $? -ne 0 ] ; then
         echo "Commit rejected: build failed"
         exit 1

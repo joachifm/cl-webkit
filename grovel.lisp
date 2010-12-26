@@ -1,3 +1,4 @@
+;;; grovel.lisp - grovel script
 ;; Copyright (C) 2010, Joachim Fasting
 ;;
 ;;   This file is part of cl-webkit
@@ -25,14 +26,14 @@
 ;; OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ;; OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-;; Commentary:
+;;; Commentary:
 ;;
 ;; Used by CFFI-grovel to automatically extract information about types and
 ;; structures.
-;;
-;; Code:
 
-(in-package :webkit.foreign)
+;;; Code:
+
+(in-package :cl-webkit.foreign)
 
 ;; XXX: this should be auto-generated
 (cc-flags
@@ -51,7 +52,6 @@
  "-I/usr/include/libpng14"
  "-I/usr/include/libxml2")
 
-;;; ^L
 ;;; webkiterror.h
 
 (include "webkit/webkiterror.h")
@@ -94,7 +94,6 @@
        ((:webkit-plugin-error-will-handle-load "WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD")
         :documentation "?"))
 
-;;; ^L
 ;;; webkitwebnavigationaction.h
 
 (include "webkit/webkitwebnavigationaction.h")
@@ -138,7 +137,6 @@
        ((:webkit-download-error-network "WEBKIT_DOWNLOAD_ERROR_NETWORK")
         :documentation "?"))
 
-;;; ^L
 ;;; webkitwebsettings.h
 
 (include "webkit/webkitwebsettings.h")
@@ -149,7 +147,6 @@
        ((:webkit-editing-behavior-windows "WEBKIT_EDITING_BEHAVIOR_WINDOWS")
         :documentation "?"))
 
-;;; ^L
 ;;; webkithittestresult.h
 
 (include "webkit/webkithittestresult.h")
@@ -168,7 +165,6 @@
        ((:webkit-hit-test-result-context-editable "WEBKIT_HIT_TEST_RESULT_CONTEXT_EDITABLE")
         :documentation "The area is editable by the user."))
 
-;;; ^L
 ;;; webkitwebframe.h
 
 (include "webkit/webkitwebframe.h")
@@ -192,7 +188,6 @@ on the screen, because the data available at the time was not significant enough
         :documentation "Page failed to load. Connect to the load-error signal
 if you want to know precisely what kind of error occurred."))
 
-;;; ^L
 ;;; webkitwebview.h
 
 (include "webkit/webkitwebview.h")

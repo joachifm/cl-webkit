@@ -1,4 +1,4 @@
-;;; packages.lisp - package descriptions
+;;; cl-webkit.asd - package descriptions
 ;; Copyright (C) 2010, Joachim Fasting
 ;;
 ;;   This file is part of cl-webkit
@@ -30,10 +30,21 @@
 
 (in-package :cl-user)
 
-(defpackage :cl-webkit.foreign
-  (:nicknames :webkit.foreign)
-  (:use :cl :cffi))
+(eval-when (:load-toplevel :execute)
+  (asdf:operate 'asdf:load-op :cffi-grovel))
 
-(defpackage :cl-webkit
-  (:nicknames :webkit)
-  (:use :cl :webkit.foreign))
+(defpackage :cl-webkit-asd
+  (:use :cl :asdf))
+
+(in-package :cl-webkit-asd)
+
+(defsystem :cl-webkit
+  :description "A simple FFI for WebKitGtk+"
+  :author "Joachim Fasting <joachim.fasting@gmail.com>"
+  :licence "BSD"
+  :version "0.0"
+  :serial t
+  :components ((:file "packages")
+               (cffi-grovel:grovel-file "grovel")
+               (:file "foreign"))
+  :depends-on (:cffi :cl-gtk2-glib))
