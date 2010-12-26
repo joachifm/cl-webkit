@@ -27,17 +27,18 @@
 ;; OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ;;; Code:
-
+
 (in-package :cl-webkit.foreign)
 
 ;;; Load foreign library
+
 (define-foreign-library libwebkit
   (:unix (:or "libwebkit-1.0.so")))
 
 (use-foreign-library libwebkit)
 
 ;;; Dummies
-
+
 (defctype gtk-target-list :pointer)
 (defctype gtk-movement-step :int)
 (defctype gdk-event-button :pointer)
@@ -56,6 +57,7 @@
 (defctype webkit-web-inspector :pointer)
 
 ;;; Foreign structures
+
 
 ;; This is the central class of the WebKit API. It's a widget implementing the
 ;; scrolling interface.
@@ -156,7 +158,7 @@
 (export 'webkit-web-history-item)
 
 ;;; webkitversion.h
-
+
 (defcfun "webkit_major_version" :uint)
 (export 'webkit-major-version)
 
@@ -167,7 +169,7 @@
 (export 'webkit-micro-version)
 
 ;;; webkitwebsettings.h
-
+
 (defcfun "webkit_web_settings_new" webkit-web-settings)
 (export 'webkit-web-settings-new)
 
@@ -180,7 +182,7 @@
 (export 'webkit-web-settings-get-user-agent)
 
 ;;; webkitnetworkrequest.h
-
+
 ;; NOTE: returns NULL if the URI is invalid
 (defcfun "webkit_network_request_new" webkit-network-request
   (uri :string))
@@ -202,7 +204,7 @@
 (export 'webkit-network-request-get-message)
 
 ;;; webkitnetworkresponse.h
-
+
 (defcfun "webkit_network_response_new" webkit-network-response
   (uri :string))
 (export 'webkit-network-response-new)
@@ -223,7 +225,7 @@
 (export 'webkit-network-response-get-message)
 
 ;;; webkitwebresource.h
-
+
 ;; NOTE: encoding can be NULL
 ;; NOTE: frame_name can be used if the resource represents contents of an entire HTML
 ;; frame, otherwise pass NULL
@@ -258,7 +260,7 @@
 (export 'webkit-web-resource-get-frame-name)
 
 ;;; webkitwebnavigationaction.h
-
+
 ;; The reason why WebKit is requesting a navigation.
 (defcfun "webkit_web_navigation_action_get_reason" webkit-web-navigation-reason
   (navigation-action webkit-web-navigation-action))
@@ -296,7 +298,7 @@
 (export 'webkit-web-navigation-action-get-target-frame)
 
 ;;; webkitdownload.h
-
+
 (defcfun "webkit_download_new" webkit-download
   (request webkit-network-request))
 (export 'webkit-download-new)
@@ -364,7 +366,7 @@
   (download webkit-download))
 
 ;;; webkitwebpolicydecision.h
-
+
 (defcfun "webkit_web_policy_decision_use" :void
   (decision webkit-web-policy-decision))
 (export 'webkit-web-policy-decision-use)
@@ -378,7 +380,7 @@
 (export 'webkit-web-policy-decision-download)
 
 ;;; webkitwebhistoryitem.h
-
+
 (defcfun "webkit_web_history_item_new" webkit-web-history-item)
 (export 'webkit-web-history-item-new)
 
@@ -417,7 +419,7 @@
 (export 'webkit-web-history-item-copy)
 
 ;;; webkitwebbackforwardlist.h
-
+
 (defcfun "webkit_web_back_forward_list_new_with_web_view" webkit-web-back-forward-list
   (web-view webkit-web-view))
 (export 'webkit-web-back-forward-list-new-with-web-view)
