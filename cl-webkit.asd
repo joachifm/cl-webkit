@@ -1,4 +1,4 @@
-;;; cl-webkit.asd - package descriptions
+;;; cl-webkit.asd - system definitions
 ;; Copyright (C) 2010, Joachim Fasting
 ;;
 ;;   This file is part of cl-webkit
