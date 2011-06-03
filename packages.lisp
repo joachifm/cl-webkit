@@ -1,4 +1,4 @@
-;;; packages.lisp - package descriptions
+;;; packages.lisp - package definitions
 ;; Copyright (C) 2010, Joachim Fasting
 ;;
 ;;   This file is part of cl-webkit
