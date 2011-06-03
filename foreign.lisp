@@ -500,6 +500,7 @@
 ;;; webkitwebview.h
 
 ;; TODO: this needs to be initialized!
+;; TODO: what did I mean by that?
 (defcfun "webkit_web_view_new" webkit-web-view)
 (export 'webkit-web-view-new)
 
