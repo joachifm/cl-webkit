@@ -200,13 +200,6 @@ if you want to know precisely what kind of error occurred."))
        ((:webkit-navigation-response-download "WEBKIT_NAVIGATION_RESPONSE_DOWNLOAD")
         :documentation "Download response"))
 
-;; The cache model determines the memory and disk space to use for caching content.
-(cenum webkit-cache-model
-       ((:webkit-cache-model-document-viewer "WEBKIT_CACHE_MODEL_DOCUMENT_VIEWER")
-        :documentation "Use this for applications without a browsing inteface.")
-       ((:webkit-cache-model-web-browser "WEBKIT_CACHE_MODEL_WEB_BROWSER")
-        :documentation "Use this for web browser applications."))
-
 (cenum webkit-web-view-target-info
        ((:webkit-web-view-target-info-html "WEBKIT_WEB_VIEW_TARGET_INFO_HTML")
         :documentation "?")
@@ -218,3 +211,15 @@ if you want to know precisely what kind of error occurred."))
         :documentation "?")
        ((:webkit-web-view-target-info-netscape-url "WEBKIT_WEB_VIEW_TARGET_INFO_NETSCAPE_URL")
         :documentation "?"))
+
+
+;;; webkitglobals.h
+
+(include "webkit/webkitglobals.h")
+
+;; The cache model determines the memory and disk space to use for caching content.
+(cenum webkit-cache-model
+       ((:webkit-cache-model-document-viewer "WEBKIT_CACHE_MODEL_DOCUMENT_VIEWER")
+        :documentation "Use this for applications without a browsing inteface.")
+       ((:webkit-cache-model-web-browser "WEBKIT_CACHE_MODEL_WEB_BROWSER")
+        :documentation "Use this for web browser applications."))
