@@ -227,6 +227,12 @@ if you want to know precisely what kind of error occurred."))
        ((:webkit-web-view-view-mode-minimized "WEBKIT_WEB_VIEW_VIEW_MODE_MINIMIZED")
         :documentation "?"))
 
+(cenum webkit-selection-affinity
+       ((:webkit-selection-affinity-upstream "WEBKIT_SELECTION_AFFINITY_UPSTREAM")
+        :documentation "?")
+       ((:webkit-selection-affinity-downstream "WEBKIT_SELECTION_AFFINITY_DOWNSTREAM")
+        :documentation "?"))
+
 
 ;;; webkitglobals.h
 
