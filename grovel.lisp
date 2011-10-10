@@ -233,6 +233,14 @@ if you want to know precisely what kind of error occurred."))
        ((:webkit-selection-affinity-downstream "WEBKIT_SELECTION_AFFINITY_DOWNSTREAM")
         :documentation "?"))
 
+(cenum webkit-insert-action
+       ((:webkit-insert-action-typed "WEBKIT_INSERT_ACTION_TYPED")
+        :documentation "?")
+       ((:webkit-insert-action-pasted "WEBKIT_INSERT_ACTION_PASTED")
+        :documentation "?")
+       ((:webkit-insert-action-dropped "WEBKIT_INSERT_ACTION_DROPPED")
+        :documentation "?"))
+
 
 ;;; webkitglobals.h
 
