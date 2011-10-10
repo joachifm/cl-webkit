@@ -94,6 +94,7 @@
        ((:webkit-plugin-error-will-handle-load "WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD")
         :documentation "?"))
 
+
 ;;; webkitwebnavigationaction.h
 
 (include "webkit/webkitwebnavigationaction.h")
@@ -145,6 +146,8 @@
        ((:webkit-editing-behavior-mac "WEBKIT_EDITING_BEHAVIOR_MAC")
         :documentation "?")
        ((:webkit-editing-behavior-windows "WEBKIT_EDITING_BEHAVIOR_WINDOWS")
+        :documentation "?")
+       ((:webkit-editing-behavior-unix "WEBKIT_EDITING_BEHAVIOR_UNIX")
         :documentation "?"))
 
 ;;; webkithittestresult.h
