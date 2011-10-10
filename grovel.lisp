@@ -215,6 +215,18 @@ if you want to know precisely what kind of error occurred."))
        ((:webkit-web-view-target-info-netscape-url "WEBKIT_WEB_VIEW_TARGET_INFO_NETSCAPE_URL")
         :documentation "?"))
 
+(cenum webkit-web-view-view-mode
+       ((:webkit-web-view-view-mode-windowed "WEBKIT_WEB_VIEW_VIEW_MODE_WINDOWED")
+        :documentation "?")
+       ((:webkit-web-view-view-mode-floating "WEBKIT_WEB_VIEW_VIEW_MODE_FLOATING")
+        :documentation "?")
+       ((:webkit-web-view-view-mode-fullscreen "WEBKIT_WEB_VIEW_VIEW_MODE_FULLSCREEN")
+        :documentation "?")
+       ((:webkit-web-view-view-mode-maximized "WEBKIT_WEB_VIEW_VIEW_MODE_MAXIMIZED")
+        :documentation "?")
+       ((:webkit-web-view-view-mode-minimized "WEBKIT_WEB_VIEW_VIEW_MODE_MINIMIZED")
+        :documentation "?"))
+
 
 ;;; webkitglobals.h
 
