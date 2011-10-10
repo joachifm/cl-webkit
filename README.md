@@ -1,7 +1,7 @@
 # cl-webkit - a binding to WebKitGtk+ for Common Lisp
 Note, this is alpha software. Do not use.
 
-## Compatbility
+## Compatibility
 cl-webkit has been confirmed to work (as in compile/load) on:
 
 * [SBCL](http://www.sbcl.org/)
