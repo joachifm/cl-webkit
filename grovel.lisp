@@ -248,7 +248,11 @@ if you want to know precisely what kind of error occurred."))
 
 ;; The cache model determines the memory and disk space to use for caching content.
 (cenum webkit-cache-model
+       ((:webkit-cache-model-default "WEBKIT_CACHE_MODEL_DEFAULT")
+        :documentation "The default cache model (optimized for web browsing).")
        ((:webkit-cache-model-document-viewer "WEBKIT_CACHE_MODEL_DOCUMENT_VIEWER")
         :documentation "Use this for applications without a browsing inteface.")
+       ((:webkit-cache-model-document-browser "WEBKIT_CACHE_MODEL_DOCUMENT_BROWSER")
+        :documentation "Cache model optimized for viewing.")
        ((:webkit-cache-model-web-browser "WEBKIT_CACHE_MODEL_WEB_BROWSER")
         :documentation "Use this for web browser applications."))
