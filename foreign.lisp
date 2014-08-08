@@ -33,7 +33,7 @@
 ;;; Load foreign library
 
 (define-foreign-library libwebkit
-  (:unix (:or "libwebkitgtk-1.0.so")))
+  (:unix (:or "libwebkitgtk-3.0.so")))
 
 (use-foreign-library libwebkit)
 
