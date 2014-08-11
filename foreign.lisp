@@ -432,6 +432,14 @@
   (web-back-forward-list webkit-web-back-forward-list))
 (export 'webkit-web-back-forward-list-go-back)
 
+(defcfun "webkit_web_view_go_back" :void
+  (web-view webkit-web-view))
+(export 'webkit-web-view-go-back)
+
+(defcfun "webkit_web_view_go_forward" :void
+  (web-view webkit-web-view))
+(export 'webkit-web-view-go-forward)
+
 (defcfun "webkit_web_back_forward_list_contains_item" :boolean
   (web-back-forward-list webkit-web-back-forward-list)
   (history-item webkit-web-history-item))
