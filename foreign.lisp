@@ -33,7 +33,7 @@
 ;;; Load foreign library
 
 (define-foreign-library libwebkit
-  (:unix (:or "libwebkitgtk-3.0.so")))
+  (:unix (:or "libwebkit2gtk-3.0.so")))
 
 (use-foreign-library libwebkit)
 
@@ -619,6 +619,14 @@
 (defcfun "webkit_web_view_get_focused_frame" webkit-web-frame
   (web-view webkit-web-view))
 (export 'webkit-web-view-get-focused-frame)
+
+(defcfun "webkit_web_view_run_javascript" :void
+  (web-view webkit-web-view)
+  (script      :string)
+  (cancellable :pointer)
+  (callback    :pointer)
+  (user_data   :pointer))
+(export 'webkit-web-view-run-javascript)
 
 (defcfun "webkit_web_view_execute_script" :void
   (web-view webkit-web-view)
