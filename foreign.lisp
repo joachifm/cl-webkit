@@ -70,6 +70,9 @@
 (defctype webkit-web-back-forward-list :pointer)
 (export 'webkit-web-back-forward-list)
 
+(defctype webkit-web-find-controller :pointer)
+(export 'webkit-web-find-controller)
+
 ;; Control the behaviour of a webkit-web-view
 ;;
 ;; Properties:
@@ -609,6 +612,10 @@
   (forward :boolean)
   (wrap :boolean))
 (export 'webkit-web-view-search-text)
+
+(defcfun "webkit_web_view_get_find_controller" webkit-web-find-controller
+  (webview webkit-web-view))
+(export 'webkit-web-view-get-find-controller)
 
 (defcfun "webkit_web_view_mark_text_matches" :uint
   (web-view webkit-web-view)
