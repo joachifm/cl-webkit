@@ -7,7 +7,7 @@
 
 (defsystem :cl-webkit-demo
   :description "cl-webkit usage examples"
-  :author "Joachim Fasting <joachim.fasting@gmail.com>"
+  :author "Joachim Fasting <joachifm@fastmail.fm>"
   :licence "BSD"
   :version "0.0"
   :serial t

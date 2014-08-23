@@ -40,7 +40,7 @@
 
 (defsystem :cl-webkit
   :description "A simple FFI for WebKitGtk+"
-  :author "Joachim Fasting <joachim.fasting@gmail.com>"
+  :author "Joachim Fasting <joachifm@fastmail.fm>"
   :licence "BSD"
   :version "0.0"
   :serial t
