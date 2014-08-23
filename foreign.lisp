@@ -826,3 +826,50 @@
 
 (defcfun "webkit_get_cache_model" webkit-cache-model)
 (export 'webkit-get-cache-model)
+
+;;; webkitfindcontroller.h
+
+;; gtype needs to be defined
+;(defcfun "webkit_find_controller_get_type" gtype)
+
+
+(defcfun "webkit_find_controller_search" :void
+  (webkit-web-find-controller webkit-web-find-controller)
+  (search-text :string)
+  (find-options :uint32)
+  (max-match-count :uint))
+(export 'webkit-find-controller-search)
+
+(defcfun "webkit_find_controller_search_finish" :void
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-search-finish)
+
+(defcfun "webkit_find_controller_search_next" :void
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-search-next)
+
+(defcfun "webkit_find_controller_search_previous" :void
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-search-previous)
+
+(defcfun "webkit_find_controller_count_matches" :void
+  (webkit-web-find-controller webkit-web-find-controller)
+  (search-text :string
+  (find-options :uint32)
+  (max-match-count :uint)))
+(export 'webkit-find-controller-count-matches)
+
+(defcfun "webkit_find_controller_get_search_text" :string
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-get-search-text)
+
+(defcfun "webkit_find_controller_get_options" :uint32
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-get-options)
+
+(defcfun "webkit_find_controller_get_max_match_count" :uint
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-get-max-match-count)
+
+(defcfun "webkit_find_controller_get_web_view" webkit-web-view)
+(export 'webkit-find-controller-get-web-view)
