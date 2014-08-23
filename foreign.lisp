@@ -591,6 +591,12 @@
   (base-uri :string))
 (export 'webkit-web-view-load-html-string)
 
+(defcfun "webkit_web_view_load_html" :void
+  (web-view webkit-web-view)
+  (content :string)
+  (base-uri :string))
+(export 'webkit-web-view-load-html)
+
 (defcfun "webkit_web_view_load_request" :void
   (web-view webkit-web-view)
   (request webkit-network-request))
