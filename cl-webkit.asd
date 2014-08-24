@@ -47,4 +47,4 @@
   :components ((:file "packages")
                (cffi-grovel:grovel-file "grovel")
                (:file "foreign"))
-  :depends-on (:cffi :cl-gtk2-glib))
+  :depends-on (:cffi))

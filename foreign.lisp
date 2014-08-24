@@ -33,7 +33,7 @@
 ;;; Load foreign library
 
 (define-foreign-library libwebkit
-  (:unix (:or "libwebkitgtk-1.0.so")))
+  (:unix (:or "libwebkit2gtk-3.0.so")))
 
 (use-foreign-library libwebkit)
 
@@ -69,6 +69,9 @@
 
 (defctype webkit-web-back-forward-list :pointer)
 (export 'webkit-web-back-forward-list)
+
+(defctype webkit-web-find-controller :pointer)
+(export 'webkit-web-find-controller)
 
 ;; Control the behaviour of a webkit-web-view
 ;;
@@ -432,6 +435,14 @@
   (web-back-forward-list webkit-web-back-forward-list))
 (export 'webkit-web-back-forward-list-go-back)
 
+(defcfun "webkit_web_view_go_back" :void
+  (web-view webkit-web-view))
+(export 'webkit-web-view-go-back)
+
+(defcfun "webkit_web_view_go_forward" :void
+  (web-view webkit-web-view))
+(export 'webkit-web-view-go-forward)
+
 (defcfun "webkit_web_back_forward_list_contains_item" :boolean
   (web-back-forward-list webkit-web-back-forward-list)
   (history-item webkit-web-history-item))
@@ -583,6 +594,12 @@
   (base-uri :string))
 (export 'webkit-web-view-load-html-string)
 
+(defcfun "webkit_web_view_load_html" :void
+  (web-view webkit-web-view)
+  (content :string)
+  (base-uri :string))
+(export 'webkit-web-view-load-html)
+
 (defcfun "webkit_web_view_load_request" :void
   (web-view webkit-web-view)
   (request webkit-network-request))
@@ -595,6 +612,10 @@
   (forward :boolean)
   (wrap :boolean))
 (export 'webkit-web-view-search-text)
+
+(defcfun "webkit_web_view_get_find_controller" webkit-web-find-controller
+  (webview webkit-web-view))
+(export 'webkit-web-view-get-find-controller)
 
 (defcfun "webkit_web_view_mark_text_matches" :uint
   (web-view webkit-web-view)
@@ -619,6 +640,14 @@
 (defcfun "webkit_web_view_get_focused_frame" webkit-web-frame
   (web-view webkit-web-view))
 (export 'webkit-web-view-get-focused-frame)
+
+(defcfun "webkit_web_view_run_javascript" :void
+  (web-view webkit-web-view)
+  (script      :string)
+  (cancellable :pointer)
+  (callback    :pointer)
+  (user_data   :pointer))
+(export 'webkit-web-view-run-javascript)
 
 (defcfun "webkit_web_view_execute_script" :void
   (web-view webkit-web-view)
@@ -797,3 +826,50 @@
 
 (defcfun "webkit_get_cache_model" webkit-cache-model)
 (export 'webkit-get-cache-model)
+
+;;; webkitfindcontroller.h
+
+;; gtype needs to be defined
+;(defcfun "webkit_find_controller_get_type" gtype)
+
+
+(defcfun "webkit_find_controller_search" :void
+  (webkit-web-find-controller webkit-web-find-controller)
+  (search-text :string)
+  (find-options :uint32)
+  (max-match-count :uint))
+(export 'webkit-find-controller-search)
+
+(defcfun "webkit_find_controller_search_finish" :void
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-search-finish)
+
+(defcfun "webkit_find_controller_search_next" :void
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-search-next)
+
+(defcfun "webkit_find_controller_search_previous" :void
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-search-previous)
+
+(defcfun "webkit_find_controller_count_matches" :void
+  (webkit-web-find-controller webkit-web-find-controller)
+  (search-text :string
+  (find-options :uint32)
+  (max-match-count :uint)))
+(export 'webkit-find-controller-count-matches)
+
+(defcfun "webkit_find_controller_get_search_text" :string
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-get-search-text)
+
+(defcfun "webkit_find_controller_get_options" :uint32
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-get-options)
+
+(defcfun "webkit_find_controller_get_max_match_count" :uint
+  (webkit-web-find-controller webkit-web-find-controller))
+(export 'webkit-find-controller-get-max-match-count)
+
+(defcfun "webkit_find_controller_get_web_view" webkit-web-view)
+(export 'webkit-find-controller-get-web-view)

@@ -29,8 +29,6 @@
 
 ;;; Code:
 
-(in-package :cl-user)
-
 (defpackage :cl-webkit-demo
   (:use :cl)
   (:nicknames "webkit-demo")
