@@ -1,0 +1,31 @@
+;;; simple-browser.lisp --- webkit browser demo
+
+;; Copyright (c) 2014 Joachim Fasting
+;;
+;; This file is part of cl-webkit.
+;;
+;; cl-webkit is free software; you can redistribute it and/or modify
+;; it under the terms of the MIT license.
+;; See `COPYING' in the source distribution for details.
+
+;;; Commentary:
+;;
+;; A simple example, generates a core image if loaded with SBCL.
+
+(in-package :cl-user)
+
+(asdf:load-system "cl-cffi-gtk")
+(asdf:load-system "cl-webkit2")
+
+(defun simple-browser ()
+  "A single-window browser with no keyboard or mouse input.
+Loads and renders a single web page."
+  (gtk:within-main-loop
+    (let ((win (make-instance 'gtk:gtk-window))
+          (view (webkit2:webkit-web-view-new)))
+      (gtk:gtk-container-add win view)
+      (webkit2:webkit-web-view-load-uri view "http://www.example.com")
+      (gtk:gtk-widget-show-all win))))
+
+#+sbcl
+(sb-ext:save-lisp-and-die "simple-browser.core")

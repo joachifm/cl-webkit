@@ -1,27 +1,16 @@
-# cl-webkit - a binding to WebKitGtk+ for Common Lisp
+# cl-webkit - a binding to WebKitGTK+ for Common Lisp
+
+## About
+cl-webkit is a FFI binding to [WebKitGTK+], currently targeting
+WebKit version 2.
+
+[WebKitGTK+]: http://webkitgtk.org/
+
+## Stability
 This is alpha software. Do not use.
 
-## Building
-cl-webkit currently requires working installations of
-
-* [WebKitGtk+](http://webkitgtk.org/)
-* [CFFI]
-
-Use [Quicklisp] to install any missing Lisp dependencies.
-
-Then, you should be able to load cl-webkit thus
-
-    $ cd cl-webkit && sbcl
-    * (progn
-        (load "cl-webkit.asd")
-        (asdf:load-system :cl-webkit))
-
-[Quicklisp]: http://www.quicklisp.org/
-[CFFI]: http://common-lisp.net/projects/cffi/
-
-## Compatibility
-cl-webkit should be compatible with all Common Lisp implementations that
-support [CFFI].
+## Additional dependencies
+- [CFFI](http://common-lisp.net/project/cffi)
 
 ## Contributing
 Send patches via email or as pull requests on [GitHub].
@@ -29,18 +18,26 @@ Feel free to append your name to the list of
 [CONTRIBUTORS](../master/CONTRIBUTORS) (anything above fixing single-letter
 typos warrants a mention).
 
+A few things to keep in mind
+
+- When adding a new binding, maintain a consistent mapping to the
+  C API, so that users can find what they need and easily cross-reference
+  the C API documentation
+- Each major section of the C API should be covered by a separate file under
+  `webkit2/`
+- Document the binding not the C API
+
+Currently, the goal is not to cover the entire C API, but to grow the binding
+by demand.
+
 [GitHub]: https://github.com/joachifm/cl-webkit
 
 ## Resources
-* [WebKitGTK+ API reference](http://webkitgtk.org/reference/index.html)
+* [WebKit2GTK+ Stable API reference](http://webkitgtk.org/reference/webkit2gtk/stable/index.html)
+* [CFFI User Manual](http://common-lisp.net/project/cffi/manual/html_node/index.html)
 
 ## Copying
-cl-webkit is distributed under a 2-clause BSD license,
-see [COPYING](../master/COPYING).
-
+cl-webkit is distributed under the MIT license (see [COPYING](../master/COPYING)).
 Please note that this licence only covers the binding itself.
-An image containing .so files from third-party libraries may be covered
-by additional terms and is most likely not redistributable without also
-providing full source code or a mechanism for re-linking.
 Refer to the distribution terms of the third-party dependencies for
 details.
