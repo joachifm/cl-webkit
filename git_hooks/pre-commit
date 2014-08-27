@@ -2,13 +2,8 @@
 #
 # Pre-commit checks
 
-# Lisp command
-LISP=${LISP:-"sbcl --noinform"}
-
-# Source tree root
+LISP="sbcl --noinform"
 topdir=`git rev-parse --show-toplevel`
-
-# Check that the package still loads
 run_build_test=false
 
 cd "$topdir"
@@ -20,11 +15,10 @@ for x in `git diff-index --cached --name-only HEAD` ; do
 done
 
 if $run_build_test ; then
-    echo "Running build test"
-
-    $LISP --load tools/buildtest.lisp --eval '(buildtest :cl-webkit)'
+    echo "Running build test" >&2
+    $LISP --load tools/buildtest.lisp --eval '(buildtest :cl-webkit2)' >&2
     if [ $? -ne 0 ] ; then
-        echo "Commit rejected: build failed"
+        echo "Commit rejected: build failed" >&2
         exit 1
     fi
 fi
