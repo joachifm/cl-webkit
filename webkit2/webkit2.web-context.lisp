@@ -22,20 +22,20 @@
 
 (export 'webkit-cache-model)
 
-(defvar webkit-cache-model-document-viewer
+(defconstant +webkit-cache-model-document-viewer+
   (foreign-enum-value 'webkit-cache-model :webkit-cache-model-document-viewer))
 
-(export 'webkit-cache-model-document-viewer)
+(export '+webkit-cache-model-document-viewer+)
 
-(defvar webkit-cache-model-web-browser
+(defconstant +webkit-cache-model-web-browser+
   (foreign-enum-value 'webkit-cache-model :webkit-cache-model-web-browser))
 
-(export 'webkit-cache-model-web-browser)
+(export '+webkit-cache-model-web-browser+)
 
-(defvar webkit-cache-model-document-browser
+(defconstant +webkit-cache-model-document-browser+
   (foreign-enum-value 'webkit-cache-model :webkit-cache-model-document-browser))
 
-(export 'webkit-cache-model-document-browser)
+(export '+webkit-cache-model-document-browser+)
 
 (defcfun "webkit_web_context_get_default" webkit-web-context)
 (export 'webkit-web-context-get-default)
@@ -132,15 +132,15 @@
   :webkit-tls-errors-policy-fail)
 (export 'webkit-tls-errors-policy)
 
-(defvar webkit-tls-errors-policy-ignore
+(defconstant +webkit-tls-errors-policy-ignore+
   (foreign-enum-value 'webkit-tls-errors-policy :webkit-tls-errors-policy-ignore))
 
-(export 'webkit-tls-errors-policy-ignore)
+(export '+webkit-tls-errors-policy-ignore+)
 
-(defvar webkit-tls-errors-policy-fail
+(defconstant +webkit-tls-errors-policy-fail+
   (foreign-enum-value 'webkit-tls-errors-policy :webkit-tls-errors-policy-fail))
 
-(export 'webkit-tls-errors-policy-fail)
+(export '+webkit-tls-errors-policy-fail+)
 
 (defcfun "webkit_web_context_set_tls_errors_policy" :void
   (webkit-web-context webkit-web-context)
@@ -182,17 +182,17 @@
   :webkit-process-model-multiple-secondary-processes)
 (export 'webkit-process-model)
 
-(defvar webkit-process-model-shared-secondary-process
+(defconstant +webkit-process-model-shared-secondary-process+
   (foreign-enum-value
    'webkit-process-model :webkit-process-model-shared-secondary-process))
 
-(export 'webkit-process-model-shared-secondary-process)
+(export '+webkit-process-model-shared-secondary-process+)
 
-(defvar webkit-process-model-multiple-secondary-processes
+(defconstant +webkit-process-model-multiple-secondary-processes+
   (foreign-enum-value
    'webkit-process-model :webkit-process-model-multiple-secondary-processes))
 
-(export 'webkit-process-model-multiple-secondary-processes)
+(export '+webkit-process-model-multiple-secondary-processes+)
 
 (defcfun "webkit_web_context_set_process_model" :void
   (webkit-web-context webkit-web-context)
