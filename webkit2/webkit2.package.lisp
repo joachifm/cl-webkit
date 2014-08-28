@@ -14,4 +14,17 @@
 
 (defpackage :cl-webkit2
   (:nicknames :webkit2 :webkit)
-  (:use :cl :cffi))
+  (:use :cl :cffi)
+  (:export
+   #:webkit-cache-model-document-viewer
+   #:webkit-cache-model-web-browser
+   #:webkit-cache-model-document-browser
+   #:webkit-tls-errors-policy-ignore
+   #:webkit-tls-errors-policy-fail
+   #:webkit-process-model-shared-secondary-process
+   #:webkit-process-model-multiple-secondary-processes
+   #:webkit-cookie-persistent-storage-text
+   #:webkit-cookie-persistent-storage-sqlite
+   #:webkit-cookie-policy-accept-always
+   #:webkit-cookie-policy-accept-never
+   #:webkit-cookie-policy-accept-no-third-party))

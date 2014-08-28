@@ -18,6 +18,10 @@
 (defcfun "webkit_web_view_new" webkit-web-view)
 (export 'webkit-web-view-new)
 
+(defcfun "webkit_web_view_new_with_context" webkit-web-view
+  (webkit-web-context webkit-web-context))
+(export 'webkit-web-view-new-with-context)
+
 (defcfun "webkit_web_view_load_uri" :void
   (web-view webkit-web-view)
   (uri :string))
