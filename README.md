@@ -30,6 +30,8 @@ A few things to keep in mind
 Currently, the goal is not to cover the entire C API, but to grow the binding
 by demand.
 
+[GitHub]: https://github.com/joachifm/cl-webkit
+
 ## Resources
 * [WebKit2GTK+ Stable API reference](http://webkitgtk.org/reference/webkit2gtk/stable/index.html)
 * [CFFI User Manual](http://common-lisp.net/project/cffi/manual/html_node/index.html)
