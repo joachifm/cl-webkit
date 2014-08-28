@@ -24,9 +24,13 @@
   (foreign-enum-value
    'webkit-cookie-persistent-storage :webkit-cookie-persistent-storage-text))
 
+(export 'webkit-cookie-persistent-storage-text)
+
 (defvar webkit-cookie-persistent-storage-sqlite
   (foreign-enum-value
    'webkit-cookie-persistent-storage :webkit-cookie-persistent-storage-sqlite))
+
+(export 'webkit-cookie-persistent-storage-sqlite)
 
 (defcenum webkit-cookie-accept-policy
   :webkit-cookie-policy-accept-always
@@ -38,13 +42,19 @@
   (foreign-enum-value
    'webkit-cookie-accept-policy :webkit-cookie-policy-accept-always))
 
+(export 'webkit-cookie-policy-accept-always)
+
 (defvar webkit-cookie-policy-accept-never
   (foreign-enum-value
    'webkit-cookie-accept-policy :webkit-cookie-policy-accept-never))
 
+(export 'webkit-cookie-policy-accept-never)
+
 (defvar webkit-cookie-policy-accept-no-third-party
   (foreign-enum-value
    'webkit-cookie-accept-policy :webkit-cookie-policy-accept-no-third-party))
+
+(export 'webkit-cookie-policy-accept-no-third-party)
 
 (defcfun "webkit_cookie_manager_get_type" :void
   (webkit-cookie-manager webkit-cookie-manager))
