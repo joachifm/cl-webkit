@@ -48,10 +48,16 @@
 (defcfun "webkit_web_view_set_zoom_level" :void
   (web-view webkit-web-view)
   (zoom-level :double))
+(export 'webkit-web-view-set-zoom-level)
 
 (defcfun "webkit_web_view_get_zoom_level" :double
   (web-view webkit-web-view))
+(export 'webkit-web-view-get-zoom-level)
 
 (defcfun "webkit_web_view_get_find_controller" webkit-find-controller
   (web-view webkit-web-view))
-(export 'webkit-web-get-find-controller)
+(export 'webkit-web-view-get-find-controller)
+
+(defcfun "webkit_web_view_stop_loading" :void
+  (web-view webkit-web-view))
+(export 'webkit-web-view-stop-loading)

@@ -29,3 +29,7 @@
 (defcfun "webkit_find_controller_search_previous" :void
   (find-controller webkit-find-controller))
 (export 'webkit-find-controller-search-previous)
+
+(defcfun "webkit_find_controller_search_finish" :void
+  (find-controller webkit-find-controller))
+(export 'webkit-find-controller-search-finish)
