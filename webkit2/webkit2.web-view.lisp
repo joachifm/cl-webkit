@@ -56,4 +56,4 @@
 
 (defcfun "webkit_web_view_get_find_controller" webkit-find-controller
   (web-view webkit-web-view))
-(export 'webkit-web-get-find-controller)
+(export 'webkit-web-view-get-find-controller)
