@@ -57,3 +57,7 @@
 (defcfun "webkit_web_view_get_find_controller" webkit-find-controller
   (web-view webkit-web-view))
 (export 'webkit-web-view-get-find-controller)
+
+(defcfun "webkit_web_view_stop_loading" :void
+  (web-view webkit-web-view))
+(export 'webkit-web-view-stop-loading)
