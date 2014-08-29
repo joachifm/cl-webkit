@@ -6,11 +6,30 @@ WebKit version 2.
 
 [WebKitGTK+]: http://webkitgtk.org/
 
-## Stability
-This is alpha software. Do not use.
+## Status
+The binding is incomplete, but what is provided should work as advertised.
+Currently, the goal is not to cover the entire C API, but to grow the binding
+by demand.
 
-## Additional dependencies
-- [CFFI](http://common-lisp.net/project/cffi)
+## Dependencies
+- A working installation of WebKit2GTK+ (whichever
+  package provides libwebkit2gtk-3.0.so, e.g.,
+  libwebkit2gtk on Debian).
+- A [CFFI] compatible Common Lisp implementation.
+  The package is developed using SBCL but should work on any
+  implementation that supports CFFI.
+
+[CFFI]: http://common-lisp.net/project/cffi
+
+## Installation
+Assuming you have [Quicklisp] installed (recommended), do
+
+    $ mkdir -p ~/common-lisp
+    $ git clone https://github.com/joachifm/cl-webkit.git ~/common-lisp/cl-webkit
+    $ lisp
+    * (ql:quickload :cl-webkit2)
+
+[Quicklisp]: http://quicklisp.org/
 
 ## Contributing
 Send patches via email or as pull requests on [GitHub].
@@ -26,9 +45,6 @@ A few things to keep in mind
 - Each major section of the C API should be covered by a separate file under
   `webkit2/`
 - Document the binding not the C API
-
-Currently, the goal is not to cover the entire C API, but to grow the binding
-by demand.
 
 [GitHub]: https://github.com/joachifm/cl-webkit
 
