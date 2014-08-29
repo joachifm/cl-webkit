@@ -10,22 +10,24 @@
 
 ;;; Commentary:
 ;;
-;; A simple example, generates a core image if loaded with SBCL.
+;; The simplest example: a WebKit frame which loads and renders a single website.
+
+;;; Code:
 
 (in-package :cl-user)
 
-(asdf:load-system "cl-cffi-gtk")
-(asdf:load-system "cl-webkit2")
+(mapcar #'asdf:load-system '(:cl-cffi-gtk :cl-webkit2))
 
-(defun simple-browser ()
+(defun simple-browser-main ()
   "A single-window browser with no keyboard or mouse input.
 Loads and renders a single web page."
   (gtk:within-main-loop
     (let ((win (make-instance 'gtk:gtk-window))
           (view (webkit2:webkit-web-view-new)))
+      (gobject:g-signal-connect win "destroy"
+                                #'(lambda (widget)
+                                    (declare (ignore widget))
+                                    (gtk:leave-gtk-main)))
       (gtk:gtk-container-add win view)
       (webkit2:webkit-web-view-load-uri view "http://www.example.com")
       (gtk:gtk-widget-show-all win))))
-
-#+sbcl
-(sb-ext:save-lisp-and-die "simple-browser.core")
