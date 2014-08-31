@@ -16,7 +16,7 @@ done
 
 if $run_build_test ; then
     echo "Running build test" >&2
-    $LISP --load tools/buildtest.lisp --eval '(buildtest :cl-webkit2)' >&2
+    $LISP --load scripts/buildtest.lisp --eval '(buildtest :cl-webkit2)' >&2
     if [ $? -ne 0 ] ; then
         echo "Commit rejected: build failed" >&2
         exit 1
