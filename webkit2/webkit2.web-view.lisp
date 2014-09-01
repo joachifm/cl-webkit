@@ -61,3 +61,11 @@
 (defcfun "webkit_web_view_stop_loading" :void
   (web-view webkit-web-view))
 (export 'webkit-web-view-stop-loading)
+
+(defcfun "webkit_web_view_run_javascript" :void
+  (web-view webkit-web-view)
+  (script :string)
+  (cancellable :pointer)
+  (async-ready-callback :pointer)
+  (user-data :pointer))
+(export 'webkit-web-view-run-javascript)
