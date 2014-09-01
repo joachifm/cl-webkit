@@ -201,4 +201,4 @@
 
 (defcfun "webkit_web_context_get_process_model" webkit-process-model
   (webkit-web-context webkit-web-context))
-(export 'webkit_web_context_get_process_model)
+(export 'webkit-web-context-get-process-model)
