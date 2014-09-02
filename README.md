@@ -24,8 +24,7 @@ by demand.
 ## Installation
 Assuming you have [Quicklisp] installed (recommended), do
 
-    $ mkdir -p ~/common-lisp
-    $ git clone https://github.com/joachifm/cl-webkit.git ~/common-lisp/cl-webkit
+    $ git clone https://github.com/joachifm/cl-webkit.git ~/common-lisp/quicklisp/local-projects/cl-webkit
     $ lisp
     * (ql:quickload :cl-webkit2)
 
