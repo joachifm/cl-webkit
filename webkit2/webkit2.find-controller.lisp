@@ -12,6 +12,13 @@
 
 (in-package :webkit2)
 
+(defclass webkit-find-controller-class (g-object)
+  ()
+  (:metaclass gobject-class)
+  (:g-type-name . "WebKitFindController"))
+
+(export 'webkit-find-controller-class)
+
 (defctype webkit-find-controller :pointer)
 (export 'webkit-find-controller)
 
