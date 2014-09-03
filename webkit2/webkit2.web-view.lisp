@@ -22,6 +22,12 @@
 (defctype webkit-web-view :pointer)
 (export 'webkit-web-view)
 
+(define-g-enum "WebKitLoadEvent" webkit-load-event ()
+  :webkit-load-started
+  :webkit-load-redirected
+  :webkit-load-committed
+  :webkit-load-finished)
+
 (defcfun "webkit_web_view_new" (g-object webkit-web-view-class))
 (export 'webkit-web-view-new)
 
