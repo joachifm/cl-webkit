@@ -12,6 +12,13 @@
 
 (in-package :webkit2)
 
+(defclass webkit-web-view-class (gtk-widget)
+  ()
+  (:metaclass gobject-class)
+  (:g-type-name . "WebKitWebView"))
+
+(export 'webkit-web-view-class)
+
 (defctype webkit-web-view :pointer)
 (export 'webkit-web-view)
 

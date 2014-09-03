@@ -12,6 +12,13 @@
 
 (in-package :webkit2)
 
+(defclass webkit-web-context-class (g-object)
+  ()
+  (:metaclass gobject-class)
+  (:g-type-name . "WebKitWebContext"))
+
+(export 'webkit-web-context-class)
+
 (defctype webkit-web-context :pointer)
 (export 'webkit-web-context)
 

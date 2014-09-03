@@ -30,4 +30,4 @@
                (:file "webkit2.download")
                (:file "webkit2.web-context" :depends-on ("webkit2.download"))
                (:file "webkit2.web-view" :depends-on ("webkit2.web-context")))
-  :depends-on (:cffi))
+  :depends-on (:cffi :cl-cffi-gtk))

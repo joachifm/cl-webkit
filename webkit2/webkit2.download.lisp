@@ -12,5 +12,12 @@
 
 (in-package :webkit2)
 
+(defclass webkit-download-class (g-object)
+  ()
+  (:metaclass gobject-class)
+  (:g-type-name . "WebKitDownload"))
+
+(export 'webkit-download-class)
+
 (defctype webkit-download :pointer)
 (export 'webkit-download)

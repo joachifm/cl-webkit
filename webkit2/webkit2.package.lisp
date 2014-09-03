@@ -14,4 +14,4 @@
 
 (defpackage :cl-webkit2
   (:nicknames :webkit2 :webkit)
-  (:use :cl :cffi))
+  (:use :cl :cffi :gtk :gobject))
