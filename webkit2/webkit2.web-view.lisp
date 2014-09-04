@@ -46,6 +46,23 @@
   (base-uri :string))
 (export 'webkit-web-view-load-html)
 
+(defcfun "webkit_web_view_load_alternate_html" :void
+  (web-view (g-object webkit-web-view-class))
+  (content :string)
+  (content-uri :string)
+  (base-uri :string)) ; XXX: can be NULL
+(export 'webkit-web-view-load-alternate-html)
+
+(defcfun "webkit_web_view_load_plain_text" :void
+  (web-view (g-object webkit-web-view-class))
+  (plain-text :string))
+(export 'webkit-web-view-load-plain-text)
+
+(defcfun "webkit_web_view_load_request" :void
+  (web-view (g-object webkit-web-view-class))
+  (request (g-object webkit-uri-request-class)))
+(export 'webkit-web-view-load-request)
+
 (defcfun "webkit_web_view_go_back" :void
   (web-view (g-object webkit-web-view-class)))
 (export 'webkit-web-view-go-back)
