@@ -58,6 +58,11 @@
   (plain-text :string))
 (export 'webkit-web-view-load-plain-text)
 
+(defcfun "webkit_web_view_load_request" :void
+  (web-view (g-object webkit-web-view-class))
+  (request (g-object webkit-uri-request-class)))
+(export 'webkit-web-view-load-request)
+
 (defcfun "webkit_web_view_go_back" :void
   (web-view (g-object webkit-web-view-class)))
 (export 'webkit-web-view-go-back)
