@@ -3,6 +3,12 @@
 ## About
 cl-webkit is a FFI binding to [WebKitGTK+], currently targeting
 WebKit version 2.
+The WebKitGTK+ library lets you easily integrate web browsing
+capabilities in your application, leveraging the full power of
+the WebKit engine.
+With WebKit version 2 you also get process separation out-of-the box.
+Please refer to the upstream documentation for additional details
+about the WebKitGTK+ library.
 
 [WebKitGTK+]: http://webkitgtk.org/
 
