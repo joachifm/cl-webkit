@@ -13,12 +13,32 @@
 (in-package :webkit2)
 
 (defclass webkit-web-view-class (gtk-widget)
-  ()
+  ((estimated-load-progress
+    :allocation :gobject-property
+    :g-property-name "estimated-load-progress"
+    :g-property-type :double)
+  (is-loading
+   :allocation :gobject-property
+   :g-property-name "is-loading"
+   :g-property-type :bool)
+  (title
+   :allocation :gobject-property
+   :g-property-name "title"
+   :g-property-type :string)
+  (uri
+   :allocation :gobject-property
+   :g-property-name "uri"
+   :g-property-type :string))
   (:metaclass gobject-class)
   (:g-type-name . "WebKitWebView")
   (:g-type-initializer . "webkit_web_view_get_type"))
 
 (export 'webkit-web-view-class)
+
+(export 'estimated-load-progress)
+(export 'is-loading)
+(export 'title)
+(export 'uri)
 
 (defctype webkit-web-view :pointer)
 (export 'webkit-web-view)
