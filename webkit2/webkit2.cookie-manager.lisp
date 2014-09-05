@@ -31,10 +31,6 @@
   :webkit-cookie-policy-accept-no-third-party)
 (export 'webkit-cookie-accept-policy)
 
-(defcfun "webkit_cookie_manager_get_type" :void
-  (webkit-cookie-manager (g-object webkit-cookie-manager)))
-(export 'webkit-cookie-manager-get-type)
-
 (defcfun "webkit_cookie_manager_set_persistent_storage" :void
   (webkit-cookie-manager (g-object webkit-cookie-manager))
   (filename :string)
