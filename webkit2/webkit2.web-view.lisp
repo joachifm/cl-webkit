@@ -12,36 +12,50 @@
 
 (in-package :webkit2)
 
-(defclass webkit-web-view-class (gtk-widget)
+(defclass webkit-web-view (gtk-widget)
   ((estimated-load-progress
     :allocation :gobject-property
     :g-property-name "estimated-load-progress"
-    :g-property-type :double)
-  (is-loading
+    :g-property-type :double
+    :reader web-view-estimated-load-progress)
+  (is-loading-p
    :allocation :gobject-property
    :g-property-name "is-loading"
-   :g-property-type :bool)
+   :g-property-type :bool
+   :reader web-view-is-loading-p)
   (title
    :allocation :gobject-property
    :g-property-name "title"
-   :g-property-type :string)
+   :g-property-type :string
+   :reader web-view-title)
   (uri
    :allocation :gobject-property
    :g-property-name "uri"
-   :g-property-type :string))
+   :g-property-type :string
+   :reader web-view-uri)
+  (web-context
+   :allocation :gobject-property
+   :g-property-name "web-context"
+   :g-property-type webkit-web-context
+   :accessor web-view-web-context
+   :initarg :web-context)
+  (zoom-level
+   :allocation :gobject-property
+   :g-property-name "zoom-level"
+   :g-property-type :double
+   :accessor web-view-zoom-level))
   (:metaclass gobject-class)
   (:g-type-name . "WebKitWebView")
   (:g-type-initializer . "webkit_web_view_get_type"))
 
-(export 'webkit-web-view-class)
-
-(export 'estimated-load-progress)
-(export 'is-loading)
-(export 'title)
-(export 'uri)
-
-(defctype webkit-web-view :pointer)
 (export 'webkit-web-view)
+
+(export 'web-view-estimated-load-progress)
+(export 'web-view-is-loading-p)
+(export 'web-view-title)
+(export 'web-view-uri)
+(export 'web-view-web-context)
+(export 'web-view-zoom-level)
 
 (define-g-enum "WebKitLoadEvent" webkit-load-event ()
   :webkit-load-started
@@ -49,72 +63,65 @@
   :webkit-load-committed
   :webkit-load-finished)
 
-(defcfun "webkit_web_view_new" (g-object webkit-web-view-class))
-(export 'webkit-web-view-new)
-
-(defcfun "webkit_web_view_new_with_context" (g-object webkit-web-view-class)
-  (webkit-web-context (g-object webkit-web-context-class)))
-(export 'webkit-web-view-new-with-context)
-
 (defcfun "webkit_web_view_load_uri" :void
-  (web-view (g-object webkit-web-view-class))
+  (web-view (g-object webkit-web-view))
   (uri :string))
 (export 'webkit-web-view-load-uri)
 
 (defcfun "webkit_web_view_load_html" :void
-  (web-view (g-object webkit-web-view-class))
+  (web-view (g-object webkit-web-view))
   (content :string)
   (base-uri :string))
 (export 'webkit-web-view-load-html)
 
 (defcfun "webkit_web_view_load_alternate_html" :void
-  (web-view (g-object webkit-web-view-class))
+  (web-view (g-object webkit-web-view))
   (content :string)
   (content-uri :string)
   (base-uri :string)) ; XXX: can be NULL
 (export 'webkit-web-view-load-alternate-html)
 
 (defcfun "webkit_web_view_load_plain_text" :void
-  (web-view (g-object webkit-web-view-class))
+  (web-view (g-object webkit-web-view))
   (plain-text :string))
 (export 'webkit-web-view-load-plain-text)
 
 (defcfun "webkit_web_view_load_request" :void
-  (web-view (g-object webkit-web-view-class))
-  (request (g-object webkit-uri-request-class)))
+  (web-view (g-object webkit-web-view))
+  (request (g-object webkit-uri-request)))
 (export 'webkit-web-view-load-request)
 
 (defcfun "webkit_web_view_go_back" :void
-  (web-view (g-object webkit-web-view-class)))
+  (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-go-back)
 
 (defcfun "webkit_web_view_go_forward" :void
-  (web-view (g-object webkit-web-view-class)))
+  (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-go-forward)
 
 (defcfun "webkit_web_view_reload" :void
-  (web-view (g-object webkit-web-view-class)))
+  (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-reload)
 
 (defcfun "webkit_web_view_set_zoom_level" :void
-  (web-view (g-object webkit-web-view-class))
+  (web-view (g-object webkit-web-view))
   (zoom-level :double))
 (export 'webkit-web-view-set-zoom-level)
 
 (defcfun "webkit_web_view_get_zoom_level" :double
-  (web-view (g-object webkit-web-view-class)))
+  (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-get-zoom-level)
 
-(defcfun "webkit_web_view_get_find_controller" (g-object webkit-find-controller-class)
-  (web-view (g-object webkit-web-view-class)))
+(defcfun "webkit_web_view_get_find_controller" (g-object webkit-find-controller)
+  (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-get-find-controller)
 
 (defcfun "webkit_web_view_stop_loading" :void
-  (web-view (g-object webkit-web-view-class)))
+  (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-stop-loading)
 
 (defcfun "webkit_web_view_run_javascript" :void
-  (web-view (g-object webkit-web-view-class))
+  (web-view (g-object webkit-web-view))
   (script :string)
   (cancellable :pointer)
   (async-ready-callback :pointer)
