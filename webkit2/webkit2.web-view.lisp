@@ -15,7 +15,8 @@
 (defclass webkit-web-view-class (gtk-widget)
   ()
   (:metaclass gobject-class)
-  (:g-type-name . "WebKitWebView"))
+  (:g-type-name . "WebKitWebView")
+  (:g-type-initializer . "webkit_web_view_get_type"))
 
 (export 'webkit-web-view-class)
 

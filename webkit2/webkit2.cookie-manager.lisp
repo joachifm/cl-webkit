@@ -15,7 +15,8 @@
 (defclass webkit-cookie-manager-class (g-object)
   ()
   (:metaclass gobject-class)
-  (:g-type-name . "WebKitCookieManager"))
+  (:g-type-name . "WebKitCookieManager")
+  (:g-type-initializer . "webkit_cookie_manager_get_type"))
 
 (export 'webkit-cookie-manager-class)
 

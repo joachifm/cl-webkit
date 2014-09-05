@@ -15,7 +15,8 @@
 (defclass webkit-find-controller-class (g-object)
   ()
   (:metaclass gobject-class)
-  (:g-type-name . "WebKitFindController"))
+  (:g-type-name . "WebKitFindController")
+  (:g-type-initializer . "webkit_find_controller_get_type"))
 
 (export 'webkit-find-controller-class)
 

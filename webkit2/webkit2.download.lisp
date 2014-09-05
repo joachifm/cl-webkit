@@ -15,7 +15,8 @@
 (defclass webkit-download-class (g-object)
   ()
   (:metaclass gobject-class)
-  (:g-type-name . "WebKitDownload"))
+  (:g-type-name . "WebKitDownload")
+  (:g-type-initializer . "webkit_download_get_type"))
 
 (export 'webkit-download-class)
 

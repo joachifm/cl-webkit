@@ -15,7 +15,8 @@
 (defclass webkit-uri-request-class (g-object)
   ()
   (:metaclass gobject-class)
-  (:g-type-name . "WebKitURIRequest"))
+  (:g-type-name . "WebKitURIRequest")
+  (:g-type-initializer . "webkit_uri_request_get_type"))
 
 (export 'webkit-uri-request-class)
 

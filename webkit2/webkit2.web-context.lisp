@@ -15,7 +15,8 @@
 (defclass webkit-web-context-class (g-object)
   ()
   (:metaclass gobject-class)
-  (:g-type-name . "WebKitWebContext"))
+  (:g-type-name . "WebKitWebContext")
+  (:g-type-initializer . "webkit_web_context_get_type"))
 
 (export 'webkit-web-context-class)
 
