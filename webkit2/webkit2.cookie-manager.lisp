@@ -25,41 +25,11 @@
   :webkit-cookie-persistent-storage-sqlite)
 (export 'webkit-cookie-persistent-storage)
 
-(defconstant +webkit-cookie-persistent-storage-text+
-  (foreign-enum-value
-   'webkit-cookie-persistent-storage :webkit-cookie-persistent-storage-text))
-
-(export '+webkit-cookie-persistent-storage-text+)
-
-(defconstant +webkit-cookie-persistent-storage-sqlite+
-  (foreign-enum-value
-   'webkit-cookie-persistent-storage :webkit-cookie-persistent-storage-sqlite))
-
-(export '+webkit-cookie-persistent-storage-sqlite+)
-
 (defcenum webkit-cookie-accept-policy
   :webkit-cookie-policy-accept-always
   :webkit-cookie-policy-accept-never
   :webkit-cookie-policy-accept-no-third-party)
 (export 'webkit-cookie-accept-policy)
-
-(defconstant +webkit-cookie-policy-accept-always+
-  (foreign-enum-value
-   'webkit-cookie-accept-policy :webkit-cookie-policy-accept-always))
-
-(export '+webkit-cookie-policy-accept-always+)
-
-(defconstant +webkit-cookie-policy-accept-never+
-  (foreign-enum-value
-   'webkit-cookie-accept-policy :webkit-cookie-policy-accept-never))
-
-(export '+webkit-cookie-policy-accept-never+)
-
-(defconstant +webkit-cookie-policy-accept-no-third-party+
-  (foreign-enum-value
-   'webkit-cookie-accept-policy :webkit-cookie-policy-accept-no-third-party))
-
-(export '+webkit-cookie-policy-accept-no-third-party+)
 
 (defcfun "webkit_cookie_manager_get_type" :void
   (webkit-cookie-manager (g-object webkit-cookie-manager)))
