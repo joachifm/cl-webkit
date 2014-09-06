@@ -23,7 +23,7 @@
 Loads and renders a single web page."
   (gtk:within-main-loop
     (let ((win (make-instance 'gtk:gtk-window))
-          (view (webkit2:webkit-web-view-new)))
+          (view (make-instance 'webkit2:webkit-web-view)))
       (gobject:g-signal-connect win "destroy"
                                 #'(lambda (widget)
                                     (declare (ignore widget))
