@@ -22,7 +22,12 @@
     :allocation :gobject-property
     :g-property-name "estimated-progress"
     :g-property-type :double
-    :reader download-estimated-progress))
+    :reader download-estimated-progress)
+   (response
+    :allocation :gobject-property
+    :g-property-name "response"
+    :g-property-type webkit-uri-response
+    :reader download-response))
   (:metaclass gobject-class)
   (:g-type-name . "WebKitDownload")
   (:g-type-initializer . "webkit_download_get_type"))
@@ -30,3 +35,4 @@
 (export 'webkit-download)
 (export 'download-destination)
 (export 'download-estimated-progress)
+(export 'download-response)
