@@ -103,6 +103,15 @@
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-reload)
 
+(defcfun "webkit_web_view_set_settings" :void
+  (web-view (g-object webkit-web-view))
+  (settings (g-object webkit-settings)))
+(export 'webkit-web-view-set-settings)
+
+(defcfun "webkit_web_view_get_settings" (g-object webkit-settings)
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-get-settings)
+
 (defcfun "webkit_web_view_set_zoom_level" :void
   (web-view (g-object webkit-web-view))
   (zoom-level :double))
