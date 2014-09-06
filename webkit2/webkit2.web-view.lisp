@@ -112,15 +112,6 @@
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-get-settings)
 
-(defcfun "webkit_web_view_set_zoom_level" :void
-  (web-view (g-object webkit-web-view))
-  (zoom-level :double))
-(export 'webkit-web-view-set-zoom-level)
-
-(defcfun "webkit_web_view_get_zoom_level" :double
-  (web-view (g-object webkit-web-view)))
-(export 'webkit-web-view-get-zoom-level)
-
 (defcfun "webkit_web_view_get_find_controller" (g-object webkit-find-controller)
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-get-find-controller)
