@@ -33,6 +33,11 @@
    :g-property-name "uri"
    :g-property-type :string
    :reader web-view-uri)
+  (view-mode
+   :allocation :gobject-property
+   :g-property-name "view-mode"
+   :g-property-type webkit-view-mode
+   :accessor web-view-view-mode)
   (web-context
    :allocation :gobject-property
    :g-property-name "web-context"
@@ -54,6 +59,7 @@
 (export 'web-view-is-loading-p)
 (export 'web-view-title)
 (export 'web-view-uri)
+(export 'web-view-view-mode)
 (export 'web-view-web-context)
 (export 'web-view-zoom-level)
 
