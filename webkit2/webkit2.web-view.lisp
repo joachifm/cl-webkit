@@ -127,3 +127,8 @@
   (async-ready-callback :pointer)
   (user-data :pointer))
 (export 'webkit-web-view-run-javascript)
+
+(defcfun "webkit_web_view_download_uri" (g-object webkit-download)
+  (web-view (g-object webkit-web-view))
+  (uri :string))
+(export 'webkit-web-view-download-uri)
