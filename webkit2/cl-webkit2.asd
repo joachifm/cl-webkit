@@ -30,6 +30,7 @@
                (:file "webkit2.download")
                (:file "webkit2.settings")
                (:file "webkit2.uri-request")
+               (:file "webkit2.web-resource" :depends-on ("webkit2.uri-response"))
                (:file "webkit2.web-context" :depends-on ("webkit2.download"))
                (:file "webkit2.web-view" :depends-on ("webkit2.settings"
                                                       "webkit2.uri-request"
