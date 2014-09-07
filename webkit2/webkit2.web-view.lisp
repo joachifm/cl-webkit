@@ -69,9 +69,13 @@
   :webkit-load-committed
   :webkit-load-finished)
 
+(export 'webkit-load-event)
+
 (define-g-enum "WebKitViewMode" webkit-view-mode ()
   :webkit-view-mode-web
   :webkit-view-mode-source)
+
+(export 'webkit-view-mode)
 
 (defcfun "webkit_web_view_load_uri" :void
   (web-view (g-object webkit-web-view))
