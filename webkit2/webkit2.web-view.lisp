@@ -142,3 +142,7 @@
   (web-view (g-object webkit-web-view))
   (uri :string))
 (export 'webkit-web-view-download-uri)
+
+(defcfun "webkit_web_view_get_main_resource" (g-object webkit-web-resource)
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-get-main-resource)
