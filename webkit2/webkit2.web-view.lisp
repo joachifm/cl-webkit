@@ -127,3 +127,7 @@
   (async-ready-callback :pointer)
   (user-data :pointer))
 (export 'webkit-web-view-run-javascript)
+
+(defcfun "webkit_web_view_get_main_resource" (g-object webkit-web-resource)
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-get-main-resource)
