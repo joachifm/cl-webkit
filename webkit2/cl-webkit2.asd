@@ -10,12 +10,7 @@
 
 ;;; Code:
 
-(in-package :cl-user)
-
-(defpackage :cl-webkit2-asd
-  (:use :cl :asdf))
-
-(in-package :cl-webkit2-asd)
+(in-package :asdf-user)
 
 (defsystem :cl-webkit2
   :description "An FFI binding to WebKit2GTK+"
