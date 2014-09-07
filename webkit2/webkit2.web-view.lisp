@@ -33,6 +33,11 @@
    :g-property-name "uri"
    :g-property-type :string
    :reader web-view-uri)
+  (view-mode
+   :allocation :gobject-property
+   :g-property-name "view-mode"
+   :g-property-type webkit-view-mode
+   :accessor web-view-view-mode)
   (web-context
    :allocation :gobject-property
    :g-property-name "web-context"
@@ -54,6 +59,7 @@
 (export 'web-view-is-loading-p)
 (export 'web-view-title)
 (export 'web-view-uri)
+(export 'web-view-view-mode)
 (export 'web-view-web-context)
 (export 'web-view-zoom-level)
 
@@ -62,6 +68,10 @@
   :webkit-load-redirected
   :webkit-load-committed
   :webkit-load-finished)
+
+(define-g-enum "WebKitViewMode" webkit-view-mode ()
+  :webkit-view-mode-web
+  :webkit-view-mode-source)
 
 (defcfun "webkit_web_view_load_uri" :void
   (web-view (g-object webkit-web-view))
