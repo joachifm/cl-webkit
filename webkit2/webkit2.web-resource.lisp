@@ -12,21 +12,10 @@
 
 (in-package :webkit2)
 
-(defclass webkit-web-resource (g-object)
-  ((response
-    :allocation :gobject-property
-    :g-property-name "response"
-    :g-property-type webkit-uri-response
-    :reader web-resource-response)
-   (uri
-    :allocation :gobject-property
-    :g-property-name "uri"
-    :g-property-type :string
-    :reader web-resource-uri))
-  (:metaclass gobject-class)
-  (:g-type-name . "WebKitWebResource")
-  (:g-type-initializer . "webkit_web_resource_get_type"))
-
-(export 'webkit-web-resource)
-(export 'web-resource-response)
-(export 'web-resource-uri)
+(define-g-object-class "WebKitWebResource" webkit-web-resource
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "webkit_web_resource_get_type")
+  ((response web-resource-response "response" "WebKitURIResponse" t nil)
+   (uri web-resource-uri "uri" "gchararray" t nil)))

@@ -12,41 +12,13 @@
 
 (in-package :webkit2)
 
-(defclass webkit-uri-response (g-object)
-  (
-   (content-length
-    :allocation :gobject-property
-    :g-property-name "content-length"
-    :g-property-type :int
-    :reader uri-response-content-length)
-   (mime-type
-    :allocation :gobject-property
-    :g-property-name "mime-type"
-    :g-property-type :string
-    :reader uri-response-mime-type)
-   (status-code
-    :allocation :gobject-property
-    :g-property-name "status-code"
-    :g-property-type :int
-    :reader uri-response-status-code)
-   (suggested-filename
-    :allocation :gobject-property
-    :g-property-name "suggested-filename"
-    :g-property-type :string
-    :reader uri-response-suggested-filename)
-   (uri
-    :allocation :gobject-property
-    :g-property-name "uri"
-    :g-property-type :string
-    :reader uri-response-uri)
-   )
-  (:metaclass gobject-class)
-  (:g-type-name . "WebKitURIResponse")
-  (:g-type-initializer . "webkit_uri_response_get_type"))
-
-(export 'webkit-uri-response)
-(export 'uri-response-content-length)
-(export 'uri-response-mime-type)
-(export 'uri-response-status-code)
-(export 'uri-response-suggested-filename)
-(export 'uri-response-uri)
+(define-g-object-class "WebKitURIResponse" webkit-uri-response
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "webkit_uri_response_get_type")
+  ((content-length uri-response-content-length "content-length" "guint" t nil)
+   (mime-type uri-response-mime-type "mime-type" "gchararray" t nil)
+   (status-code uri-response-status-code "status-code" "guint" t nil)
+   (suggested-filename uri-response-suggested-filename "suggested-filename" "gchararray" t nil)
+   (uri uri-response-uri "uri" "gchararray" t nil)))

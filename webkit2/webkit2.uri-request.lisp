@@ -12,16 +12,9 @@
 
 (in-package :webkit2)
 
-(defclass webkit-uri-request (g-object)
-  ((uri
-    :allocation :gobject-property
-    :g-property-name "uri"
-    :g-property-type :string
-    :accessor uri-request-uri
-    :initarg :uri))
-  (:metaclass gobject-class)
-  (:g-type-name . "WebKitURIRequest")
-  (:g-type-initializer . "webkit_uri_request_get_type"))
-
-(export 'webkit-uri-request)
-(export 'uri-request-uri)
+(define-g-object-class "WebKitURIRequest" webkit-uri-request
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "webkit_uri_request_get_type")
+  ((uri uri-request-uri "uri" "gchararray" t t)))

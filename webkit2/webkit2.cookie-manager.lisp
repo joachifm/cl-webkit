@@ -12,24 +12,21 @@
 
 (in-package :webkit2)
 
-(defclass webkit-cookie-manager (g-object)
-  ()
-  (:metaclass gobject-class)
-  (:g-type-name . "WebKitCookieManager")
-  (:g-type-initializer . "webkit_cookie_manager_get_type"))
+(define-g-object-class "WebKitCookieManager" webkit-cookie-manager
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "webkit_cookie_manager_get_type")
+  ())
 
-(export 'webkit-cookie-manager)
-
-(defcenum webkit-cookie-persistent-storage
+(define-g-enum "WebKitCookiePersistentStorage" webkit-cookie-persistent-storage ()
   :webkit-cookie-persistent-storage-text
   :webkit-cookie-persistent-storage-sqlite)
-(export 'webkit-cookie-persistent-storage)
 
-(defcenum webkit-cookie-accept-policy
+(define-g-enum "WebKitCookieAcceptPolicy" webkit-cookie-accept-policy ()
   :webkit-cookie-policy-accept-always
   :webkit-cookie-policy-accept-never
   :webkit-cookie-policy-accept-no-third-party)
-(export 'webkit-cookie-accept-policy)
 
 (defcfun "webkit_cookie_manager_set_persistent_storage" :void
   (webkit-cookie-manager (g-object webkit-cookie-manager))

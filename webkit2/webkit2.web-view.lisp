@@ -12,56 +12,21 @@
 
 (in-package :webkit2)
 
-(defclass webkit-web-view (gtk-widget)
-  ((estimated-load-progress
-    :allocation :gobject-property
-    :g-property-name "estimated-load-progress"
-    :g-property-type :double
-    :reader web-view-estimated-load-progress)
-  (is-loading-p
-   :allocation :gobject-property
-   :g-property-name "is-loading"
-   :g-property-type :bool
-   :reader web-view-is-loading-p)
-  (title
-   :allocation :gobject-property
-   :g-property-name "title"
-   :g-property-type :string
-   :reader web-view-title)
-  (uri
-   :allocation :gobject-property
-   :g-property-name "uri"
-   :g-property-type :string
-   :reader web-view-uri)
-  (view-mode
-   :allocation :gobject-property
-   :g-property-name "view-mode"
-   :g-property-type webkit-view-mode
-   :accessor web-view-view-mode)
-  (web-context
-   :allocation :gobject-property
-   :g-property-name "web-context"
-   :g-property-type webkit-web-context
-   :accessor web-view-web-context
-   :initarg :web-context)
-  (zoom-level
-   :allocation :gobject-property
-   :g-property-name "zoom-level"
-   :g-property-type :double
-   :accessor web-view-zoom-level))
-  (:metaclass gobject-class)
-  (:g-type-name . "WebKitWebView")
-  (:g-type-initializer . "webkit_web_view_get_type"))
-
-(export 'webkit-web-view)
-
-(export 'web-view-estimated-load-progress)
-(export 'web-view-is-loading-p)
-(export 'web-view-title)
-(export 'web-view-uri)
-(export 'web-view-view-mode)
-(export 'web-view-web-context)
-(export 'web-view-zoom-level)
+(define-g-object-class "WebKitWebView" webkit-web-view
+  (:superclass gtk-widget
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "webkit_web_view_get_type")
+  ;; (name accessor-name gname type readable writable)
+  ;; cf. `parse-gobject-property' in cl-cffi-gtk/gobject/gobject.generating.lisp
+  ((estimated-load-progress web-view-estimated-load-progress
+                            "estimated-load-progress" "gdouble" t nil)
+   (is-loading-p web-view-is-loading-p "is-loading" "gboolean" t nil)
+   (title web-view-title "title" "gchararray" t nil)
+   (uri web-view-uri "uri" "gchararray" t nil)
+   (view-mode web-view-view-mode "view-mode" "WebKitViewMode" t t)
+   (web-context web-view-web-context "web-context" "WebKitWebContext" t t)
+   (zoom-level web-view-zoom-level "zoom-level" "gdouble" t t)))
 
 (define-g-enum "WebKitLoadEvent" webkit-load-event ()
   :webkit-load-started
@@ -69,13 +34,9 @@
   :webkit-load-committed
   :webkit-load-finished)
 
-(export 'webkit-load-event)
-
 (define-g-enum "WebKitViewMode" webkit-view-mode ()
   :webkit-view-mode-web
   :webkit-view-mode-source)
-
-(export 'webkit-view-mode)
 
 (defcfun "webkit_web_view_load_uri" :void
   (web-view (g-object webkit-web-view))

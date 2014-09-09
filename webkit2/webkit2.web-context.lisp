@@ -12,20 +12,17 @@
 
 (in-package :webkit2)
 
-(defclass webkit-web-context (g-object)
-  ()
-  (:metaclass gobject-class)
-  (:g-type-name . "WebKitWebContext")
-  (:g-type-initializer . "webkit_web_context_get_type"))
+(define-g-object-class "WebKitWebContext" webkit-web-context
+  (:superclass g-object
+   :interfaces nil
+   :export t
+   :type-initializer "webkit_web_context_get_type")
+  ())
 
-(export 'webkit-web-context)
-
-(defcenum webkit-cache-model
+(define-g-enum "WebKitCacheModel" webkit-cache-model ()
   :webkit-cache-model-document-viewer
   :webkit-cache-model-web-browser
   :webkit-cache-model-document-browser)
-
-(export 'webkit-cache-model)
 
 (defcfun "webkit_web_context_get_default" (g-object webkit-web-context))
 (export 'webkit-web-context-get-default)
@@ -117,10 +114,9 @@
   (languages :string))
 (export 'webkit-web-context-set-preferred-languages)
 
-(defcenum webkit-tls-errors-policy
+(define-g-enum "WebKitTLSErrorsPolicy" webkit-tls-errors-policy ()
   :webkit-tls-errors-policy-ignore
   :webkit-tls-errors-policy-fail)
-(export 'webkit-tls-errors-policy)
 
 (defcfun "webkit_web_context_set_tls_errors_policy" :void
   (webkit-web-context (g-object webkit-web-context))
@@ -157,10 +153,9 @@
   (host :string))
 (export 'webkit-web-context-allow-tls-certificate-for-host)
 
-(defcenum webkit-process-model
+(define-g-enum "WebKitProcessModel" webkit-process-model ()
   :webkit-process-model-shared-secondary-process
   :webkit-process-model-multiple-secondary-processes)
-(export 'webkit-process-model)
 
 (defcfun "webkit_web_context_set_process_model" :void
   (webkit-web-context (g-object webkit-web-context))

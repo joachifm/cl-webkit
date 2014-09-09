@@ -12,27 +12,11 @@
 
 (in-package :webkit2)
 
-(defclass webkit-download (g-object)
-  ((destination
-    :allocation :gobject-property
-    :g-property-name "destination"
-    :g-property-type :string
-    :reader download-destination)
-   (estimated-progress
-    :allocation :gobject-property
-    :g-property-name "estimated-progress"
-    :g-property-type :double
-    :reader download-estimated-progress)
-   (response
-    :allocation :gobject-property
-    :g-property-name "response"
-    :g-property-type webkit-uri-response
-    :reader download-response))
-  (:metaclass gobject-class)
-  (:g-type-name . "WebKitDownload")
-  (:g-type-initializer . "webkit_download_get_type"))
-
-(export 'webkit-download)
-(export 'download-destination)
-(export 'download-estimated-progress)
-(export 'download-response)
+(define-g-object-class "WebKitDownload" webkit-download
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "webkit_download_get_type")
+  ((destination download-destination "destination" "gchararray" t nil)
+   (estimated-progress download-estimated-progress "estimated-progress" "gdouble" t nil)
+   (response download-response "response" "WebKitURIResponse" t nil)))
