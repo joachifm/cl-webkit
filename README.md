@@ -24,8 +24,10 @@ by demand.
 - A [CFFI] compatible Common Lisp implementation.
   The package is developed using SBCL but should work on any
   implementation that supports CFFI.
+- A recent checkout of [cl-cffi-gtk]
 
 [CFFI]: http://common-lisp.net/project/cffi
+[cl-cffi-gtk]: https://github.com/crategus/cl-cffi-gtk.git
 
 ## Installation
 Assuming you have [Quicklisp] installed (recommended), do
