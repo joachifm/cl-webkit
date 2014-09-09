@@ -12,21 +12,17 @@
 
 (in-package :webkit2)
 
-(define-g-object-class "WebKitWebView" webkit-web-view
+(define-g-object-class* "WebKitWebView" webkit-web-view
   (:superclass gtk-widget
-   :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "webkit_web_view_get_type")
-  ;; (name accessor-name gname type readable writable)
-  ;; cf. `parse-gobject-property' in cl-cffi-gtk/gobject/gobject.generating.lisp
-  ((estimated-load-progress web-view-estimated-load-progress
-                            "estimated-load-progress" "gdouble" t nil)
-   (is-loading-p web-view-is-loading-p "is-loading" "gboolean" t nil)
-   (title web-view-title "title" "gchararray" t nil)
-   (uri web-view-uri "uri" "gchararray" t nil)
-   (view-mode web-view-view-mode "view-mode" "WebKitViewMode" t t)
-   (web-context web-view-web-context "web-context" "WebKitWebContext" t t)
-   (zoom-level web-view-zoom-level "zoom-level" "gdouble" t t)))
+  (("estimated-load-progress" "gdouble")
+   ("is-loading" "gboolean")
+   ("title" "gchararray")
+   ("uri" "gchararray")
+   ("view-mode" "WebKitViewMode" t t)
+   ("web-context" "WebKitWebContext" t t)
+   ("zoom-level" "gdouble" t t)))
 
 (define-g-enum "WebKitLoadEvent" webkit-load-event ()
   :webkit-load-started

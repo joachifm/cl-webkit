@@ -12,14 +12,14 @@
 
 (in-package :webkit2)
 
-(define-g-object-class "WebKitFindController" webkit-find-controller
+(define-g-object-class* "WebKitFindController" webkit-find-controller
   (:superclass g-object
    :export t
    :interfaces nil
    :type-initializer "webkit_find_controller_get_type")
-  ((max-match-count find-controller-max-match-count "max-match-count" "guint" t nil)
-   (text find-controller-text "text" "gchararray" t nil)
-   (web-view find-controller-web-view "web-view" "WebKitWebView" t t)))
+  (("max-match-count" "guint")
+   ("text" "gchararray")
+   ("web-view" "WebKitWebView" t t)))
 
 (defcfun "webkit_find_controller_search" :void
   (find-controller (g-object webkit-find-controller))

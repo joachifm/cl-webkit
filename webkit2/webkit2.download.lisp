@@ -12,11 +12,11 @@
 
 (in-package :webkit2)
 
-(define-g-object-class "WebKitDownload" webkit-download
+(define-g-object-class* "WebKitDownload" webkit-download
   (:superclass g-object
    :export t
    :interfaces nil
    :type-initializer "webkit_download_get_type")
-  ((destination download-destination "destination" "gchararray" t nil)
-   (estimated-progress download-estimated-progress "estimated-progress" "gdouble" t nil)
-   (response download-response "response" "WebKitURIResponse" t nil)))
+  (("destination" "gchararray")
+   ("estimated-progress" "gdouble")
+   ("response" "WebKitURIResponse")))

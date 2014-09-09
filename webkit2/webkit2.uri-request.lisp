@@ -12,9 +12,9 @@
 
 (in-package :webkit2)
 
-(define-g-object-class "WebKitURIRequest" webkit-uri-request
+(define-g-object-class* "WebKitURIRequest" webkit-uri-request
   (:superclass g-object
    :export t
    :interfaces nil
    :type-initializer "webkit_uri_request_get_type")
-  ((uri uri-request-uri "uri" "gchararray" t t)))
+  (("uri" "gchararray" t t)))

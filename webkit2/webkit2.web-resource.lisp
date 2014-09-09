@@ -12,10 +12,10 @@
 
 (in-package :webkit2)
 
-(define-g-object-class "WebKitWebResource" webkit-web-resource
+(define-g-object-class* "WebKitWebResource" webkit-web-resource
   (:superclass g-object
    :export t
    :interfaces nil
    :type-initializer "webkit_web_resource_get_type")
-  ((response web-resource-response "response" "WebKitURIResponse" t nil)
-   (uri web-resource-uri "uri" "gchararray" t nil)))
+  (("response" "WebKitURIResponse")
+   ("uri" "gchararray")))

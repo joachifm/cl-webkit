@@ -12,13 +12,13 @@
 
 (in-package :webkit2)
 
-(define-g-object-class "WebKitURIResponse" webkit-uri-response
+(define-g-object-class* "WebKitURIResponse" webkit-uri-response
   (:superclass g-object
    :export t
    :interfaces nil
    :type-initializer "webkit_uri_response_get_type")
-  ((content-length uri-response-content-length "content-length" "guint" t nil)
-   (mime-type uri-response-mime-type "mime-type" "gchararray" t nil)
-   (status-code uri-response-status-code "status-code" "guint" t nil)
-   (suggested-filename uri-response-suggested-filename "suggested-filename" "gchararray" t nil)
-   (uri uri-response-uri "uri" "gchararray" t nil)))
+  (("content-length" "guint")
+   ("mime-type" "gchararray")
+   ("status-code" "guint")
+   ("suggested-filename" "gchararray")
+   ("uri" "gchararray")))
