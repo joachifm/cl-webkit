@@ -12,6 +12,9 @@
 
 (in-package :webkit2)
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (pushnew :webkit2 *features*))
+
 (define-foreign-library libwebkit
   (:unix (:or "libwebkit2gtk-3.0.so")))
 
