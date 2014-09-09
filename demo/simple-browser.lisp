@@ -31,3 +31,7 @@ Loads and renders a single web page."
       (gtk:gtk-container-add win view)
       (webkit2:webkit-web-view-load-uri view "http://www.example.com")
       (gtk:gtk-widget-show-all win))))
+
+(defun do-simple-browser-main ()
+  (simple-browser-main)
+  (gtk:join-gtk-main))
