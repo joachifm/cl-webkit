@@ -12,5 +12,7 @@
 
 (in-package :webkit2)
 
-(define-webkit-class "WebKitURIRequest" ()
+(define-webkit-class "WebKitURIRequest"
+    ;; XXX: until medial->delim can handle consequtive uppers
+    (:type-initializer "webkit_uri_request_get_type")
   (("uri" "gchararray" t t)))

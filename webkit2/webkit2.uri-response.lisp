@@ -12,7 +12,9 @@
 
 (in-package :webkit2)
 
-(define-webkit-class "WebKitURIResponse" ()
+(define-webkit-class "WebKitURIResponse"
+    ;; XXX: until medial->delim can handle consequtive uppers
+    (:type-initializer "webkit_uri_response_get_type")
   (("content-length" "guint")
    ("mime-type" "gchararray")
    ("status-code" "guint")

@@ -88,11 +88,11 @@ GNAME is a string like WebKitWebView."
 (defmacro define-webkit-class (g-type-name
                                (&key (superclass 'g-object)
                                      (export t)
-                                     (interfaces nil))
+                                     (interfaces nil)
+                                     (type-initializer (webkit-gname-string->type-initializer g-type-name)))
                                   (&rest properties))
   "A variant of DEFINE-G-OBJECT-CLASS* tuned for WebKit types."
-  (let ((class-name (webkit-gname-string->class-name g-type-name))
-        (type-initializer (webkit-gname-string->type-initializer g-type-name)))
+  (let ((class-name (webkit-gname-string->class-name g-type-name)))
     `(define-g-object-class* ,g-type-name ,class-name
        (:superclass ,superclass :export ,export :interfaces ,interfaces
                     :type-initializer ,type-initializer)
