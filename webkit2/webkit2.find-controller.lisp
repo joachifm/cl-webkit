@@ -12,11 +12,7 @@
 
 (in-package :webkit2)
 
-(define-g-object-class* "WebKitFindController" webkit-find-controller
-  (:superclass g-object
-   :export t
-   :interfaces nil
-   :type-initializer "webkit_find_controller_get_type")
+(define-webkit-class "WebKitFindController" ()
   (("max-match-count" "guint")
    ("text" "gchararray")
    ("web-view" "WebKitWebView" t t)))

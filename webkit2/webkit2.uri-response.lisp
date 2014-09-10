@@ -12,11 +12,7 @@
 
 (in-package :webkit2)
 
-(define-g-object-class* "WebKitURIResponse" webkit-uri-response
-  (:superclass g-object
-   :export t
-   :interfaces nil
-   :type-initializer "webkit_uri_response_get_type")
+(define-webkit-class "WebKitURIResponse" ()
   (("content-length" "guint")
    ("mime-type" "gchararray")
    ("status-code" "guint")

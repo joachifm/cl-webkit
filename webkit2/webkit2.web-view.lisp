@@ -12,10 +12,9 @@
 
 (in-package :webkit2)
 
-(define-g-object-class* "WebKitWebView" webkit-web-view
+(define-webkit-class "WebKitWebView"
   (:superclass gtk-widget
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
-   :type-initializer "webkit_web_view_get_type")
+   :interfaces ("AtkImplementorIface" "GtkBuildable"))
   (("estimated-load-progress" "gdouble")
    ("is-loading" "gboolean")
    ("title" "gchararray")

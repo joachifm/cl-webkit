@@ -12,12 +12,7 @@
 
 (in-package :webkit2)
 
-(define-g-object-class "WebKitWebContext" webkit-web-context
-  (:superclass g-object
-   :interfaces nil
-   :export t
-   :type-initializer "webkit_web_context_get_type")
-  ())
+(define-webkit-class "WebKitWebContext" () ())
 
 (define-g-enum "WebKitCacheModel" webkit-cache-model ()
   :webkit-cache-model-document-viewer

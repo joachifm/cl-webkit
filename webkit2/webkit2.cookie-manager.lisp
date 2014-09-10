@@ -12,12 +12,7 @@
 
 (in-package :webkit2)
 
-(define-g-object-class "WebKitCookieManager" webkit-cookie-manager
-  (:superclass g-object
-   :export t
-   :interfaces nil
-   :type-initializer "webkit_cookie_manager_get_type")
-  ())
+(define-webkit-class "WebKitCookieManager" () ())
 
 (define-g-enum "WebKitCookiePersistentStorage" webkit-cookie-persistent-storage ()
   :webkit-cookie-persistent-storage-text

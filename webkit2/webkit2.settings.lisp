@@ -12,11 +12,7 @@
 
 (in-package :webkit2)
 
-(define-g-object-class* "WebKitSettings" webkit-settings
-  (:superclass g-object
-   :export t
-   :interfaces nil
-   :type-initializer "webkit_settings_get_type")
+(define-webkit-class "WebKitSettings" ()
    (("allow-modal-dialogs" "gboolean" t t)
     ("auto-load-images" "gboolean" t t)
     ("cursive-font-family" "gchararray" t t)

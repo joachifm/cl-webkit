@@ -8,30 +8,23 @@
 
 ;;; Code:
 
-;;; A more convenient wrapper for DEFINE-G-OBJECT-CLASS
-;;;
-;;; WebKit types have very regular naming, which means a lot of
-;;; redundancy when defining classes (e.g., for a property zoom-level,
-;;; we'd do (zoom-level prefix-zoom "zoom-level" ...).
-;;; Exploit this pattern for great good.
-
 (in-package :webkit2)
+
+;;; A more convenient wrapper for DEFINE-G-OBJECT-CLASS
 
 (defun parse-namespec (spec)
   "Parse namespec for PARSE-G-OBJECT-SLOT-SPEC.
 
 Returns (values lisp-name g-property-name-string)."
   (etypecase spec
-    (string (values (string->symbol spec)
-                    spec))
+    (string (values (foo->symbol spec) spec))
     (list (values (car spec) (cadr spec)))))
 
 (defun make-accessor-name (prefix name)
   "Make accessor name for PARSE-G-OBJECT-SLOT-SPEC."
   (check-type prefix symbol)
   (check-type name symbol)
-  (string->symbol (concatenate 'string
-                               (symbol-name prefix) "-" (symbol-name name))))
+  (foo->symbol prefix "-" name))
 
 (defun parse-g-object-slot-spec (class-name spec)
   "Generate property slot specs for DEFINE-G-OBJECT-CLASS.
@@ -51,8 +44,6 @@ Unless explicitly specified, lisp-names are derived from gname-string."
     (multiple-value-bind (name gname) (parse-namespec namespec)
       (list name (make-accessor-name class-name name) gname type readp writep))))
 
-;;; TODO: derive g-type-name from name (or the other round)
-;;; TODO: derive type-initializer from name (or g-type-name)
 ;;; TODO: maybe support namespec (name gname &optional accessor-name)
 ;;; TODO: what about initarg?
 (defmacro define-g-object-class* (g-type-name name
@@ -60,9 +51,9 @@ Unless explicitly specified, lisp-names are derived from gname-string."
                                         (export t)
                                         (interfaces nil)
                                         type-initializer)
-                                  (&rest properties))
-  "A variant of DEFINE-G-OBJECT-CLASS where property accessors and g-type names are
-derived from the slot name.
+                                     (&rest properties))
+  "A variant of DEFINE-G-OBJECT-CLASS where slot names and
+accessors are derived from the g-type name.
 
 See PARSE-G-OBJECT-SLOT-SPEC for the property syntax."
   `(define-g-object-class ,g-type-name ,name
@@ -71,3 +62,38 @@ See PARSE-G-OBJECT-SLOT-SPEC for the property syntax."
       :interfaces ,interfaces
       :type-initializer ,type-initializer)
      ,(mapcar #'(lambda (spec) (parse-g-object-slot-spec name spec)) properties)))
+
+;;; WebKit types have very regular naming, which means a lot of
+;;; redundancy when defining classes (e.g., for a property zoom-level,
+;;; we'd do (zoom-level prefix-zoom "zoom-level" ...).
+;;; Exploit this pattern for great good with a specialised wrapper of the
+;;; previous wrapper (sic)
+
+(defun webkit-gname-string->type-initializer (gname)
+  "Guess the g-type-initializer for a WebKit g-object type.
+
+Assumes that all type initializers follow the pattern
+webkit_name_get_type.
+
+GNAME is a string like WebKitWebView."
+  (concatenate 'string
+               "webkit_"
+               (medial->delim gname :delim #\_ :start 6)
+               "_get_type"))
+
+(defun webkit-gname-string->class-name (gname)
+  "Derive class name from GNAME, where GNAME is a string like WebKitWebView."
+  (foo->symbol "webkit-" (medial->delim gname :start 6)))
+
+(defmacro define-webkit-class (g-type-name
+                               (&key (superclass 'g-object)
+                                     (export t)
+                                     (interfaces nil))
+                                  (&rest properties))
+  "A variant of DEFINE-G-OBJECT-CLASS* tuned for WebKit types."
+  (let ((class-name (webkit-gname-string->class-name g-type-name))
+        (type-initializer (webkit-gname-string->type-initializer g-type-name)))
+    `(define-g-object-class* ,g-type-name ,class-name
+       (:superclass ,superclass :export ,export :interfaces ,interfaces
+                    :type-initializer ,type-initializer)
+       ,properties)))
