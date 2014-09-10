@@ -13,10 +13,8 @@
 
 (in-package :cl-user)
 
-(eval-when (:load-toplevel :compile-toplevel)
-  (unless (find-package :asdf)
-    (format t "ASDF is required to run this script.")
-    (sb-ext:exit :code 1)))
+#-asdf
+(require :asdf)
 
 (defun buildtest (sys)
   (let* ((null-stream (make-broadcast-stream))

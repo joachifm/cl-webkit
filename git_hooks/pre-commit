@@ -2,14 +2,14 @@
 #
 # Pre-commit checks
 
-LISP="sbcl --noinform"
-topdir=`git rev-parse --show-toplevel`
+LISP="sbcl --noinform --no-userinit"
+topdir=$(git rev-parse --show-toplevel)
 run_build_test=false
 
 cd "$topdir"
-for x in `git diff-index --cached --name-only HEAD` ; do
+for x in $(git diff-index --cached --name-only HEAD) ; do
     case "$x" in
-        tools/*) continue ;;
+        scripts/*) continue ;;
         *.lisp|*.asd) run_build_test=true ;;
     esac
 done
