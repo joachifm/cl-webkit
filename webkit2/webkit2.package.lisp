@@ -12,6 +12,6 @@
 
 (in-package :cl-user)
 
-(defpackage :cl-webkit2
+(defpackage #:cl-webkit2
   (:nicknames :webkit2 :webkit)
   (:use :cl :cffi :gtk :gobject))
