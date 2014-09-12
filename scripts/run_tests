@@ -1,0 +1,3 @@
+#!/bin/sh
+
+${LISP:-sbcl} --eval '(progn (asdf:load-system :cl-webkit2-tests) (webkit2-tests:run-tests))'
