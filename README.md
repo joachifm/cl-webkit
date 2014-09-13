@@ -22,12 +22,16 @@ by demand.
   package provides libwebkit2gtk-3.0.so, e.g.,
   libwebkit2gtk on Debian).
 - A [CFFI] compatible Common Lisp implementation.
-  The package is developed using SBCL but should work on any
+  The package is developed using [SBCL] but should work on any
   implementation that supports CFFI.
 - A recent checkout of [cl-cffi-gtk]
 
+To run the test-suite you also need a checkout of [lisp-unit].
+
 [CFFI]: http://common-lisp.net/project/cffi
 [cl-cffi-gtk]: https://github.com/crategus/cl-cffi-gtk.git
+[lisp-unit]: https://github.com/OdonataResearchLLC/lisp-unit.git
+[SBCL]: http://sbcl.org
 
 ## Installation
 Assuming you have [Quicklisp] installed (recommended), do
