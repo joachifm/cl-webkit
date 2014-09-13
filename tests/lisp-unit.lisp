@@ -1,4 +1,4 @@
-;;; cl-webkit2-tests.asd --- a suite of unit tests for cl-webkit2
+;;; lisp-unit.lisp --- a suite of unit tests for cl-webkit2
 
 ;; This file is part of cl-webkit.
 ;;
