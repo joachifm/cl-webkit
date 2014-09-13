@@ -16,7 +16,7 @@
 
 (in-package :cl-user)
 
-(mapcar #'asdf:load-system '(:cl-cffi-gtk :cl-webkit2))
+(asdf:load-systems :cl-cffi-gtk :cl-webkit2)
 
 (defun simple-browser-main ()
   "A single-window browser with no keyboard or mouse input.
