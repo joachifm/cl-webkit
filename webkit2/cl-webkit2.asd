@@ -21,18 +21,14 @@
   :components ((:file "webkit2.package")
                (:file "webkit2.init")
                (:file "util")
-               (:file "macros" :depends-on ("util"))
-               (:file "webkit2.find-controller")
+               (:file "macros")
                (:file "webkit2.cookie-manager")
-               (:file "webkit2.uri-response")
-               (:file "webkit2.download" :depends-on ("webkit2.uri-response"))
+               (:file "webkit2.download")
+               (:file "webkit2.find-controller")
                (:file "webkit2.settings")
                (:file "webkit2.uri-request")
-               (:file "webkit2.web-resource" :depends-on ("webkit2.uri-response"))
-               (:file "webkit2.web-context" :depends-on ("webkit2.download"))
-               (:file "webkit2.web-view" :depends-on ("macros"
-                                                      "webkit2.settings"
-                                                      "webkit2.uri-request"
-                                                      "webkit2.web-context"
-                                                      "webkit2.web-resource")))
+               (:file "webkit2.uri-response")
+               (:file "webkit2.web-context")
+               (:file "webkit2.web-resource")
+               (:file "webkit2.web-view"))
   :depends-on (:cffi :cl-cffi-gtk))
