@@ -26,6 +26,7 @@
                (:file "webkit2.download")
                (:file "webkit2.find-controller")
                (:file "webkit2.hit-test-result")
+               (:file "webkit2.plugin")
                (:file "webkit2.settings")
                (:file "webkit2.uri-request")
                (:file "webkit2.uri-response")
