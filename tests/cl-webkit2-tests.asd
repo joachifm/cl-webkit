@@ -8,6 +8,9 @@
 
 ;;; Code:
 
+#-asdf3
+(defpackage #:asdf-user (:use :cl :asdf))
+
 (in-package :asdf-user)
 
 (defsystem :cl-webkit2-tests
