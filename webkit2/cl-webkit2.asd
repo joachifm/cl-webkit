@@ -10,6 +10,9 @@
 
 ;;; Code:
 
+#-(or clisp sbcl)
+(warn "unsupported implementation, satisfaction uncertain!")
+
 #-asdf3
 (defpackage #:asdf-user (:use :cl :asdf))
 
