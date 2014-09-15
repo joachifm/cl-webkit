@@ -32,5 +32,6 @@
                (:file "webkit2.uri-response")
                (:file "webkit2.web-context")
                (:file "webkit2.web-resource")
+               (:file "webkit2.web-view-group")
                (:file "webkit2.web-view"))
   :depends-on (:cffi :cl-cffi-gtk))
