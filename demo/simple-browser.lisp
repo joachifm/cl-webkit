@@ -16,6 +16,7 @@
 
 (in-package :cl-user)
 
+(require :asdf)
 (asdf:load-systems :cl-cffi-gtk :cl-webkit2)
 
 (defun simple-browser-main ()
