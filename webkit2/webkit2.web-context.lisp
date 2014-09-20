@@ -71,8 +71,7 @@
   (user_data   :pointer))
 (export 'webkit-web-context-get-plugins)
 
-;; XXX: Implement proper return type glist
-(defcfun "webkit_web_context_get_plugins_finish" :pointer ; glib:glist
+(defcfun "webkit_web_context_get_plugins_finish" (glib:g-list webkit-plugin)
   (webkit-web-context (g-object webkit-web-context))
   (gasync-result :pointer)
   (gerror :pointer))
