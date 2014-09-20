@@ -44,9 +44,9 @@
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-cookie-manager)
 
-;; TODO: Implement WebKitFaviconDatabase.h
-;; (defcfun "webkit_web_context_get_favicon_database" webkit-favicon-database
-;;   (webkit-web-context webkit-web-context))
+(defcfun "webkit_web_context_get_favicon_database" (g-object webkit-favicon-database)
+  (webkit-web-context (g-object webkit-web-context)))
+(export 'webkit-web-context-get-favicon-database)
 
 (defcfun "webkit_web_context_set_favicon_database_directory" :void
   (webkit-web-context (g-object webkit-web-context)))
