@@ -30,6 +30,7 @@
                (:file "macros")
                (:file "webkit2.cookie-manager")
                (:file "webkit2.download")
+               (:file "webkit2.favicon-database")
                (:file "webkit2.find-controller")
                (:file "webkit2.hit-test-result")
                (:file "webkit2.plugin")
