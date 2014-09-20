@@ -56,9 +56,9 @@
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-favicon-database-directory)
 
-;; TODO: Implement WebKitSecurityManager.h
-;; (defcfun "webkit_web_context_get_security_manager" webkit-security-manager
-;;   (webkit-web-context webkit-web-context))
+(defcfun "webkit_web_context_get_security_manager" (g-object webkit-security-manager)
+  (webkit-web-context (g-object webkit-web-context)))
+(export 'webkit-web-context-get-security-manager)
 
 (defcfun "webkit_web_context_set_additional_plugins_directory" :void
   (webkit-web-context (g-object webkit-web-context)))
