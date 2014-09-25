@@ -10,6 +10,18 @@
 
 (in-package :webkit2)
 
+;;; Convenience wrapper for defcfun
+
+(defmacro defcfun* (name-and-options &rest body)
+  "A version of DEFCFUN that automatically exports the definition."
+  `(progn
+     (defcfun ,name-and-options ,@body)
+     (export (quote ,(translate-name-from-foreign
+                      (if (consp name-and-options)
+                          (car name-and-options)
+                          name-and-options)
+                      (load-time-value *package*))))))
+
 ;;; A more convenient wrapper for DEFINE-G-OBJECT-CLASS
 
 (defun parse-namespec (spec)
