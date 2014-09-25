@@ -16,8 +16,10 @@
 
 (defmethod cffi:translate-name-to-foreign (name (package (eql *package*)) &optional varp)
   (declare (ignore varp))
-  (translate-underscore-separated-name name))
+  (concatenate 'string "webkit_"
+               (translate-underscore-separated-name name)))
 
 (defmethod cffi:translate-name-from-foreign (foreign-name (package (eql *package*)) &optional varp)
   (declare (ignore varp))
-  (translate-underscore-separated-name foreign-name))
+  (let ((basename (subseq foreign-name 7))) ; drop prefix "webkit_"
+    (translate-underscore-separated-name basename)))
