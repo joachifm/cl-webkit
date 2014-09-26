@@ -25,10 +25,10 @@
   :version "0.0"
   :serial t
   :components ((:file "webkit2.package")
-               (:file "webkit2.init")
                (:file "util")
                (:file "macros")
                (:file "translate")
+               (:file "webkit2.init")
                (:file "webkit2.cookie-manager")
                (:file "webkit2.download")
                (:file "webkit2.favicon-database")
