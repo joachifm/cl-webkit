@@ -17,6 +17,8 @@ The binding is incomplete, but what is provided should work as advertised.
 Currently, the goal is not to cover the entire C API, but to grow the binding
 by demand.
 
+[![Build Status](https://travis-ci.org/joachifm/cl-webkit.svg?branch=master)](https://travis-ci.org/joachifm/cl-webkit)
+
 ## Dependencies
 - A working installation of WebKit2GTK+ (whichever
   package provides libwebkit2gtk-3.0.so, e.g.,
