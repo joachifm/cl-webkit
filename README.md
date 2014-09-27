@@ -63,6 +63,10 @@ A few things to keep in mind
 * [WebKit2GTK+ Stable API reference](http://webkitgtk.org/reference/webkit2gtk/stable/index.html)
 * [CFFI User Manual](http://common-lisp.net/project/cffi/manual/html_node/index.html)
 
+## See also
+
+* [lispkit](https://github.com/AeroNotix/lispkit), a lisp browser using WebKit
+
 ## Copying
 cl-webkit is distributed under the MIT license (see [COPYING](../master/COPYING)).
 Please note that this licence only covers the binding itself.
