@@ -24,6 +24,8 @@ export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_RUNTIME_DIR="${HOME}"
 mkdir -m 0700 -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
 
+export DISPLAY=":99.0" # cf. travis.yml
+
 alias sbcl='sbcl --noinform --no-sysinit --no-userinit --disable-debugger'
 
 #### install system deps
@@ -49,9 +51,8 @@ sbcl --load ./quicklisp.lisp --eval '(quicklisp-quickstart:install)' --quit
 mkdir -p "$LOCAL_LISP_TREE"
 git clone https://github.com/OdonataResearchLLC/lisp-unit.git ${LOCAL_LISP_TREE}/lisp-unit
 git clone https://github.com/crategus/cl-cffi-gtk.git ${LOCAL_LISP_TREE}/cl-cffi-gtk
-sbcl --load "${QL_HOME}/setup.lisp" --eval '(ql:quickload (list "cl-webkit2" "cl-webkit2-tests"))' --quit
 
 #### run
-# XXX: add run test suite and stuff here.
 
-exit 0
+sbcl --load "${QL_HOME}/setup.lisp" --eval '(ql:quickload (list "cl-webkit2" "cl-webkit2-tests"))' --quit
+sbcl --load "${QL_HOME}/setup.lisp" --load ./demo/simple-browser.lisp --eval '(simple-browser-main)' --quit
