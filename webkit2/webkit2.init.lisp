@@ -23,8 +23,8 @@
 (eval-when (:load-toplevel :execute)
   (with-standard-io-syntax
     (let ((versym (intern (format nil "WEBKIT2-~a.~a"
-                                  (webkit-get-major-version)
-                                  (webkit-get-minor-version))
+                                  (get-major-version)
+                                  (get-minor-version))
                           :keyword)))
       (pushnew versym *features*))))
 
