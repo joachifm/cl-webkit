@@ -17,13 +17,16 @@
   #+clisp (ext:exit code)
   #-(or clisp sbcl) (error "exit: unsupported implementation"))
 
+(setf asdf:*compile-file-warnings-behaviour* :error)
 (handler-case (asdf:operate 'asdf:load-op :cl-webkit2-tests)
   (error (c) (progn (format *error-output* "Failed: ~A~%" c)
                     (os-exit 1))))
+
 (let* ((result (lisp-unit:run-tests :all :cl-webkit2-tests))
        (failures (lisp-unit:failed-tests result)))
   (when (> (length failures)
            webkit2-tests:*expected-failure-count*)
     (format *error-output* "The number of failures exceeds the expected count.~%")
     (os-exit 1)))
+
 (os-exit 0)
