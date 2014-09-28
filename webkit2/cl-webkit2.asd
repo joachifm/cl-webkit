@@ -34,6 +34,7 @@
                (:file "webkit2.favicon-database")
                (:file "webkit2.find-controller")
                (:file "webkit2.hit-test-result")
+               (:file "webkit2.permission-request")
                (:file "webkit2.plugin")
                (:file "webkit2.security-manager")
                (:file "webkit2.settings")
