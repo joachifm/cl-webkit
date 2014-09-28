@@ -12,10 +12,20 @@
 
 (in-package :webkit2)
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (pushnew :webkit2 *features*))
-
 (define-foreign-library libwebkit
   (:unix (:or "libwebkit2gtk-3.0.so")))
 
 (use-foreign-library libwebkit)
+
+(defcfun "webkit_get_major_version" :int)
+(defcfun "webkit_get_minor_version" :int)
+
+(eval-when (:load-toplevel :execute)
+  (with-standard-io-syntax
+    (let ((versym (intern (format nil "WEBKIT2-~a.~a"
+                                  (webkit-get-major-version)
+                                  (webkit-get-minor-version))
+                          :keyword)))
+      (pushnew versym *features*))))
+
+(pushnew :WEBKIT2 *features*)
