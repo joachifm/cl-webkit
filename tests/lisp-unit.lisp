@@ -10,6 +10,10 @@
 
 (in-package #:webkit2-tests)
 
+;;; The number of test cases known to fail
+
+(defparameter *expected-failure-count* 3)
+
 ;;; Main entry point
 
 (defun run-tests ()

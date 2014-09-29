@@ -13,4 +13,4 @@
 (defpackage #:cl-webkit2-tests
   (:use :cl :webkit2)
   (:nicknames #:webkit2-tests)
-  (:export #:run-tests))
+  (:export #:run-tests #:*expected-failure-count*))
