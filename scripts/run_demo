@@ -1,2 +1,2 @@
 #!/bin/sh
-${LISP:-sbcl} --load demo/simple-browser.lisp --eval '(do-simple-browser-main)' --quit
+sbcl --load demo/simple-browser.lisp --eval '(do-simple-browser-main)' --quit
