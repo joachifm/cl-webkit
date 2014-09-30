@@ -17,21 +17,21 @@
    ("text" "gchararray")
    ("web-view" "WebKitWebView" t t)))
 
-(defcfun "webkit_find_controller_search" :void
+(defcfun* "webkit_find_controller_search" :void
   (find-controller (g-object webkit-find-controller))
   (search-text :string)
   (find-options :uint)
   (max-match-count :uint))
 (export 'webkit-find-controller-search)
 
-(defcfun "webkit_find_controller_search_next" :void
+(defcfun* "webkit_find_controller_search_next" :void
   (find-controller (g-object webkit-find-controller)))
 (export 'webkit-find-controller-search-next)
 
-(defcfun "webkit_find_controller_search_previous" :void
+(defcfun* "webkit_find_controller_search_previous" :void
   (find-controller (g-object webkit-find-controller)))
 (export 'webkit-find-controller-search-previous)
 
-(defcfun "webkit_find_controller_search_finish" :void
+(defcfun* "webkit_find_controller_search_finish" :void
   (find-controller (g-object webkit-find-controller)))
 (export 'webkit-find-controller-search-finish)

@@ -12,14 +12,14 @@
 
 (define-webkit-class "WebKitPlugin" () ())
 
-(defcfun "webkit_plugin_get_name" :string
+(defcfun* "webkit_plugin_get_name" :string
   (plugin (g-object webkit-plugin)))
 (export 'webkit-plugin-get-name)
 
-(defcfun "webkit_plugin_get_description" :string
+(defcfun* "webkit_plugin_get_description" :string
   (plugin (g-object webkit-plugin)))
 (export 'webkit-plugin-get-description)
 
-(defcfun "webkit_plugin_get_path" :string
+(defcfun* "webkit_plugin_get_path" :string
   (plugin (g-object webkit-plugin)))
 (export 'webkit-plugin-get-path)

@@ -17,10 +17,10 @@
   :webkit-injected-content-frames-all
   :webkit-injected-content-frames-top-only)
 
-(defcfun "webkit_web_view_group_new" (g-object webkit-web-view-group)
+(defcfun* "webkit_web_view_group_new" (g-object webkit-web-view-group)
   (name :string))
 (export 'webkit-web-view-group-new)
 
-(defcfun "webkit_web_view_group_get_name" :string
+(defcfun* "webkit_web_view_group_get_name" :string
   (group (g-object webkit-web-view-group)))
 (export 'webkit-web-view-group-get-name)

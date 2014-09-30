@@ -23,18 +23,18 @@
   :webkit-cookie-policy-accept-never
   :webkit-cookie-policy-accept-no-third-party)
 
-(defcfun "webkit_cookie_manager_set_persistent_storage" :void
+(defcfun* "webkit_cookie_manager_set_persistent_storage" :void
   (webkit-cookie-manager (g-object webkit-cookie-manager))
   (filename :string)
   (storage webkit-cookie-persistent-storage))
 (export 'webkit-cookie-manager-set-persistent-storage)
 
-(defcfun "webkit_cookie_manager_set_accept_policy" :void
+(defcfun* "webkit_cookie_manager_set_accept_policy" :void
   (webkit-cookie-manager (g-object webkit-cookie-manager))
   (policy webkit-cookie-accept-policy))
 (export 'webkit-cookie-manager-set-accept-policy)
 
-(defcfun "webkit_cookie_manager_get_accept_policy" :void
+(defcfun* "webkit_cookie_manager_get_accept_policy" :void
   (webkit-cookie-manager (g-object webkit-cookie-manager))
   (cancellable :pointer)
   (callback    :pointer)
@@ -47,24 +47,24 @@
   (error  :pointer))
 (export 'webkit-cookie-manager-get-accept-policy-finish)
 
-(defcfun "webkit_cookie_manager_get_domains_with_cookies" :void
+(defcfun* "webkit_cookie_manager_get_domains_with_cookies" :void
   (webkit-cookie-manager (g-object webkit-cookie-manager))
   (cancellable :pointer)
   (callback    :pointer)
   (user_data   :pointer))
 (export 'webkit-cookie-manager-get-domains-with-cookies)
 
-(defcfun "webkit_cookie_manager_get_domains_with_cookies_finish" :string
+(defcfun* "webkit_cookie_manager_get_domains_with_cookies_finish" :string
   (webkit-cookie-manager (g-object webkit-cookie-manager))
   (result :pointer)
   (error  :pointer))
 (export 'webkit-cookie-manager-get-domains-with-cookies-finish)
 
-(defcfun "webkit_cookie_manager_delete_cookies_for_domain" :void
+(defcfun* "webkit_cookie_manager_delete_cookies_for_domain" :void
   (webkit-cookie-manager (g-object webkit-cookie-manager))
   (domain :string))
 (export 'webkit-cookie-manager-delete-cookies-for-domain)
 
-(defcfun "webkit_cookie_manager_delete_all_cookies" :void
+(defcfun* "webkit_cookie_manager_delete_all_cookies" :void
   (webkit-cookie-manager (g-object webkit-cookie-manager)))
 (export 'webkit_cookie_manager_delete_all_cookies)

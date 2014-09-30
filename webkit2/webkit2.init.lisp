@@ -17,8 +17,8 @@
 
 (use-foreign-library libwebkit2)
 
-(defcfun "webkit_get_major_version" :int)
-(defcfun "webkit_get_minor_version" :int)
+(defcfun* "webkit_get_major_version" :int)
+(defcfun* "webkit_get_minor_version" :int)
 
 (eval-when (:load-toplevel :execute)
   (with-standard-io-syntax

@@ -19,65 +19,65 @@
   :webkit-cache-model-web-browser
   :webkit-cache-model-document-browser)
 
-(defcfun "webkit_web_context_get_default" (g-object webkit-web-context))
+(defcfun* "webkit_web_context_get_default" (g-object webkit-web-context))
 (export 'webkit-web-context-get-default)
 
-(defcfun "webkit_web_context_set_cache_model" :void
+(defcfun* "webkit_web_context_set_cache_model" :void
   (webkit-web-context (g-object webkit-web-context))
   (webkit-cache-model webkit-cache-model))
 (export 'webkit-web-context-set-cache-model)
 
-(defcfun "webkit_web_context_get_cache_model" webkit-cache-model
+(defcfun* "webkit_web_context_get_cache_model" webkit-cache-model
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-cache-model)
 
-(defcfun "webkit_web_context_clear_cache" :void
+(defcfun* "webkit_web_context_clear_cache" :void
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-clear-cache)
 
-(defcfun "webkit_web_context_download_uri" (g-object webkit-download)
+(defcfun* "webkit_web_context_download_uri" (g-object webkit-download)
   (webkit-web-context (g-object webkit-web-context))
   (uri :string))
 (export 'webkit-web-context-download-uri)
 
-(defcfun "webkit_web_context_get_cookie_manager" (g-object webkit-cookie-manager)
+(defcfun* "webkit_web_context_get_cookie_manager" (g-object webkit-cookie-manager)
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-cookie-manager)
 
-(defcfun "webkit_web_context_get_favicon_database" (g-object webkit-favicon-database)
+(defcfun* "webkit_web_context_get_favicon_database" (g-object webkit-favicon-database)
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-favicon-database)
 
-(defcfun "webkit_web_context_set_favicon_database_directory" :void
+(defcfun* "webkit_web_context_set_favicon_database_directory" :void
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-set-favicon-database-directory)
 
-(defcfun "webkit_web_context_get_favicon_database_directory" :string
+(defcfun* "webkit_web_context_get_favicon_database_directory" :string
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-favicon-database-directory)
 
-(defcfun "webkit_web_context_get_security_manager" (g-object webkit-security-manager)
+(defcfun* "webkit_web_context_get_security_manager" (g-object webkit-security-manager)
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-security-manager)
 
-(defcfun "webkit_web_context_set_additional_plugins_directory" :void
+(defcfun* "webkit_web_context_set_additional_plugins_directory" :void
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-set-additional-plugins-directory)
 
-(defcfun "webkit_web_context_get_plugins" :void
+(defcfun* "webkit_web_context_get_plugins" :void
   (webkit-web-context (g-object webkit-web-context))
   (cancellable :pointer)
   (callback    :pointer)
   (user_data   :pointer))
 (export 'webkit-web-context-get-plugins)
 
-(defcfun "webkit_web_context_get_plugins_finish" (glib:g-list webkit-plugin)
+(defcfun* "webkit_web_context_get_plugins_finish" (glib:g-list webkit-plugin)
   (webkit-web-context (g-object webkit-web-context))
   (gasync-result :pointer)
   (gerror :pointer))
 (export 'webkit-web-context-get-plugins-finish)
 
-(defcfun "webkit_web_context_register_uri_scheme" :void
+(defcfun* "webkit_web_context_register_uri_scheme" :void
   (webkit-web-context (g-object webkit-web-context))
   (scheme :string)
   (webkit-uri-scheme-request-callback :pointer)
@@ -85,25 +85,25 @@
   (gdestroynotify :pointer))
 (export 'webkit-web-context-register-uri-scheme)
 
-(defcfun "webkit_web_context_get_spell_checking_enabled" :boolean
+(defcfun* "webkit_web_context_get_spell_checking_enabled" :boolean
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-spell-checking-enabled)
 
-(defcfun "webkit_web_context_set_spell_checking_enabled" :void
+(defcfun* "webkit_web_context_set_spell_checking_enabled" :void
   (webkit-web-context (g-object webkit-web-context))
   (enabled :boolean))
 (export 'webkit-web-context-set-spell-checking-enabled)
 
-(defcfun "webkit_web_context_get_spell_checking_languages" :pointer
+(defcfun* "webkit_web_context_get_spell_checking_languages" :pointer
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-spell-checking-languages)
 
-(defcfun "webkit_web_context_set_spell_checking_languages" :void
+(defcfun* "webkit_web_context_set_spell_checking_languages" :void
   (webkit-web-context (g-object webkit-web-context))
   (languages :string))
 (export 'webkit-web-context-set-spell-checking-languages)
 
-(defcfun "webkit_web_context_set_preferred_languages" :void
+(defcfun* "webkit_web_context_set_preferred_languages" :void
   (webkit-web-context (g-object webkit-web-context))
   (languages :string))
 (export 'webkit-web-context-set-preferred-languages)
@@ -112,36 +112,36 @@
   :webkit-tls-errors-policy-ignore
   :webkit-tls-errors-policy-fail)
 
-(defcfun "webkit_web_context_set_tls_errors_policy" :void
+(defcfun* "webkit_web_context_set_tls_errors_policy" :void
   (webkit-web-context (g-object webkit-web-context))
   (policy webkit-tls-errors-policy))
 (export 'webkit-web-context-set-tls-errors-policy)
 
-(defcfun "webkit_web_context_get_tls_errors_policy" webkit-tls-errors-policy
+(defcfun* "webkit_web_context_get_tls_errors_policy" webkit-tls-errors-policy
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-tls-errors-policy)
 
-(defcfun "webkit_web_context_set_web_extensions_directory" :void
+(defcfun* "webkit_web_context_set_web_extensions_directory" :void
   (webkit-web-context (g-object webkit-web-context))
   (directory :string))
 (export 'webkit-web-context-set-web-extensions-directory)
 
-(defcfun "webkit_web_context_set_web_extensions_initialization_user_data" :void
+(defcfun* "webkit_web_context_set_web_extensions_initialization_user_data" :void
   (webkit-web-context (g-object webkit-web-context))
   (user_data :pointer))
 (export 'webkit-web-context-set-web-extensions-initialization-user-data)
 
-(defcfun "webkit_web_context_prefetch_dns" :void
+(defcfun* "webkit_web_context_prefetch_dns" :void
   (webkit-web-context (g-object webkit-web-context))
   (hostname :string))
 (export 'webkit-web-context-prefetch-dns)
 
-(defcfun "webkit_web_context_set_disk_cache_directory" :void
+(defcfun* "webkit_web_context_set_disk_cache_directory" :void
   (webkit-web-context (g-object webkit-web-context))
   (hostname :string))
 (export 'webkit-web-context-set-disk-cache-directory)
 
-(defcfun "webkit_web_context_allow_tls_certificate_for_host" :void
+(defcfun* "webkit_web_context_allow_tls_certificate_for_host" :void
   (webkit-web-context (g-object webkit-web-context))
   (webkit-certificate-info :pointer)
   (host :string))
@@ -151,11 +151,11 @@
   :webkit-process-model-shared-secondary-process
   :webkit-process-model-multiple-secondary-processes)
 
-(defcfun "webkit_web_context_set_process_model" :void
+(defcfun* "webkit_web_context_set_process_model" :void
   (webkit-web-context (g-object webkit-web-context))
   (webkit-process-model webkit-process-model))
 (export 'webkit-web-context-set-process-model)
 
-(defcfun "webkit_web_context_get_process_model" webkit-process-model
+(defcfun* "webkit_web_context_get_process_model" webkit-process-model
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-process-model)

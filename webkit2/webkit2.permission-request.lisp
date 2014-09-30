@@ -14,10 +14,10 @@
   (:export t
    :type-initializer "webkit_permission_request_get_type"))
 
-(defcfun "webkit_permission_request_allow" :void
+(defcfun* "webkit_permission_request_allow" :void
   (permission-request (g-object webkit-permission-request)))
 (export 'webkit-permission-request-allow)
 
-(defcfun "webkit_permission_request_deny" :void
+(defcfun* "webkit_permission_request_deny" :void
   (permission-request (g-object webkit-permission-request)))
 (export 'webkit-permission-request-deny)
