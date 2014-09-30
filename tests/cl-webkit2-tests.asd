@@ -17,4 +17,4 @@
   :serial t
   :components ((:file "package")
                (:file "lisp-unit" :depends-on ("package")))
-  :depends-on (:cl-webkit2 :lisp-unit))
+  :depends-on (:cl-webkit2 :lisp-unit :uiop))

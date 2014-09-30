@@ -12,21 +12,14 @@
 
 (require :asdf)
 
-(defun os-exit (code)
-  #+sbcl (sb-ext:exit :code code)
-  #+clisp (ext:exit code)
-  #-(or clisp sbcl) (error "exit: unsupported implementation"))
-
 (setf asdf:*compile-file-warnings-behaviour* :error)
+
 (handler-case (asdf:operate 'asdf:load-op :cl-webkit2-tests)
-  (error (c) (progn (format *error-output* "Failed: ~A~%" c)
-                    (os-exit 1))))
+  (error (c) (uiop:die 1 "Failed: ~A~%" c)))
 
 (let* ((result (lisp-unit:run-tests :all :cl-webkit2-tests))
        (failures (lisp-unit:failed-tests result)))
-  (when (> (length failures)
-           webkit2-tests:*expected-failure-count*)
-    (format *error-output* "The number of failures exceeds the expected count.~%")
-    (os-exit 1)))
+  (when (> (length failures) webkit2-tests:*expected-failure-count*)
+    (uiop:die 1 "The number of failure exceeds the expected count.~%")))
 
-(os-exit 0)
+(uiop:quit 0)
