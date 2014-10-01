@@ -42,6 +42,7 @@
                (:file "webkit2.uri-response")
                (:file "webkit2.policy-decision")
                (:file "webkit2.navigation-policy-decision")
+               (:file "webkit2.response-policy-decision")
                (:file "webkit2.web-context")
                (:file "webkit2.web-resource")
                (:file "webkit2.web-view-group")
