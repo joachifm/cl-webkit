@@ -12,10 +12,10 @@
 
 (in-package :webkit2)
 
-(define-foreign-library libwebkit
+(define-foreign-library libwebkit2
   (:unix (:or "libwebkit2gtk-3.0.so")))
 
-(use-foreign-library libwebkit)
+(use-foreign-library libwebkit2)
 
 (defcfun "webkit_get_major_version" :int)
 (defcfun "webkit_get_minor_version" :int)
