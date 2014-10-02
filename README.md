@@ -1,23 +1,24 @@
 # cl-webkit - a binding to WebKitGTK+ for Common Lisp
 
 ## About
-cl-webkit is a FFI binding to [WebKitGTK+], currently targeting
-WebKit version 2.
-The WebKitGTK+ library lets you easily integrate web browsing
-capabilities in your application, leveraging the full power of
-the WebKit engine.
-With WebKit version 2 you also get process separation out-of-the box.
-Please refer to the upstream documentation for additional details
-about the WebKitGTK+ library.
+cl-webkit is a binding to [WebKitGTK+] for Common Lisp, currently
+targeting WebKit version 2.
+The WebKitGTK+ library adds web browsing capabilities to an application,
+leveraging the full power of the WebKit browsing engine.
 
 [WebKitGTK+]: http://webkitgtk.org/
 
-## Status
-The binding is incomplete, but what is provided should work as advertised.
-Currently, the goal is not to cover the entire C API, but to grow the binding
-by demand.
+## API overview
+The cl-webkit API closely follows the WebKit2 API, with the exception that
+class based interfaces are preferred over functional interfaces in cases
+where both are provided.
+Hence, most `*_{new,get,set}` methods are excluded in favour of
+`make-instance` and slot accessors.
 
+## Status
 [![Build Status](https://travis-ci.org/joachifm/cl-webkit.svg?branch=master)](https://travis-ci.org/joachifm/cl-webkit)
+
+The binding is incomplete, but what is provided should work as advertised.
 
 ## Dependencies
 - A working installation of WebKit2GTK+ (whichever
@@ -28,7 +29,8 @@ by demand.
   implementation that supports CFFI.
 - A recent checkout of [cl-cffi-gtk]
 
-To run the test-suite you also need a checkout of [lisp-unit].
+To run the test-suite you also need a checkout of [lisp-unit]
+(the quicklisp version does not work).
 
 [CFFI]: http://common-lisp.net/project/cffi
 [cl-cffi-gtk]: https://github.com/crategus/cl-cffi-gtk.git
@@ -66,7 +68,6 @@ A few things to keep in mind
 * [CFFI User Manual](http://common-lisp.net/project/cffi/manual/html_node/index.html)
 
 ## See also
-
 * [lispkit](https://github.com/AeroNotix/lispkit), a lisp browser using WebKit
 
 ## Copying
