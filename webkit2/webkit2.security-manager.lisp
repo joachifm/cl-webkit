@@ -67,7 +67,7 @@
   (scheme :string))
 (export 'webkit-security-manager-register-uri-scheme-as-empty-document)
 
-(defcfun "webkit_security_manager_register_uri_scheme_is_empty_document" :boolean
+(defcfun "webkit_security_manager_uri_scheme_is_empty_document" :boolean
   (security-manager (g-object webkit-security-manager))
   (scheme :string))
-(export 'webkit-security-manager-register-uri-scheme-is-empty-document)
+(export 'webkit-security-manager-uri-scheme-is-empty-document)
