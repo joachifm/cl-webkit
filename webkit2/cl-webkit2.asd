@@ -30,6 +30,8 @@
                (:file "translate")
                (:file "webkit2.init")
                (:file "webkit2.cookie-manager")
+               (:file "webkit2.context-menu-item")
+               (:file "webkit2.context-menu")
                (:file "webkit2.download")
                (:file "webkit2.favicon-database")
                (:file "webkit2.find-controller")
