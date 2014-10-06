@@ -26,6 +26,7 @@ mkdir -m 0700 -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
 
 export DISPLAY=":99.0" # cf. travis.yml
 
+alias curl='curl -# -L'
 alias sbcl='sbcl --noinform --no-sysinit --no-userinit --disable-debugger'
 
 #### install system deps
@@ -37,13 +38,13 @@ sudo apt-get install libgtk-3.0 libwebkit2gtk-3.0-dev
 
 #### bootstrap SBCL
 
-curl -# -L "${SBCL_URL}?use_mirror=autoselect" -o "${SBCL_NAME}.tar.bz2"
+curl "${SBCL_URL}?use_mirror=autoselect" -o "${SBCL_NAME}.tar.bz2"
 bzip2 -dc "${SBCL_NAME}.tar.bz2" | tar -xf -
 (cd "$SBCL_NAME" && INSTALL_ROOT="$HOME" sh ./install.sh)
 
 #### bootstrap quicklisp
 
-curl -# -L http://beta.quicklisp.org/quicklisp.lisp -o ./quicklisp.lisp
+curl http://beta.quicklisp.org/quicklisp.lisp -o ./quicklisp.lisp
 sbcl --load ./quicklisp.lisp --eval '(quicklisp-quickstart:install)' --quit
 
 #### install lisp dependencies
