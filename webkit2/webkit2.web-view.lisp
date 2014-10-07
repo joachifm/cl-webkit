@@ -106,3 +106,7 @@
 (defcfun "webkit_web_view_get_main_resource" (g-object webkit-web-resource)
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-get-main-resource)
+
+(defcfun "webkit_web_view_get_back_forward_list" (g-object webkit-back-forward-list)
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-get-back-forward-list)
