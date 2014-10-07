@@ -29,6 +29,7 @@
                (:file "macros")
                (:file "translate")
                (:file "webkit2.init")
+               (:file "webkit2.back-forward-list-item")
                (:file "webkit2.cookie-manager")
                (:file "webkit2.context-menu-item")
                (:file "webkit2.context-menu")
