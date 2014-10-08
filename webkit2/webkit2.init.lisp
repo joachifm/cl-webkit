@@ -13,7 +13,12 @@
 (in-package :webkit2)
 
 (define-foreign-library libwebkit2
-  (:unix (:or "libwebkit2gtk-3.0.so")))
+  (:unix (:or "libwebkit2gtk-3.0.so.25.10.9" ; webkit2gtk-2.4.6
+              "libwebkit2gtk-3.0.so.25.10.8" ; webkit2gtk-2.4.5
+              "libwebkit2gtk-3.0.so.25.10.7" ; webkit2gtk-2.4.4
+              "libwebkit2gtk-3.0.so.25.10.3" ; webkit2gtk-2.4.0
+              "libwebkit2gtk-3.0.so.25"
+              "libwebkit2gtk-3.0.so")))
 
 (use-foreign-library libwebkit2)
 
