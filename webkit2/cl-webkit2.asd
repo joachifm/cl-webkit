@@ -36,6 +36,7 @@
                (:file "webkit2.context-menu")
                (:file "webkit2.download")
                (:file "webkit2.favicon-database")
+               (:file "webkit2.file-chooser-request")
                (:file "webkit2.find-controller")
                (:file "webkit2.form-submission-request")
                (:file "webkit2.hit-test-result")
