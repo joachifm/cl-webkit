@@ -26,6 +26,5 @@
                                   (webkit-get-major-version)
                                   (webkit-get-minor-version))
                           :keyword)))
-      (pushnew versym *features*))))
-
-(pushnew :WEBKIT2 *features*)
+      (pushnew versym *features*)))
+  (pushnew :WEBKIT2 *features*))
