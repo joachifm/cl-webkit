@@ -10,7 +10,11 @@
 
 (in-package :webkit2)
 
-(define-webkit-class "WebKitFileChooserRequest" () ())
+(define-webkit-class "WebKitFileChooserRequest" ()
+  (("filter" "GtkFileFilter")
+   ("mime-types" "GStrv")
+   ("select-multiple" "gboolean")
+   ("selected-files" "GStrv")))
 
 (defcfun "webkit_file_chooser_request_get_mime_types" :pointer ; XXX: const gchar * const *
   (request (g-object webkit-file-chooser-request)))
