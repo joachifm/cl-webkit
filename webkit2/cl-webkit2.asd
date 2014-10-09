@@ -42,6 +42,7 @@
                (:file "webkit2.hit-test-result")
                (:file "webkit2.permission-request")
                (:file "webkit2.plugin")
+               (:file "webkit2.print-operation")
                (:file "webkit2.security-manager")
                (:file "webkit2.settings")
                (:file "webkit2.uri-request")
