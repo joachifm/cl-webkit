@@ -36,6 +36,17 @@ sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main" -y
 sudo apt-get update -yy
 sudo apt-get install libgtk-3.0 libwebkit2gtk-3.0-dev
 
+#### bootstrap clisp
+
+sudo apt-get install clisp
+
+cat >"${HOME}/clisp-wrapper.lisp" <<EOF
+(load "${QL_HOME}/setup.lisp")
+(ql:quickload (list "cl-webkit2" "cl-webkit2-tests"))
+(load "./demo/simple-browser.lisp")
+(ext:exit)
+EOF
+
 #### bootstrap SBCL
 
 curl "${SBCL_URL}?use_mirror=autoselect" -o "${SBCL_NAME}.tar.bz2"
@@ -57,3 +68,5 @@ git clone https://github.com/crategus/cl-cffi-gtk.git ${LOCAL_LISP_TREE}/cl-cffi
 
 sbcl --load "${QL_HOME}/setup.lisp" --eval '(ql:quickload (list "cl-webkit2" "cl-webkit2-tests"))' --quit
 sbcl --load "${QL_HOME}/setup.lisp" --load ./demo/simple-browser.lisp --eval '(simple-browser-main)' --quit
+
+clisp -i "${HOME}/clisp-wrapper.lisp"
