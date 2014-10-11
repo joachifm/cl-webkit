@@ -39,6 +39,8 @@ To run the test-suite you also need a checkout of [lisp-unit]
 
 ## Installation
 
+Assuming you have [Quicklisp] installed, do
+
     $ git clone https://github.com/joachifm/cl-webkit.git ~/common-lisp/quicklisp/local-projects/cl-webkit
     $ lisp
     * (ql:quickload :cl-webkit2)
