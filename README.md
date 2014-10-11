@@ -18,7 +18,7 @@ Hence, most `*_{new,get,set}` methods are excluded in favour of
 ## Status
 [![Build Status](https://travis-ci.org/joachifm/cl-webkit.svg?branch=master)](https://travis-ci.org/joachifm/cl-webkit)
 
-The binding is incomplete, but what is provided should work as advertised.
+The binding currently covers most of the WebKit 2.4 API.
 
 ## Dependencies
 - A working installation of WebKit2GTK+ (whichever
@@ -38,7 +38,6 @@ To run the test-suite you also need a checkout of [lisp-unit]
 [SBCL]: http://sbcl.org
 
 ## Installation
-Assuming you have [Quicklisp] installed (recommended), do
 
     $ git clone https://github.com/joachifm/cl-webkit.git ~/common-lisp/quicklisp/local-projects/cl-webkit
     $ lisp
