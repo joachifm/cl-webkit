@@ -44,6 +44,7 @@
                (:file "webkit2.plugin")
                (:file "webkit2.print-operation")
                (:file "webkit2.script-world")
+               (:file "webkit2.frame")
                (:file "webkit2.security-manager")
                (:file "webkit2.settings")
                (:file "webkit2.uri-request")
