@@ -11,7 +11,7 @@
 (in-package :webkit2)
 
 (define-webkit-class "WebKitWebPage" ()
-  (("uri" "gchar")))
+  (("uri" "gchararray")))
 
 (defctype webkit-dom-document :pointer)
 
