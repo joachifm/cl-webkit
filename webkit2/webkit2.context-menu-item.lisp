@@ -78,3 +78,11 @@
   (item (g-object webkit-context-menu-item)))
 (export 'webkit-context-menu-item-is-separator)
   
+(defcfun "webkit_context_menu_item_new_from_stock_action" (g-object webkit-context-menu-item)
+  (action (g-object webkit-context-menu-action)))
+(export 'webkit-context-menu-item-new-from-stock-action)
+
+(defcfun "webkit_context_menu_item_new_from_stock_action_with_label" (g-object webkit-context-menu-item)
+  (action (g-object webkit-context-menu-action))
+  (label :string))
+(export 'webkit-context-menu-item-new-from-stock-action-with-label)
