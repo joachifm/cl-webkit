@@ -19,6 +19,14 @@
   :webkit-cache-model-web-browser
   :webkit-cache-model-document-browser)
 
+(define-g-enum "WebKitTLSErrorsPolicy" webkit-tls-errors-policy ()
+  :webkit-tls-errors-policy-ignore
+  :webkit-tls-errors-policy-fail)
+
+(define-g-enum "WebKitProcessModel" webkit-process-model ()
+  :webkit-process-model-shared-secondary-process
+  :webkit-process-model-multiple-secondary-processes)
+
 (defcfun "webkit_web_context_get_default" (g-object webkit-web-context))
 (export 'webkit-web-context-get-default)
 
@@ -77,14 +85,6 @@
   (gerror :pointer))
 (export 'webkit-web-context-get-plugins-finish)
 
-(defcfun "webkit_web_context_register_uri_scheme" :void
-  (webkit-web-context (g-object webkit-web-context))
-  (scheme :string)
-  (webkit-uri-scheme-request-callback :pointer)
-  (user_data :pointer)
-  (gdestroynotify :pointer))
-(export 'webkit-web-context-register-uri-scheme)
-
 (defcfun "webkit_web_context_get_spell_checking_enabled" :boolean
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-spell-checking-enabled)
@@ -94,7 +94,7 @@
   (enabled :boolean))
 (export 'webkit-web-context-set-spell-checking-enabled)
 
-(defcfun "webkit_web_context_get_spell_checking_languages" :pointer
+(defcfun "webkit_web_context_get_spell_checking_languages" :pointer ;; XXX: const gchar * const *
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-spell-checking-languages)
 
@@ -107,10 +107,6 @@
   (webkit-web-context (g-object webkit-web-context))
   (languages :string))
 (export 'webkit-web-context-set-preferred-languages)
-
-(define-g-enum "WebKitTLSErrorsPolicy" webkit-tls-errors-policy ()
-  :webkit-tls-errors-policy-ignore
-  :webkit-tls-errors-policy-fail)
 
 (defcfun "webkit_web_context_set_tls_errors_policy" :void
   (webkit-web-context (g-object webkit-web-context))
@@ -147,10 +143,6 @@
   (host :string))
 (export 'webkit-web-context-allow-tls-certificate-for-host)
 
-(define-g-enum "WebKitProcessModel" webkit-process-model ()
-  :webkit-process-model-shared-secondary-process
-  :webkit-process-model-multiple-secondary-processes)
-
 (defcfun "webkit_web_context_set_process_model" :void
   (webkit-web-context (g-object webkit-web-context))
   (webkit-process-model webkit-process-model))
@@ -159,3 +151,11 @@
 (defcfun "webkit_web_context_get_process_model" webkit-process-model
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-process-model)
+
+(defcfun "webkit_web_context_register_uri_scheme" :void
+  (webkit-web-context (g-object webkit-web-context))
+  (scheme :string)
+  (webkit-uri-scheme-request-callback :pointer)
+  (user_data :pointer)
+  (gdestroynotify :pointer))
+(export 'webkit-web-context-register-uri-scheme)
