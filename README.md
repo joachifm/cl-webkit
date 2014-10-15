@@ -12,8 +12,10 @@ leveraging the full power of the WebKit browsing engine.
 The cl-webkit API closely follows the WebKit2 API, with the exception that
 class based interfaces are preferred over functional interfaces in cases
 where both are provided.
-Hence, most `*_{new,get,set}` methods are excluded in favour of
-`make-instance` and slot accessors.
+That is, `*_{new,get,set}` methods are excluded in favour of `make-instance`
+and slot accessors wherever possible.
+For documentation on how to use the WebKit2 API, please refer to the C API
+documentation.
 
 ## Status
 [![Build Status](https://travis-ci.org/joachifm/cl-webkit.svg?branch=master)](https://travis-ci.org/joachifm/cl-webkit)
@@ -61,6 +63,9 @@ A few things to keep in mind
 - Each major section of the C API should be covered by a separate file under
   `webkit2/`
 - Document the binding not the C API
+- Contributing implies an agreement to redistribute the work under the
+  project's license (see below); please make sure that you own the rights
+  to the work you contribute
 
 [GitHub]: https://github.com/joachifm/cl-webkit
 
