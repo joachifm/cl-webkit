@@ -110,3 +110,11 @@
 (defcfun "webkit_web_view_get_back_forward_list" (g-object webkit-back-forward-list)
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-get-back-forward-list)
+
+(defcfun "webkit_web_view_can_go_back" :boolean
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-can-go-back)
+
+(defcfun "webkit_web_view_can_go_forward" :boolean
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-can-go-forward)
