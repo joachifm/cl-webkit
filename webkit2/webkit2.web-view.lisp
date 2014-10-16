@@ -123,3 +123,7 @@
   (web-view (g-object webkit-web-view))
   (mime-type :string))
 (export 'webkit-web-view-can-show-mime-type)
+
+(defcfun "webkit_web_view_reload_bypass_cache" :void
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-reload-bypass-cache)
