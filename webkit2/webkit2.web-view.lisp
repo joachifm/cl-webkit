@@ -118,3 +118,8 @@
 (defcfun "webkit_web_view_can_go_forward" :boolean
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-can-go-forward)
+
+(defcfun "webkit_web_view_can_show_mime_type" :boolean
+  (web-view (g-object webkit-web-view))
+  (mime-type :string))
+(export 'webkit-web-view-can-show-mime-type)
