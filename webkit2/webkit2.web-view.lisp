@@ -136,3 +136,7 @@
 (defcfun "webkit_web_view_reload_bypass_cache" :void
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-reload-bypass-cache)
+
+(defcfun "webkit_web_view_get_inspector" (g-object webkit-web-inspector)
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-get-inspector)
