@@ -140,3 +140,9 @@
 (defcfun "webkit_web_view_get_inspector" (g-object webkit-web-inspector)
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-get-inspector)
+
+(defcfun "webkit_web_view_get_tls_info" :boolean
+  (web-view (g-object webkit-web-view))
+  (certificate :pointer) ; XXX: GTlsCertificate **
+  (errors :pointer)) ; XXX: GTlsCertificateFlags *
+(export 'webkit-web-view-get-tls-info)
