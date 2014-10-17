@@ -33,6 +33,11 @@
   :webkit-insecure-content-run
   :webkit-insecure-content-displayed)
 
+(define-g-enum "WebKitPolicyDecisionType" webkit-policy-decision-type ()
+  :webkit-policy-decision-type-navigation-action
+  :webkit-policy-decision-type-new-window-action
+  :webkit-policy-decision-type-response)
+
 (define-g-enum "WebKitViewMode" webkit-view-mode ()
   :webkit-view-mode-web
   :webkit-view-mode-source)
