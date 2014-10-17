@@ -29,6 +29,10 @@
   :webkit-load-committed
   :webkit-load-finished)
 
+(define-g-enum "WebKitInsecureContentEvent" webkit-insecure-content-event ()
+  :webkit-insecure-content-run
+  :webkit-insecure-content-displayed)
+
 (define-g-enum "WebKitViewMode" webkit-view-mode ()
   :webkit-view-mode-web
   :webkit-view-mode-source)
