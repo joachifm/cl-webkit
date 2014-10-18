@@ -149,3 +149,11 @@
   (certificate :pointer) ; XXX: GTlsCertificate **
   (errors :pointer)) ; XXX: GTlsCertificateFlags *
 (export 'webkit-web-view-get-tls-info)
+
+(defcfun "webkit_web_view_save" :void
+  (web-view (g-object webkit-web-view))
+  (save-mode webkit-save-mode)
+  (cancellable :pointer) ; XXX: GCancellable
+  (callback :pointer) ; XXX: GAsyncReadyCallback
+  (user-data :pointer)) ; XXX: gpointer
+(export 'webkit-web-view-save)
