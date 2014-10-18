@@ -162,3 +162,11 @@
   (web-view (g-object webkit-web-view))
   (result :pointer) ; XXX: GAsyncResult
   (error :pointer)) ; XXX: GError
+
+(defcfun "webkit_web_view_save_to_file" :void
+  (web-view (g-object webkit-web-view))
+  (file :pointer) ; XXX: GFile
+  (save-mode webkit-save-mode)
+  (cancellable :pointer) ; XXX: GCancellable
+  (callback :pointer) ; XXX: GAsyncReadyCallback
+  (user-data :pointer)) ; XXX: user-data
