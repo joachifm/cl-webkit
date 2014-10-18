@@ -42,6 +42,9 @@
   :webkit-view-mode-web
   :webkit-view-mode-source)
 
+(define-g-enum "WebKitSaveMode" webkit-save-mode ()
+  :webkit-save-mode-mhtml)
+
 (defcfun "webkit_web_view_load_uri" :void
   (web-view (g-object webkit-web-view))
   (uri :string))
