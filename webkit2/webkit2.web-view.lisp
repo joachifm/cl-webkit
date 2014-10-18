@@ -157,3 +157,8 @@
   (callback :pointer) ; XXX: GAsyncReadyCallback
   (user-data :pointer)) ; XXX: gpointer
 (export 'webkit-web-view-save)
+
+(defcfun "webkit_web_view_save_finish" :pointer ; XXX: GInputStream
+  (web-view (g-object webkit-web-view))
+  (result :pointer) ; XXX: GAsyncResult
+  (error :pointer)) ; XXX: GError
