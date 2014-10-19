@@ -14,10 +14,6 @@
   (("attached-height" "guint")
    ("inspected-uri" "gchararray")))
 
-(defcfun "webkit_web_view_get_inspector" (g-object webkit-web-inspector)
-  (web-view (g-object webkit-web-view)))
-(export 'webkit-web-view-get-inspector)
-
 (defcfun "webkit_web_inspector_is_attached" :boolean
   (inspector (g-object webkit-web-inspector)))
 (export 'webkit-web-inspector-is-attached)

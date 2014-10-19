@@ -56,7 +56,7 @@
                (:file "webkit2.web-page")
                (:file "webkit2.web-resource")
                (:file "webkit2.web-view-group")
-               (:file "webkit2.web-view")
                (:file "webkit2.web-inspector")
+               (:file "webkit2.web-view")
                (:file "webkit2.window-properties"))
   :depends-on (:cffi :cl-cffi-gtk))
