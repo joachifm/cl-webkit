@@ -49,6 +49,10 @@
   :webkit-snapshot-region-visible
   :webkit-snapshot-region-full-document)
 
+(define-g-enum "WebKitSnapshotOptions" webkit-snapshot-options ()
+  :webkit-snapshot-options-none
+  :webkit-snapshot-options-include-selection-highlighting)
+
 (defcfun "webkit_web_view_load_uri" :void
   (web-view (g-object webkit-web-view))
   (uri :string))
