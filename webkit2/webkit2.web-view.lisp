@@ -191,3 +191,8 @@
   (cancellable :pointer) ; XXX: GCancellable
   (callback :pointer) ; XXX: GAsyncReadyCallback
   (user-data :pointer)) ; XXX: gpointer
+
+(defcfun "webkit_web_view_get_snapshot_finish" :pointer ; XXX: cairo_surface_t
+  (web-view (g-object webkit-web-view))
+  (result :pointer) ; XXX: GAsyncResult
+  (error :pointer)) ; XXX: GError
