@@ -183,3 +183,11 @@
   (web-view (g-object webkit-web-view))
   (result :pointer) ; XXX: GAsyncResult
   (error :pointer)) ; XXX: GError
+
+(defcfun "webkit_web_view_get_snapshot" :void
+  (web-view (g-object webkit-web-view))
+  (region webkit-snapshot-region)
+  (options webkit-snapshot-options)
+  (cancellable :pointer) ; XXX: GCancellable
+  (callback :pointer) ; XXX: GAsyncReadyCallback
+  (user-data :pointer)) ; XXX: gpointer
