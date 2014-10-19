@@ -45,6 +45,10 @@
 (define-g-enum "WebKitSaveMode" webkit-save-mode ()
   :webkit-save-mode-mhtml)
 
+(define-g-enum "WebKitSnapshotRegion" webkit-snapshot-region ()
+  :webkit-snapshot-region-visible
+  :webkit-snapshot-region-full-document)
+
 (defcfun "webkit_web_view_load_uri" :void
   (web-view (g-object webkit-web-view))
   (uri :string))
