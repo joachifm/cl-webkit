@@ -169,7 +169,7 @@
   (save-mode webkit-save-mode)
   (cancellable :pointer) ; XXX: GCancellable
   (callback :pointer) ; XXX: GAsyncReadyCallback
-  (user-data :pointer)) ; XXX: user-data
+  (user-data :pointer)) ; XXX: gpointer
 
 (defcfun "webkit_web_view_save_to_file_finish" :boolean
   (web-view (g-object webkit-web-view))
