@@ -89,6 +89,11 @@
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-go-forward)
 
+(defcfun "webkit_web_view_go_to_back_forward_list_item" :void
+  (web-view (g-object webkit-web-view))
+  (list-item (g-object webkit-back-forward-list-item)))
+(export 'webkit-web-view-go-to-back-forward-list-item)
+
 (defcfun "webkit_web_view_reload" :void
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-reload)
