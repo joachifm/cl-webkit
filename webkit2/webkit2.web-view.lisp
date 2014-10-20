@@ -175,6 +175,7 @@
   (web-view (g-object webkit-web-view))
   (result :pointer) ; XXX: GAsyncResult
   (error :pointer)) ; XXX: GError
+(export 'webkit-web-view-save-finish)
 
 (defcfun "webkit_web_view_save_to_file" :void
   (web-view (g-object webkit-web-view))
@@ -183,11 +184,13 @@
   (cancellable :pointer) ; XXX: GCancellable
   (callback :pointer) ; XXX: GAsyncReadyCallback
   (user-data :pointer)) ; XXX: gpointer
+(export 'webkit-web-view-save-to-file)
 
 (defcfun "webkit_web_view_save_to_file_finish" :boolean
   (web-view (g-object webkit-web-view))
   (result :pointer) ; XXX: GAsyncResult
   (error :pointer)) ; XXX: GError
+(export 'webkit-web-view-save-to-file-finish)
 
 (defcfun "webkit_web_view_get_snapshot" :void
   (web-view (g-object webkit-web-view))
@@ -196,8 +199,10 @@
   (cancellable :pointer) ; XXX: GCancellable
   (callback :pointer) ; XXX: GAsyncReadyCallback
   (user-data :pointer)) ; XXX: gpointer
+(export 'webkit-web-view-get-snapshot)
 
 (defcfun "webkit_web_view_get_snapshot_finish" :pointer ; XXX: cairo_surface_t
   (web-view (g-object webkit-web-view))
   (result :pointer) ; XXX: GAsyncResult
   (error :pointer)) ; XXX: GError
+(export 'webkit-web-view-get-snapshot-finish)
