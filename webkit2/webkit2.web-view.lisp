@@ -23,6 +23,8 @@
    ("web-context" "WebKitWebContext" t t)
    ("zoom-level" "gdouble" t t)))
 
+(defctype webkit-script-dialog :pointer) ; XXX: GBoxed WebScriptDialog
+
 (define-g-enum "WebKitLoadEvent" webkit-load-event ()
   :webkit-load-started
   :webkit-load-redirected
@@ -211,3 +213,25 @@
   (result :pointer) ; XXX: GAsyncResult
   (error :pointer)) ; XXX: GError
 (export 'webkit-web-view-get-snapshot-finish)
+
+(defcfun "webkit_script_dialog_get_dialog_type" webkit-script-dialog-type
+  (dialog webkit-script-dialog))
+(export 'webkit-script-dialog-get-dialog-type)
+
+(defcfun "webkit_script_dialog_get_message" :string
+  (dialog (g-object webkit-script-dialog)))
+(export 'webkit-script-dialog-get-message)
+
+(defcfun "webkit_script_dialog_confirm_set_confirmed" :void
+  (dialog (g-object webkit-script-dialog))
+  (confirmed :boolean))
+(export 'webkit-script-dialog-set-confirmed)
+
+(defcfun "webkit_script_dialog_prompt_get_default_text" :string
+  (dialog (g-object webkit-script-dialog)))
+(export 'webkit-script-dialog-prompt-get-default-text)
+
+(defcfun "webkit_script_dialog_prompt_set_text" :void
+  (dialog (g-object webkit-script-dialog))
+  (text :string))
+(export 'webkit-script-dialog-prompt-set-text)
