@@ -53,6 +53,11 @@
   :webkit-snapshot-options-none
   :webkit-snapshot-options-include-selection-highlighting)
 
+(define-g-enum "WebKitScriptDialogType" webkit-script-dialog-type ()
+  :webkit-script-dialog-alert
+  :webkit-script-dialog-confirm
+  :webkit-script-dialog-prompt)
+
 (defcfun "webkit_web_view_load_uri" :void
   (web-view (g-object webkit-web-view))
   (uri :string))
