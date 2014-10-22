@@ -90,3 +90,12 @@
 (defcfun "webkit_context_menu_item_get_stock_action" (g-object webkit-context-menu-action)
   (action (g-object webkit-context-menu-action)))
 (export 'webkit-context-menu-item-get-stock-action)
+
+(defcfun "webkit_context_menu_item_set_submenu" :void
+  (item (g-object webkit-context-menu-item))
+  (submenu (g-object webkit-context-menu)))
+(export 'webkit-context-menu-item-set-submenu)
+
+(defcfun "webkit_context_menu_item_get_submenu" (g-object webkit-context-menu)
+  (item (g-object webkit-context-menu-item)))
+(export 'webkit-context-menu-item-get-submenu)
