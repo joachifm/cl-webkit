@@ -242,3 +242,22 @@
   (dialog (g-object webkit-script-dialog))
   (text :string))
 (export 'webkit-script-dialog-prompt-set-text)
+
+(defcfun "webkit_web_view_can_execute_editing_command" :void
+  (web-view (g-object webkit-web-view))
+  (command :string)
+  (cancellable :pointer) ; XXX: GCanellable
+  (callback :pointer) ; XXX: GAsyncReadyCallback
+  (user-data :pointer)) ; XXX: gpointer
+(export 'webkit-web-view-can-execute-editing-command)
+
+(defcfun "webkit_web_view_can_execute_editing_command_finish" :boolean
+  (web-view (g-object webkit-web-view))
+  (result :pointer) ; XXX: GAsyncResult
+  (error :pointer)) ; XXX: GError
+(export 'webkit-web-view-can-execute-editing-command-finish)
+
+(defcfun "webkit_web_view_execute_editing_command" :void
+  (web-view (g-object webkit-web-view))
+  (command :string))
+(export 'webkit-web-view-can-execute-editing-command)
