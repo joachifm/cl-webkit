@@ -67,6 +67,8 @@
   :webkit-script-dialog-confirm
   :webkit-script-dialog-prompt)
 
+(defctype js-global-context-ref :pointer)
+
 (defcfun "webkit_web_view_load_uri" :void
   (web-view (g-object webkit-web-view))
   (uri :string))
@@ -261,3 +263,7 @@
   (web-view (g-object webkit-web-view))
   (command :string))
 (export 'webkit-web-view-can-execute-editing-command)
+
+(defcfun "webkit_web_view_get_javascript_global_context" js-global-context-ref
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-get-javascript-global-context)
