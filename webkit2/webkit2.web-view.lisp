@@ -279,3 +279,7 @@
 (defcfun "webkit_javascript_result_unref" :void
   (js-result webkit-javascript-result))
 (export 'webkit-javascript-result-unref)
+
+(defcfun "webkit_javascript_result_get_global_context" js-global-context-ref
+  (js-result webkit-javascript-result))
+(export 'webkit-javascript-result-get-global-context)
