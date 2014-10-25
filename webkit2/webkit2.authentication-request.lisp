@@ -47,3 +47,7 @@
 (defcfun "webkit_authentication_request_get_realm" :string
   (request (g-object webkit-authentication-request)))
 (export 'webkit-authentication-request-get-realm)
+
+(defcfun "webkit_authentication_request_get_scheme" webkit-authentication-scheme
+  (request (g-object webkit-authentication-request)))
+(export 'webkit-authentication-request-get-scheme)
