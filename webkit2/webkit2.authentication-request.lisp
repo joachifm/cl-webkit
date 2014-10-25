@@ -23,3 +23,7 @@
   :webkit-authentication-scheme-server-trust-evaluation-requested
   :webkit-authentication-scheme-unknown)
 (export 'webkit-authentication-scheme)
+
+(defcfun "webkit_authentication_request_cancel" :void
+  (request (g-object webkit-authentication-request)))
+(export 'webkit-authentication-request-cancel)
