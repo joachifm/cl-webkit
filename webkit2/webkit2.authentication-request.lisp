@@ -39,3 +39,7 @@
 (defcfun "webkit_authentication_request_get_port" :string
   (request (g-object webkit-authentication-request)))
 (export 'webkit-authentication-request-get-port)
+
+(defcfun "webkit_authentication_request_is_retry" :boolean
+  (request (g-object webkit-authentication-request)))
+(export 'webkit-authentication-request-is-retry)
