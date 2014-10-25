@@ -275,3 +275,7 @@
 (defcfun "webkit_javascript_result_ref" webkit-javascript-result
   (js-result webkit-javascript-result))
 (export 'webkit-javascript-result-ref)
+
+(defcfun "webkit_javascript_result_unref" :void
+  (js-result webkit-javascript-result))
+(export 'webkit-javascript-result-unref)
