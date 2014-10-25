@@ -35,3 +35,7 @@
 (defcfun "webkit_authentication_request_get_host" :string
   (request (g-object webkit-authentication-request)))
 (export 'webkit-authentication-request-get-host)
+
+(defcfun "webkit_authentication_request_get_port" :string
+  (request (g-object webkit-authentication-request)))
+(export 'webkit-authentication-request-get-port)
