@@ -27,3 +27,7 @@
 (defcfun "webkit_authentication_request_cancel" :void
   (request (g-object webkit-authentication-request)))
 (export 'webkit-authentication-request-cancel)
+
+(defcfun "webkit_authentication_request_can_save_credentials" :boolean
+  (request (g-object webkit-authentication-request)))
+(export 'webkit-authentication-request-can-save-credentials)
