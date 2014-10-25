@@ -56,6 +56,6 @@
   (request (g-object webkit-authentication-request)))
 (export 'webkit-authentication-request-get-scheme)
 
-(defcfun "webkit_authentication_request_is_proxy" :boolean
+(defcfun "webkit_authentication_request_is_for_proxy" :boolean
   (request (g-object webkit-authentication-request)))
-(export 'webkit-authentication-request-is-proxy)
+(export 'webkit-authentication-request-is-for-proxy)
