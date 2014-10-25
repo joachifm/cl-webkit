@@ -191,10 +191,14 @@
   (user-data :pointer)) ; XXX: gpointer
 (export 'webkit-web-view-save)
 
-(defcfun "webkit_web_view_save_finish" :pointer ; XXX: GInputStream
+(defcfun ("webkit_web_view_save_finish" %webkit-web-view-save-finish) :pointer ; XXX: GInputStream
   (web-view (g-object webkit-web-view))
   (result :pointer) ; XXX: GAsyncResult
-  (error :pointer)) ; XXX: GError
+  (gerror :pointer))
+
+(defun webkit-web-view-save-finish (web-view result)
+  (glib:with-g-error (err)
+    (%webkit-web-view-save-finish web-view result err)))
 (export 'webkit-web-view-save-finish)
 
 (defcfun "webkit_web_view_save_to_file" :void
@@ -206,10 +210,14 @@
   (user-data :pointer)) ; XXX: gpointer
 (export 'webkit-web-view-save-to-file)
 
-(defcfun "webkit_web_view_save_to_file_finish" :boolean
+(defcfun ("webkit_web_view_save_to_file_finish" %webkit-web-view-save-to-file-finish) :boolean
   (web-view (g-object webkit-web-view))
   (result :pointer) ; XXX: GAsyncResult
-  (error :pointer)) ; XXX: GError
+  (gerror :pointer))
+
+(defun webkit-web-view-save-to-file-finish (web-view result)
+  (glib:with-g-error (err)
+    (%webkit-web-view-save-to-file-finish web-view result err)))
 (export 'webkit-web-view-save-to-file-finish)
 
 (defcfun "webkit_web_view_get_snapshot" :void
@@ -221,10 +229,14 @@
   (user-data :pointer)) ; XXX: gpointer
 (export 'webkit-web-view-get-snapshot)
 
-(defcfun "webkit_web_view_get_snapshot_finish" :pointer ; XXX: cairo_surface_t
+(defcfun ("webkit_web_view_get_snapshot_finish" %webkit-web-view-get-snapshot-finish) :pointer ; XXX: cairo_surface_t
   (web-view (g-object webkit-web-view))
   (result :pointer) ; XXX: GAsyncResult
-  (error :pointer)) ; XXX: GError
+  (gerror :pointer))
+
+(defun webkit-web-view-get-snapshot-finish (web-view result)
+  (glib:with-g-error (err)
+    (%webkit-web-view-get-snapshot-finish web-view result err)))
 (export 'webkit-web-view-get-snapshot-finish)
 
 (defcfun "webkit_script_dialog_get_dialog_type" webkit-script-dialog-type
@@ -257,10 +269,14 @@
   (user-data :pointer)) ; XXX: gpointer
 (export 'webkit-web-view-can-execute-editing-command)
 
-(defcfun "webkit_web_view_can_execute_editing_command_finish" :boolean
+(defcfun ("webkit_web_view_can_execute_editing_command_finish" %webkit-web-view-can-execute-editing-command-finish) :boolean
   (web-view (g-object webkit-web-view))
   (result :pointer) ; XXX: GAsyncResult
-  (error :pointer)) ; XXX: GError
+  (gerror :pointer))
+
+(defun webkit-web-view-can-execute-editing-command-finish (web-view result)
+  (glib:with-g-error (err)
+    (%webkit-web-view-can-execute-editing-command-finish web-view result err)))
 (export 'webkit-web-view-can-execute-editing-command-finish)
 
 (defcfun "webkit_web_view_execute_editing_command" :void

@@ -41,10 +41,14 @@
   (user_data   :pointer))
 (export 'webkit-cookie-manager-get-accept-policy)
 
-(defcfun webkit_cookie_manager_get_accept_policy_finish webkit-cookie-accept-policy
+(defcfun ("webkit_cookie_manager_get_accept_policy_finish" %webkit-cookie-manager-get-accept-policy-finish) webkit-cookie-accept-policy
   (webkit-cookie-manager (g-object webkit-cookie-manager))
   (result :pointer)
-  (error  :pointer))
+  (gerror :pointer))
+
+(defun webkit-cookie-manager-get-accept-policy-finish (cookie-manager result)
+  (glib:with-g-error (err)
+    (%webkit-cookie-manager-get-accept-policy-finish cookie-manager result err)))
 (export 'webkit-cookie-manager-get-accept-policy-finish)
 
 (defcfun "webkit_cookie_manager_get_domains_with_cookies" :void
@@ -54,10 +58,14 @@
   (user_data   :pointer))
 (export 'webkit-cookie-manager-get-domains-with-cookies)
 
-(defcfun "webkit_cookie_manager_get_domains_with_cookies_finish" :string
+(defcfun ("webkit_cookie_manager_get_domains_with_cookies_finish" %webkit-cookie-manager-get-domains-with-cookies-finish) :string
   (webkit-cookie-manager (g-object webkit-cookie-manager))
   (result :pointer)
-  (error  :pointer))
+  (gerror :pointer))
+
+(defun webkit-cookie-manager-get-domains-with-cookies-finish (cookie-manager result)
+  (glib:with-g-error (err)
+    (%webkit-cookie-manager-get-domains-with-cookies-finish cookie-manager result err)))
 (export 'webkit-cookie-manager-get-domains-with-cookies-finish)
 
 (defcfun "webkit_cookie_manager_delete_cookies_for_domain" :void

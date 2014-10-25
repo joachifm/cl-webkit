@@ -79,10 +79,15 @@
   (user_data   :pointer))
 (export 'webkit-web-context-get-plugins)
 
-(defcfun "webkit_web_context_get_plugins_finish" (glib:g-list webkit-plugin)
+(defcfun ("webkit_web_context_get_plugins_finish" %webkit-web-context-get-plugins-finish) (glib:g-list webkit-plugin)
   (webkit-web-context (g-object webkit-web-context))
   (gasync-result :pointer)
   (gerror :pointer))
+
+(defun webkit-web-context-get-plugins-finish (web-context async-result)
+  (glib:with-g-error (err)
+    (%webkit-web-context-get-plugins-finish web-context async-result err)))
+
 (export 'webkit-web-context-get-plugins-finish)
 
 (defcfun "webkit_web_context_get_spell_checking_enabled" :boolean
