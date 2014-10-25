@@ -271,3 +271,7 @@
 (defcfun "webkit_web_view_get_javascript_global_context" js-global-context-ref
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-get-javascript-global-context)
+
+(defcfun "webkit_javascript_result_ref" webkit-javascript-result
+  (js-result webkit-javascript-result))
+(export 'webkit-javascript-result-ref)
