@@ -31,3 +31,7 @@
 (defcfun "webkit_authentication_request_can_save_credentials" :boolean
   (request (g-object webkit-authentication-request)))
 (export 'webkit-authentication-request-can-save-credentials)
+
+(defcfun "webkit_authentication_request_get_host" :string
+  (request (g-object webkit-authentication-request)))
+(export 'webkit-authentication-request-get-host)
