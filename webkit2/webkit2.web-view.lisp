@@ -69,6 +69,10 @@
 
 (defctype js-global-context-ref :pointer)
 
+(defctype webkit-javascript-result :pointer) ; XXX: GBoxed struct
+
+(defctype js-value-ref :pointer)
+
 (defcfun "webkit_web_view_load_uri" :void
   (web-view (g-object webkit-web-view))
   (uri :string))
