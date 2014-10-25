@@ -43,3 +43,7 @@
 (defcfun "webkit_authentication_request_is_retry" :boolean
   (request (g-object webkit-authentication-request)))
 (export 'webkit-authentication-request-is-retry)
+
+(defcfun "webkit_authentication_request_get_realm" :string
+  (request (g-object webkit-authentication-request)))
+(export 'webkit-authentication-request-get-realm)
