@@ -153,6 +153,14 @@
     (%webkit-web-view-run-javascript-finish web-view result err)))
 (export 'webkit-web-view-run-javascript-finish)
 
+(defcfun "webkit_web_view_run_javascript_from_gresource" :void
+  (web-view (g-object webkit-web-view))
+  (resource :string)
+  (cancellable :pointer) ; GCancellable
+  (callback :pointer) ; GAsyncReadyCallback
+  (user-data :pointer))
+(export 'webkit-web-view-run-javascript-from-resource)
+
 (defcfun "webkit_web_view_download_uri" (g-object webkit-download)
   (web-view (g-object webkit-web-view))
   (uri :string))
