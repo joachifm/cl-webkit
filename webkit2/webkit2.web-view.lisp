@@ -143,6 +143,16 @@
   (user-data :pointer))
 (export 'webkit-web-view-run-javascript)
 
+(defcfun ("webkit_web_view_run_javascript_finish" %webkit-web-view-run-javascript-finish) webkit-javascript-result
+  (web-view (g-object webkit-web-view))
+  (result :pointer) ; GAsyncResult
+  (gerror :pointer))
+
+(defun webkit-web-view-run-javascript-finish (web-view result)
+  (glib:with-g-error (err)
+    (%webkit-web-view-run-javascript-finish web-view result err)))
+(export 'webkit-web-view-run-javascript-finish)
+
 (defcfun "webkit_web_view_download_uri" (g-object webkit-download)
   (web-view (g-object webkit-web-view))
   (uri :string))
