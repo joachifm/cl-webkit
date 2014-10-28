@@ -75,3 +75,19 @@
 (defcfun "webkit_credential_free" :void
   (credential webkit-credential))
 (export 'webkit-credential-free)
+
+(defcfun "webkit_credential_get_password" :string
+  (credential webkit-credential))
+(export 'webkit-credential-get-password)
+
+(defcfun "webkit_credential_get_persistence" webkit-credential-persistence
+  (credential webkit-credential))
+(export 'webkit-credential-get-persistence)
+
+(defcfun "webkit_credential_get_username" :string
+  (credential webkit-credential))
+(export 'webkit-credential-get-username)
+
+(defcfun "webkit_credential_has_password" :boolean
+  (credential webkit-credential))
+(export 'webkit-credential-has-password)
