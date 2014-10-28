@@ -30,6 +30,11 @@
   :webkit-credential-persistence-for-session
   :webkit-credential-persistence-permanent)
 
+(defcfun "webkit_authentication_request_authenticate" :void
+  (request (g-object webkit-authentication-request))
+  (credential webkit-credential))
+(export 'webkit-authentication-request-authenticate)
+
 (defcfun "webkit_authentication_request_cancel" :void
   (request (g-object webkit-authentication-request)))
 (export 'webkit-authentication-request-cancel)
@@ -49,6 +54,10 @@
 (defcfun "webkit_authentication_request_is_retry" :boolean
   (request (g-object webkit-authentication-request)))
 (export 'webkit-authentication-request-is-retry)
+
+(defcfun "webkit_authentication_request_get_proposed_credential" webkit-credential
+  (request (g-object webkit-authentication-request)))
+(export 'webkit-authentication-request-get-proposed-credential)
 
 (defcfun "webkit_authentication_request_get_realm" :string
   (request (g-object webkit-authentication-request)))
