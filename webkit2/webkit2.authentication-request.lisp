@@ -12,6 +12,8 @@
 
 (define-webkit-class "WebKitAuthenticationRequest" () ())
 
+(defctype webkit-credential :pointer) ; XXX: GBoxed struct WebKitCredential
+
 (define-g-enum "WebKitAuthenticationScheme" webkit-authentication-scheme ()
   :webkit-authentication-scheme-default
   :webkit-authentication-scheme-http-basic
@@ -59,3 +61,17 @@
 (defcfun "webkit_authentication_request_is_for_proxy" :boolean
   (request (g-object webkit-authentication-request)))
 (export 'webkit-authentication-request-is-for-proxy)
+
+(defcfun "webkit_credential_new" webkit-credential
+  (username :string)
+  (password :string)
+  (persistence webkit-credential-persistence))
+(export 'webkit-credential-new)
+
+(defcfun "webkit_credential_copy" webkit-credential
+  (credential webkit-credential))
+(export 'webkit-credential-copy)
+
+(defcfun "webkit_credential_free" :void
+  (credential webkit-credential))
+(export 'webkit-credential-free)
