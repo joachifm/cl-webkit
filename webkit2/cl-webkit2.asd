@@ -32,6 +32,7 @@
                (:file "webkit2.authentication-request")
                (:file "webkit2.back-forward-list-item")
                (:file "webkit2.back-forward-list")
+               (:file "webkit2.certificate-info")
                (:file "webkit2.cookie-manager")
                (:file "webkit2.context-menu-item")
                (:file "webkit2.context-menu")
