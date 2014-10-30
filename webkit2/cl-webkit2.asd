@@ -29,6 +29,7 @@
                (:file "macros")
                (:file "translate")
                (:file "webkit2.init")
+               (:file "webkit2.error")
                (:file "webkit2.authentication-request")
                (:file "webkit2.back-forward-list-item")
                (:file "webkit2.back-forward-list")
