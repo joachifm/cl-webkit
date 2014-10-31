@@ -46,3 +46,11 @@
 
 (define-g-enum "WebKitSnapshotError" webkit-snapshot-error ()
   :webkit-snapshot-error-failed-to-create)
+
+(defcfun "webkit_network_error_quark" glib:g-quark)
+(defcfun "webkit_plugin_error_quark" glib:g-quark)
+(defcfun "webkit_policy_error_quark" glib:g-quark)
+(defcfun "webkit_download_error_quark" glib:g-quark)
+(defcfun "webkit_print_error_quark" glib:g-quark)
+(defcfun "webkit_javascript_error_quark" glib:g-quark)
+(defcfun "webkit_snapshot_error_quark" glib:g-quark)
