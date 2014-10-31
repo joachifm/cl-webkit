@@ -47,6 +47,8 @@
 (define-g-enum "WebKitSnapshotError" webkit-snapshot-error ()
   :webkit-snapshot-error-failed-to-create)
 
+;;; XXX: grovel these definitions instead
+
 (defcfun "webkit_network_error_quark" glib:g-quark)
 (defcfun "webkit_plugin_error_quark" glib:g-quark)
 (defcfun "webkit_policy_error_quark" glib:g-quark)
@@ -54,3 +56,11 @@
 (defcfun "webkit_print_error_quark" glib:g-quark)
 (defcfun "webkit_javascript_error_quark" glib:g-quark)
 (defcfun "webkit_snapshot_error_quark" glib:g-quark)
+
+(defparameter *webkit-network-error* (webkit-network-error-quark))
+(defparameter *webkit-plugin-error* (webkit-plugin-error-quark))
+(defparameter *webkit-policy-error* (webkit-policy-error-quark))
+(defparameter *webkit-download-error* (webkit-download-error-quark))
+(defparameter *webkit-print-error* (webkit-print-error-quark))
+(defparameter *webkit-javascript-error* (webkit-javascript-error-quark))
+(defparameter *webkit-snapshot-error* (webkit-snapshot-error-quark))
