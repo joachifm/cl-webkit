@@ -1,7 +1,5 @@
 ;;; webkit2.init.lisp --- initialize foreign library
 
-;; Copyright (c) 2014 Joachim Fasting
-;;
 ;; This file is part of cl-webkit.
 ;;
 ;; cl-webkit is free software; you can redistribute it and/or modify
