@@ -10,6 +10,13 @@
 
 (in-package :webkit2)
 
+(defparameter +webkit-editing-command-cut+ "Cut") ; XXX: WEBKIT_EDITING_COMMAND_CUT
+(defparameter +webkit-editing-command-copy+ "Copy") ; XXX: WEBKIT_EDITING_COMMAND_COPY
+(defparameter +webkit-editing-command-paste+ "Paste") ; XXX: WEBKIT_EDITING_COMMAND_PASTE
+(defparameter +webkit-editing-command-select-all+ "SelectAll") ; XXX: WEBKIT_EDITING_COMMAND_SELECT_ALL
+(defparameter +webkit-editing-command-undo+ "Undo") ; XXX: WEBKIT_EDITING_COMMAND_UNDO
+(defparameter +webkit-editing-command-redo+ "Redo") ; XXX: WEBKIT_EDITING_COMMAND_REDO
+
 (define-webkit-class "WebKitWebView"
   (:superclass gtk-widget
    :interfaces ("AtkImplementorIface" "GtkBuildable"))
@@ -20,6 +27,8 @@
    ("view-mode" "WebKitViewMode" t t)
    ("web-context" "WebKitWebContext" t t)
    ("zoom-level" "gdouble" t t)))
+
+(defctype webkit-script-dialog :pointer) ; XXX: GBoxed WebScriptDialog
 
 (define-g-enum "WebKitLoadEvent" webkit-load-event ()
   :webkit-load-started
@@ -40,6 +49,28 @@
   :webkit-view-mode-web
   :webkit-view-mode-source)
 
+(define-g-enum "WebKitSaveMode" webkit-save-mode ()
+  :webkit-save-mode-mhtml)
+
+(define-g-enum "WebKitSnapshotRegion" webkit-snapshot-region ()
+  :webkit-snapshot-region-visible
+  :webkit-snapshot-region-full-document)
+
+(define-g-enum "WebKitSnapshotOptions" webkit-snapshot-options ()
+  :webkit-snapshot-options-none
+  :webkit-snapshot-options-include-selection-highlighting)
+
+(define-g-enum "WebKitScriptDialogType" webkit-script-dialog-type ()
+  :webkit-script-dialog-alert
+  :webkit-script-dialog-confirm
+  :webkit-script-dialog-prompt)
+
+(defctype js-global-context-ref :pointer)
+
+(defctype webkit-javascript-result :pointer) ; XXX: GBoxed struct
+
+(defctype js-value-ref :pointer)
+
 (defcfun "webkit_web_view_load_uri" :void
   (web-view (g-object webkit-web-view))
   (uri :string))
@@ -55,7 +86,7 @@
   (web-view (g-object webkit-web-view))
   (content :string)
   (content-uri :string)
-  (base-uri :string))
+  (base-uri :string)) ; XXX: can be NULL
 (export 'webkit-web-view-load-alternate-html)
 
 (defcfun "webkit_web_view_load_plain_text" :void
@@ -178,9 +209,6 @@
   (errors :pointer)) ; XXX: GTlsCertificateFlags *
 (export 'webkit-web-view-get-tls-info)
 
-(define-g-enum "WebKitSaveMode" webkit-save-mode ()
-  :webkit-save-mode-mhtml)
-
 (defcfun "webkit_web_view_save" :void
   (web-view (g-object webkit-web-view))
   (save-mode webkit-save-mode)
@@ -218,14 +246,6 @@
     (%webkit-web-view-save-to-file-finish web-view result err)))
 (export 'webkit-web-view-save-to-file-finish)
 
-(define-g-enum "WebKitSnapshotRegion" webkit-snapshot-region ()
-  :webkit-snapshot-region-visible
-  :webkit-snapshot-region-full-document)
-
-(define-g-enum "WebKitSnapshotOptions" webkit-snapshot-options ()
-  :webkit-snapshot-options-none
-  :webkit-snapshot-options-include-selection-highlighting)
-
 (defcfun "webkit_web_view_get_snapshot" :void
   (web-view (g-object webkit-web-view))
   (region webkit-snapshot-region)
@@ -244,13 +264,6 @@
   (glib:with-g-error (err)
     (%webkit-web-view-get-snapshot-finish web-view result err)))
 (export 'webkit-web-view-get-snapshot-finish)
-
-(defctype webkit-script-dialog :pointer) ; XXX: GBoxed WebScriptDialog
-
-(define-g-enum "WebKitScriptDialogType" webkit-script-dialog-type ()
-  :webkit-script-dialog-alert
-  :webkit-script-dialog-confirm
-  :webkit-script-dialog-prompt)
 
 (defcfun "webkit_script_dialog_get_dialog_type" webkit-script-dialog-type
   (dialog webkit-script-dialog))
@@ -274,13 +287,6 @@
   (text :string))
 (export 'webkit-script-dialog-prompt-set-text)
 
-(defparameter +webkit-editing-command-cut+ "Cut") ; XXX: WEBKIT_EDITING_COMMAND_CUT
-(defparameter +webkit-editing-command-copy+ "Copy") ; XXX: WEBKIT_EDITING_COMMAND_COPY
-(defparameter +webkit-editing-command-paste+ "Paste") ; XXX: WEBKIT_EDITING_COMMAND_PASTE
-(defparameter +webkit-editing-command-select-all+ "SelectAll") ; XXX: WEBKIT_EDITING_COMMAND_SELECT_ALL
-(defparameter +webkit-editing-command-undo+ "Undo") ; XXX: WEBKIT_EDITING_COMMAND_UNDO
-(defparameter +webkit-editing-command-redo+ "Redo") ; XXX: WEBKIT_EDITING_COMMAND_REDO
-
 (defcfun "webkit_web_view_can_execute_editing_command" :void
   (web-view (g-object webkit-web-view))
   (command :string)
@@ -303,12 +309,6 @@
   (web-view (g-object webkit-web-view))
   (command :string))
 (export 'webkit-web-view-can-execute-editing-command)
-
-(defctype js-global-context-ref :pointer)
-
-(defctype webkit-javascript-result :pointer) ; XXX: GBoxed struct
-
-(defctype js-value-ref :pointer)
 
 (defcfun "webkit_web_view_get_javascript_global_context" js-global-context-ref
   (web-view (g-object webkit-web-view)))
