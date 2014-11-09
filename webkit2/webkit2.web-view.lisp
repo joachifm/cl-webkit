@@ -86,7 +86,7 @@
   (web-view (g-object webkit-web-view))
   (content :string)
   (content-uri :string)
-  (base-uri :string)) ; XXX: can be NULL
+  (base-uri :string))
 (export 'webkit-web-view-load-alternate-html)
 
 (defcfun "webkit_web_view_load_plain_text" :void
@@ -214,7 +214,7 @@
   (save-mode webkit-save-mode)
   (cancellable :pointer) ; XXX: GCancellable
   (callback :pointer) ; XXX: GAsyncReadyCallback
-  (user-data :pointer)) ; XXX: gpointer
+  (user-data :pointer))
 (export 'webkit-web-view-save)
 
 (defcfun ("webkit_web_view_save_finish" %webkit-web-view-save-finish) :pointer ; XXX: GInputStream
@@ -233,7 +233,7 @@
   (save-mode webkit-save-mode)
   (cancellable :pointer) ; XXX: GCancellable
   (callback :pointer) ; XXX: GAsyncReadyCallback
-  (user-data :pointer)) ; XXX: gpointer
+  (user-data :pointer))
 (export 'webkit-web-view-save-to-file)
 
 (defcfun ("webkit_web_view_save_to_file_finish" %webkit-web-view-save-to-file-finish) :boolean
@@ -252,7 +252,7 @@
   (options webkit-snapshot-options)
   (cancellable :pointer) ; XXX: GCancellable
   (callback :pointer) ; XXX: GAsyncReadyCallback
-  (user-data :pointer)) ; XXX: gpointer
+  (user-data :pointer))
 (export 'webkit-web-view-get-snapshot)
 
 (defcfun ("webkit_web_view_get_snapshot_finish" %webkit-web-view-get-snapshot-finish) :pointer ; XXX: cairo_surface_t
@@ -290,9 +290,9 @@
 (defcfun "webkit_web_view_can_execute_editing_command" :void
   (web-view (g-object webkit-web-view))
   (command :string)
-  (cancellable :pointer) ; XXX: GCanellable
+  (cancellable :pointer) ; XXX: GCancellable
   (callback :pointer) ; XXX: GAsyncReadyCallback
-  (user-data :pointer)) ; XXX: gpointer
+  (user-data :pointer))
 (export 'webkit-web-view-can-execute-editing-command)
 
 (defcfun ("webkit_web_view_can_execute_editing_command_finish" %webkit-web-view-can-execute-editing-command-finish) :boolean
