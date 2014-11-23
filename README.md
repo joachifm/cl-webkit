@@ -16,6 +16,9 @@ That is, `*_{new,get,set}` methods are excluded in favour of `make-instance`
 and slot accessors wherever possible.
 For documentation on how to use the WebKit2 API, please refer to the C API
 documentation.
+Generally, the binding will not maintain backwards compatibility with older
+versions of WebKit2, preferring instead to closely follow the newest version
+readily available on mainstream distributions.
 
 ## Status
 [![Build Status](https://travis-ci.org/joachifm/cl-webkit.svg?branch=master)](https://travis-ci.org/joachifm/cl-webkit)
@@ -52,8 +55,7 @@ Assuming you have [Quicklisp] installed, do
 ## Contributing
 Send patches via email or as pull requests on [GitHub].
 Feel free to append your name to the list of
-[CONTRIBUTORS](../master/CONTRIBUTORS) (anything above fixing single-letter
-typos warrants a mention).
+[CONTRIBUTORS](https://github.com/joachifm/cl-webkit/blob/master/CONTRIBUTORS).
 
 A few things to keep in mind
 
@@ -77,7 +79,8 @@ A few things to keep in mind
 * [lispkit](https://github.com/AeroNotix/lispkit), a lisp browser using WebKit
 
 ## Copying
-cl-webkit is distributed under the MIT license (see [COPYING](../master/COPYING)).
+cl-webkit is distributed under the MIT license
+(see [COPYING](https://github.com/joachifm/cl-webkit/blob/master/COPYING)).
 Please note that this licence only covers the binding itself.
 Refer to the distribution terms of the third-party dependencies for
 details.
