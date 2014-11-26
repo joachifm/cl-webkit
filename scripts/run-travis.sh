@@ -2,7 +2,7 @@
 
 #### parameters
 
-SBCL_VER=1.2.3
+SBCL_VER=1.2.5
 SBCL_ARCH=x86-64-linux
 SBCL_NAME="sbcl-${SBCL_VER}-${SBCL_ARCH}"
 SBCL_URL="http://prdownloads.sourceforge.net/sbcl/${SBCL_NAME}-binary.tar.bz2"
