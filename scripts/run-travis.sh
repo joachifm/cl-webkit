@@ -32,7 +32,7 @@ alias sbcl='sbcl --noinform --no-sysinit --no-userinit --disable-debugger'
 #### install system deps
 
 sudo apt-get install python-software-properties
-sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main" -y
+sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu utopic main" -y
 sudo apt-get update -yy
 sudo apt-get install libgtk-3.0 libwebkit2gtk-3.0-dev
 
