@@ -103,6 +103,14 @@
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-go-back)
 
+(defcfun "webkit_web_view_load_bytes" :void
+  (web-view (g-object webkit-web-view))
+  (bytes :pointer) ; XXX: GBytes *
+  (mime-type :string)
+  (encoding :string)
+  (base-uri :string))
+(export 'webkit-web-view-load-bytes)
+
 (defcfun "webkit_web_view_go_forward" :void
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-go-forward)
