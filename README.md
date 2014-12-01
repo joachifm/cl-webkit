@@ -14,11 +14,13 @@ class based interfaces are preferred over functional interfaces in cases
 where both are provided.
 That is, `*_{new,get,set}` methods are excluded in favour of `make-instance`
 and slot accessors wherever possible.
+
 For documentation on how to use the WebKit2 API, please refer to the C API
 documentation.
-Generally, the binding will not maintain backwards compatibility with older
-versions of WebKit2, preferring instead to closely follow the newest version
-readily available on mainstream distributions.
+
+Backwards compatibility (with older WebKit2 API versions) is not a priority.
+The binding targets the latest version of Webkit2Gtk+ available on mainstream
+distributions.
 
 ## Status
 [![Build Status](https://travis-ci.org/joachifm/cl-webkit.svg?branch=master)](https://travis-ci.org/joachifm/cl-webkit)
