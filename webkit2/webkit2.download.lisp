@@ -15,4 +15,5 @@
 (define-webkit-class "WebKitDownload" ()
   (("destination" "gchararray")
    ("estimated-progress" "gdouble")
-   ("response" "WebKitURIResponse")))
+   ("response" "WebKitURIResponse")
+   ("allow-overwrite" "gboolean")))
