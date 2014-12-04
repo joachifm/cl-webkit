@@ -122,6 +122,12 @@
   (webkit-web-context (g-object webkit-web-context)))
 (export 'webkit-web-context-get-tls-errors-policy)
 
+(defcfun "webkit_web_context_allow_tls_certificate_for_host" :void
+  (webkit-web-context (g-object webkit-web-context))
+  (certificate :pointer) ; XXX: GTlsCertificate
+  (host :string))
+(export 'webkit-web-context-allow-tls-certificate-for-host)
+
 (defcfun "webkit_web_context_set_web_extensions_directory" :void
   (webkit-web-context (g-object webkit-web-context))
   (directory :string))
