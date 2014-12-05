@@ -58,4 +58,3 @@
     ("serif-font-family" "gchararray" t t)
     ("user-agent" "gchararray" t t)
     ("zoom-text-only" "gboolean" t t)))
-
