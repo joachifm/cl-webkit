@@ -52,6 +52,7 @@
                (:file "webkit2.policy-decision")
                (:file "webkit2.navigation-policy-decision")
                (:file "webkit2.response-policy-decision")
+               (:file "webkit2.navigation-action")
                (:file "webkit2.user-content-manager")
                (:file "webkit2.web-context")
                (:file "webkit2.web-page")
