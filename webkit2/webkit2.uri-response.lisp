@@ -10,10 +10,13 @@
 
 (in-package :webkit2)
 
+(defctype soup-message-headers :pointer) ; XXX: SoupMessageHeaders *
+
 (define-webkit-class "WebKitURIResponse"
     ;; XXX: until medial->delim can handle consequtive uppers
     (:type-initializer "webkit_uri_response_get_type")
   (("content-length" "guint")
+   ("http-headers" soup-message-headers)
    ("mime-type" "gchararray")
    ("status-code" "guint")
    ("suggested-filename" "gchararray")
