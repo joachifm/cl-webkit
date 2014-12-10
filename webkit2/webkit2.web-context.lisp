@@ -148,12 +148,6 @@
   (hostname :string))
 (export 'webkit-web-context-set-disk-cache-directory)
 
-(defcfun "webkit_web_context_allow_tls_certificate_for_host" :void
-  (webkit-web-context (g-object webkit-web-context))
-  (webkit-certificate-info :pointer)
-  (host :string))
-(export 'webkit-web-context-allow-tls-certificate-for-host)
-
 (defcfun "webkit_web_context_set_process_model" :void
   (webkit-web-context (g-object webkit-web-context))
   (webkit-process-model webkit-process-model))
