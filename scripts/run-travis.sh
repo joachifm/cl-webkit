@@ -68,5 +68,3 @@ git clone https://github.com/crategus/cl-cffi-gtk.git ${LOCAL_LISP_TREE}/cl-cffi
 
 sbcl --load "${QL_HOME}/setup.lisp" --eval '(ql:quickload (list "cl-webkit2" "cl-webkit2-tests"))' --quit
 sbcl --load "${QL_HOME}/setup.lisp" --load ./demo/simple-browser.lisp --eval '(simple-browser-main)' --quit
-
-clisp -i "${HOME}/clisp-wrapper.lisp"
