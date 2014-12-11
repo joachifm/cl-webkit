@@ -12,6 +12,8 @@
 
 (defctype soup-message-headers :pointer)
 
+(export 'soup-message-headers)
+
 (defcfun "soup_message_headers_get_one" :string
   (headers soup-message-headers)
   (name :string))
