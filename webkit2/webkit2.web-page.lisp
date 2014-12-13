@@ -13,9 +13,7 @@
 (define-webkit-class "WebKitWebPage" ()
   (("uri" "gchararray")))
 
-(defctype webkit-dom-document :pointer)
-
-(defcfun "webkit_web_page_get_dom_document" webkit-dom-document
+(defcfun "webkit_web_page_get_dom_document" (g-object webkit-dom-document)
   (web-page (g-object webkit-web-page)))
 (export 'webkit-web-page-get-dom-document)
 
