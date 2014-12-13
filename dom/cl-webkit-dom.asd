@@ -22,5 +22,6 @@
   :licence "MIT"
   :version "0.0"
   :serial t
-  :components ((:file "package"))
-  :depends-on (:cffi))
+  :components ((:file "package")
+               (:file "document"))
+  :depends-on (:cffi :cl-cffi-gtk))
