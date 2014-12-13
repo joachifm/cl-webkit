@@ -11,5 +11,5 @@
 (in-package :cl-user)
 
 (defpackage #:cl-webkit-dom
-  (:nicknames :webkit-dom :dom)
+  (:nicknames :webkit-dom)
   (:use :cl :cffi))
