@@ -10,10 +10,11 @@
 
 (in-package #:webkit-dom)
 
+;;; XXX: replace opaque pointer types with proper types
 (gobject:define-g-object-class "WebKitDOMDocument" webkit-dom-document
-  (:superclass g-object
+  (:superclass g-object ; XXX: GObject -> WebKitDOMObject -> WebKitDOMNode -> WebKitDOMDocument
                :export t
-               :interfaces nil
+               :interfaces nil ; XXX: implements WebKitDOMEventTarget
                :type-initializer "webkit_dom_document_get_type")
   (
   ;; slot-name      accessor-name             g-object name      type     r w
