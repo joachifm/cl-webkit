@@ -5,7 +5,7 @@
 SBCL_VER=1.2.6
 SBCL_ARCH=x86-64-linux
 SBCL_NAME="sbcl-${SBCL_VER}-${SBCL_ARCH}"
-SBCL_URL="http://prdownloads.sourceforge.net/sbcl/${SBCL_NAME}-binary.tar.bz2"
+SBCL_URL="http://prdownloads.sourceforge.net/sbcl/${SBCL_NAME}-binary.tar.bz2?use_mirror=autoselect"
 
 LOCAL_LISP_TREE=${HOME}/common-lisp
 QL_HOME=${HOME}/quicklisp
@@ -16,7 +16,7 @@ set -ev
 
 export SBCL_HOME="${HOME}/lib/sbcl"
 export PATH="${HOME}/bin${PATH:+:}${PATH}"
-export CL_SOURCE_REGISTRY="${TRAVIS_BUILD_DIR}//:${LOCAL_LISP_TREE}//:${CL_SOURCE_REGISTRY}"
+export CL_SOURCE_REGISTRY="${TRAVIS_BUILD_DIR}//:${LOCAL_LISP_TREE}//${CL_SOURCE_REGISTRY:+:}${CL_SOURCE_REGISTRY}"
 
 export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_CONFIG_HOME="${HOME}/.config"
@@ -49,8 +49,7 @@ EOF
 
 #### bootstrap SBCL
 
-curl "${SBCL_URL}?use_mirror=autoselect" -o "${SBCL_NAME}.tar.bz2"
-bzip2 -dc "${SBCL_NAME}.tar.bz2" | tar -xf -
+curl "$SBCL_URL" | tar -xjf -
 (cd "$SBCL_NAME" && INSTALL_ROOT="$HOME" sh ./install.sh)
 
 #### bootstrap quicklisp
