@@ -23,5 +23,6 @@
   :version "0.0"
   :serial t
   :components ((:file "package")
+               (:file "element")
                (:file "document"))
   :depends-on (:cffi :cl-cffi-gtk))
