@@ -24,5 +24,6 @@
   :serial t
   :components ((:file "package")
                (:file "element")
-               (:file "document"))
+               (:file "document")
+               (:file "event"))
   :depends-on (:cffi :cl-cffi-gtk))
