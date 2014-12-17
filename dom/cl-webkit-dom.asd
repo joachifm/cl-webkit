@@ -23,6 +23,7 @@
   :version "0.0"
   :serial t
   :components ((:file "package")
+               (:file "init")
                (:file "element")
                (:file "document")
                (:file "event"))
