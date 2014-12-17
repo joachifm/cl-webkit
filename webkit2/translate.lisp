@@ -14,6 +14,11 @@
 
 (in-package :webkit2)
 
+(defun translate-webkit-class-name (g-class-name)
+  (cffi:translate-camelcase-name g-class-name
+                                 :special-words '("DOM" "URI" "WebKit")
+                                 :upper-initial-p t))
+
 (defmethod cffi:translate-name-to-foreign (name (package (eql *package*)) &optional varp)
   (declare (ignore varp))
   (translate-underscore-separated-name name))

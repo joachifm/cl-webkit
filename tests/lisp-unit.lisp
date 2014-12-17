@@ -79,6 +79,27 @@
     (let ((*print-case* :downcase))
       (webkit2::foo->symbol 'foo)))))
 
+;;; Translations
+
+(defparameter *class-name-translation-inputs*
+  '(("WebKitWebView" . WEBKIT-WEB-VIEW)
+    ("WebKitResponsePolicyDecision" . WEBKIT-RESPONSE-POLICY-DECISION)
+    ("WebKitURIRequest" . WEBKIT-URI-REQUEST)
+    ("WebKitURIResponse" . WEBKIT-URI-RESPONSE)
+    ("WebKitDOMEvent" . WEBKIT-DOM-EVENT)))
+
+(lisp-unit:define-test translate-webkit-class-name-from
+  (mapcar #'(lambda (x)
+              (let ((res (webkit2::translate-webkit-class-name (car x))))
+                (cons res (equal (cdr x) res))))
+          *class-name-translation-inputs*))
+
+(lisp-unit:define-test translate-webkit-class-name-to
+  (mapcar #'(lambda (x)
+              (let ((res (webkit2::translate-webkit-class-name (cdr x))))
+                (cons res (equal (car x) res))))
+          *class-name-translation-inputs*))
+
 ;;; Defining macros
 
 (lisp-unit:define-test define-webkit-class-example-1
