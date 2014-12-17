@@ -81,10 +81,6 @@ GNAME is a string like WebKitWebView."
                (medial->delim gname :delim #\_ :start 6)
                "_get_type"))
 
-(defun webkit-gname-string->class-name (gname)
-  "Derive class name from GNAME, where GNAME is a string like WebKitWebView."
-  (foo->symbol "webkit-" (medial->delim gname :start 6)))
-
 (defmacro define-webkit-class (g-type-name
                                (&key (superclass 'g-object)
                                      (export t)
@@ -92,7 +88,7 @@ GNAME is a string like WebKitWebView."
                                      (type-initializer (webkit-gname-string->type-initializer g-type-name)))
                                   (&rest properties))
   "A variant of DEFINE-G-OBJECT-CLASS* tuned for WebKit types."
-  (let ((class-name (webkit-gname-string->class-name g-type-name)))
+  (let ((class-name (translate-webkit-class-name g-type-name)))
     `(define-g-object-class* ,g-type-name ,class-name
        (:superclass ,superclass :export ,export :interfaces ,interfaces
                     :type-initializer ,type-initializer)
