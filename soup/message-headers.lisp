@@ -11,24 +11,14 @@
 (in-package #:cl-soup)
 
 (defctype soup-message-headers :pointer)
-
 (export 'soup-message-headers)
 
 (defcfun "soup_message_headers_get_one" :string
   (headers soup-message-headers)
   (name :string))
+(export 'soup-message-headers-get-one)
 
 (defcfun "soup_message_headers_get_list" :string
   (headers soup-message-headers)
   (name :string))
-
-;;; libsoup provides a deprecated function of the same name; users
-;;; of this binding are unlikely to care whether the header they are
-;;; getting can occur only one, so provide a unified interface.
-;;;
-;;; Ideally, we'd have a soup-message-headers->hashtable function.
-(defun soup-message-headers-get (headers name)
-  (or (soup-message-headers-get-one headers name)
-      (soup-message-headers-get-list headers name)))
-
-(export 'soup-message-headers-get)
+(export 'soup-message-headers-get-list)
