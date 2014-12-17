@@ -12,6 +12,7 @@
 
 (define-foreign-library libsoup
     (:unix (:or "libsoup-2.4.so.1.7.0" ; libsoup-2.48.0
+                "libsoup-2.4.so"
                 )))
 
 (use-foreign-library libsoup)
