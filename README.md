@@ -36,8 +36,7 @@ The binding currently covers most of the WebKit 2.4 API.
   implementation that supports CFFI.
 - A recent checkout of [cl-cffi-gtk]
 
-To run the test-suite you also need a checkout of [lisp-unit]
-(the quicklisp version does not work).
+To run the test-suite you also need a checkout of [lisp-unit].
 
 [CFFI]: http://common-lisp.net/project/cffi
 [cl-cffi-gtk]: https://github.com/crategus/cl-cffi-gtk.git
