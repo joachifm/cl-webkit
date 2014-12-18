@@ -22,36 +22,6 @@
 
 ;;; Utilities
 
-(lisp-unit:define-test medial->delim-nonmedial
-  (lisp-unit:assert-equal
-   "foobar"
-   (webkit2::medial->delim "foobar")))
-
-(lisp-unit:define-test medial->delim-single-uppers
-  (lisp-unit:assert-equal
-   "web-view"
-   (webkit2::medial->delim "WebView")))
-
-(lisp-unit:define-test medial->delim-skip-prefix
-  (lisp-unit:assert-equal
-   "web-view"
-   (webkit2::medial->delim "WebKitWebView" :start 6)))
-
-(lisp-unit:define-test medial->delim-to-upcase
-  (lisp-unit:assert-equal
-   "WEB-VIEW"
-   (webkit2::medial->delim "WebView" :norm-case #'char-upcase)))
-
-(lisp-unit:define-test medial->delim-multi-uppers
-  (lisp-unit:assert-equal
-   "url-response"
-   (webkit2::medial->delim "URLResponse")))
-
-(lisp-unit:define-test medial->delim-idem
-  (lisp-unit:assert-equal
-   "web-view"
-   (webkit2::medial->delim (webkit2::medial->delim "WebView"))))
-
 (lisp-unit:define-test foo->symbol-upper-string
   (lisp-unit:assert-equal
    "FOO"

@@ -77,8 +77,7 @@ webkit_name_get_type.
 
 GNAME is a string like WebKitWebView."
   (concatenate 'string
-               "webkit_"
-               (medial->delim gname :delim #\_ :start 6)
+               (cffi:translate-name-to-foreign (translate-webkit-class-name gname) *package*)
                "_get_type"))
 
 (defmacro define-webkit-class (g-type-name

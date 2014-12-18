@@ -10,9 +10,7 @@
 
 (in-package :webkit2)
 
-(define-webkit-class "WebKitURIRequest"
-    ;; XXX: until medial->delim can handle consequtive uppers
-    (:type-initializer "webkit_uri_request_get_type")
+(define-webkit-class "WebKitURIRequest" ()
   (("uri" "gchararray" t t)))
 
 (defcfun "webkit_uri_request_get_http_headers" soup:soup-message-headers
