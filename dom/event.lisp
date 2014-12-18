@@ -15,7 +15,7 @@
   (:superclass g-object ; XXX: GObject -> WebKitDOMObject -> WebKitDOMEvent
                :export t
                :interfaces nil
-               :type-initializer "webkit_dom_event_get_type") ; XXX: invalid
+               :type-initializer "webkit_dom_event_get_type")
   (
    ;; slot-name      accessor-name             g-object name      type     r w
    (bubbles event-bubbles "bubbles" :boolean t nil)

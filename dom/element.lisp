@@ -15,7 +15,7 @@
   (:superclass g-object ; XXX: GObject -> WebKitDOMObject -> WebKitDOMNode -> WebKitDOMElement
                :export t
                :interfaces nil ; XXX: implements WebKitDOMEventTarget
-               :type-initializer "webkit_dom_element_get_type") ; XXX: invalid
+               :type-initializer "webkit_dom_element_get_type")
   (
    ;; slot-name      accessor-name             g-object name      type     r w
    (attributes
