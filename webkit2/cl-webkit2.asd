@@ -24,8 +24,8 @@
   :serial t
   :components ((:file "webkit2.package")
                (:file "util")
-               (:file "macros")
                (:file "translate")
+               (:file "macros")
                (:file "webkit2.init")
                (:file "webkit2.error")
                (:file "webkit2.authentication-request")
