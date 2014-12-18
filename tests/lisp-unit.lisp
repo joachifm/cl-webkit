@@ -12,7 +12,7 @@
 
 ;;; The number of test cases known to fail
 
-(defparameter *expected-failure-count* 3)
+(defparameter *expected-failure-count* 2)
 
 ;;; Main entry point
 
