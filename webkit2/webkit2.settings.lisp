@@ -8,7 +8,7 @@
 
 ;;; Code:
 
-(in-package :webkit2)
+(in-package #:webkit2)
 
 (define-webkit-class "WebKitSettings" ()
    (("allow-modal-dialogs" "gboolean" t t)

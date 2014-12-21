@@ -8,7 +8,7 @@
 
 ;;; Code:
 
-(in-package :webkit2)
+(in-package #:webkit2)
 
 (define-g-enum "WebKitNetworkError" webkit-network-error ()
   :webkit-network-error-failed

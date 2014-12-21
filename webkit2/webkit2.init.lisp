@@ -8,7 +8,7 @@
 
 ;;; Code:
 
-(in-package :webkit2)
+(in-package #:webkit2)
 
 (define-foreign-library libwebkit2
     (:unix (:or "libwebkit2gtk-4.0.so"         ; webkit2gtk-2.6.4

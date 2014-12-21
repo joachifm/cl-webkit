@@ -8,7 +8,7 @@
 
 ;;; Code:
 
-(in-package :webkit2)
+(in-package #:webkit2)
 
 ;;; A more convenient wrapper for DEFINE-G-OBJECT-CLASS
 

@@ -1,4 +1,4 @@
-(in-package :webkit2)
+(in-package #:webkit2)
 
 (define-webkit-class "WebKitFrame" () ())
 

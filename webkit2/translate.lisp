@@ -12,7 +12,7 @@
 
 ;;; Code:
 
-(in-package :webkit2)
+(in-package #:webkit2)
 
 (defun translate-webkit-class-name (g-class-name)
   (cffi:translate-camelcase-name g-class-name

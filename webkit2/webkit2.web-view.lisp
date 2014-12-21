@@ -8,7 +8,7 @@
 
 ;;; Code:
 
-(in-package :webkit2)
+(in-package #:webkit2)
 
 (defparameter +webkit-editing-command-cut+ "Cut") ; XXX: WEBKIT_EDITING_COMMAND_CUT
 (defparameter +webkit-editing-command-copy+ "Copy") ; XXX: WEBKIT_EDITING_COMMAND_COPY

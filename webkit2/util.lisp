@@ -8,7 +8,7 @@
 
 ;;; Code:
 
-(in-package :webkit2)
+(in-package #:webkit2)
 
 (defun foo->symbol (&rest lst)
   "Convert a list of things (coercible to string) into a symbol."

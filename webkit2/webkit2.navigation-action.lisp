@@ -8,7 +8,7 @@
 
 ;;; Code:
 
-(in-package :webkit2)
+(in-package #:webkit2)
 
 (defctype webkit-navigation-action :pointer) ; XXX: GBoxed
 
