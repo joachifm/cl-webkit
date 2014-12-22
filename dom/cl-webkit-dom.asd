@@ -26,5 +26,6 @@
                (:file "init")
                (:file "element")
                (:file "document")
-               (:file "event"))
+               (:file "event")
+               (:file "keyboard-event"))
   :depends-on (:cffi :cl-cffi-gtk))
