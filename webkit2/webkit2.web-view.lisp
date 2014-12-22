@@ -76,6 +76,10 @@
   (uri :string))
 (export 'webkit-web-view-load-uri)
 
+(defcfun "webkit_web_view_get_uri" :string
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-uri)
+
 (defcfun "webkit_web_view_load_html" :void
   (web-view (g-object webkit-web-view))
   (content :string)
