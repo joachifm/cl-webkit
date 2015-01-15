@@ -145,13 +145,13 @@
   (web-view (g-object webkit-web-view))
   (script :string)
   (cancellable :pointer)
-  (async-ready-callback :pointer)
+  (callback g-async-ready-callback)
   (user-data :pointer))
 (export 'webkit-web-view-run-javascript)
 
 (defcfun ("webkit_web_view_run_javascript_finish" %webkit-web-view-run-javascript-finish) webkit-javascript-result
   (web-view (g-object webkit-web-view))
-  (result :pointer) ; GAsyncResult
+  (result g-async-result)
   (gerror :pointer))
 
 (defun webkit-web-view-run-javascript-finish (web-view result)
@@ -163,13 +163,13 @@
   (web-view (g-object webkit-web-view))
   (resource :string)
   (cancellable :pointer) ; GCancellable
-  (callback :pointer) ; GAsyncReadyCallback
+  (callback g-async-ready-callback)
   (user-data :pointer))
 (export 'webkit-web-view-run-javascript-from-resource)
 
 (defcfun ("webkit_web_view_run_javascript_from_gresource_finish" %webkit-web-view-run-javascript-from-gresource-finish) webkit-javascript-result
   (web-view (g-object webkit-web-view))
-  (result :pointer) ; GAsyncResult
+  (result g-async-result)
   (gerror :pointer))
 
 (defun webkit-web-view-run-javascript-from-gresource-finish (web-view result)
@@ -221,13 +221,13 @@
   (web-view (g-object webkit-web-view))
   (save-mode webkit-save-mode)
   (cancellable :pointer) ; XXX: GCancellable
-  (callback :pointer) ; XXX: GAsyncReadyCallback
+  (callback g-async-ready-callback)
   (user-data :pointer))
 (export 'webkit-web-view-save)
 
 (defcfun ("webkit_web_view_save_finish" %webkit-web-view-save-finish) :pointer ; XXX: GInputStream
   (web-view (g-object webkit-web-view))
-  (result :pointer) ; XXX: GAsyncResult
+  (result g-async-result)
   (gerror :pointer))
 
 (defun webkit-web-view-save-finish (web-view result)
@@ -240,13 +240,13 @@
   (file :pointer) ; XXX: GFile
   (save-mode webkit-save-mode)
   (cancellable :pointer) ; XXX: GCancellable
-  (callback :pointer) ; XXX: GAsyncReadyCallback
+  (callback g-async-ready-callback)
   (user-data :pointer))
 (export 'webkit-web-view-save-to-file)
 
 (defcfun ("webkit_web_view_save_to_file_finish" %webkit-web-view-save-to-file-finish) :boolean
   (web-view (g-object webkit-web-view))
-  (result :pointer) ; XXX: GAsyncResult
+  (result g-async-result)
   (gerror :pointer))
 
 (defun webkit-web-view-save-to-file-finish (web-view result)
@@ -259,13 +259,13 @@
   (region webkit-snapshot-region)
   (options webkit-snapshot-options)
   (cancellable :pointer) ; XXX: GCancellable
-  (callback :pointer) ; XXX: GAsyncReadyCallback
+  (callback g-async-ready-callback)
   (user-data :pointer))
 (export 'webkit-web-view-get-snapshot)
 
 (defcfun ("webkit_web_view_get_snapshot_finish" %webkit-web-view-get-snapshot-finish) :pointer ; XXX: cairo_surface_t
   (web-view (g-object webkit-web-view))
-  (result :pointer) ; XXX: GAsyncResult
+  (result g-async-result)
   (gerror :pointer))
 
 (defun webkit-web-view-get-snapshot-finish (web-view result)
@@ -299,13 +299,13 @@
   (web-view (g-object webkit-web-view))
   (command :string)
   (cancellable :pointer) ; XXX: GCancellable
-  (callback :pointer) ; XXX: GAsyncReadyCallback
+  (callback g-async-ready-callback)
   (user-data :pointer))
 (export 'webkit-web-view-can-execute-editing-command)
 
 (defcfun ("webkit_web_view_can_execute_editing_command_finish" %webkit-web-view-can-execute-editing-command-finish) :boolean
   (web-view (g-object webkit-web-view))
-  (result :pointer) ; XXX: GAsyncResult
+  (result g-async-result)
   (gerror :pointer))
 
 (defun webkit-web-view-can-execute-editing-command-finish (web-view result)

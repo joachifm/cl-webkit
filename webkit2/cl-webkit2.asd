@@ -26,6 +26,7 @@
                (:file "util")
                (:file "translate")
                (:file "macros")
+               (:file "callback")
                (:file "webkit2.init")
                (:file "webkit2.error")
                (:file "webkit2.authentication-request")
