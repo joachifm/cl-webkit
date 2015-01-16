@@ -2,7 +2,7 @@
 
 #### parameters
 
-SBCL_VER=1.2.6
+SBCL_VER=1.2.7
 SBCL_ARCH=x86-64-linux
 SBCL_NAME="sbcl-${SBCL_VER}-${SBCL_ARCH}"
 SBCL_URL="http://prdownloads.sourceforge.net/sbcl/${SBCL_NAME}-binary.tar.bz2?use_mirror=autoselect"
@@ -38,14 +38,14 @@ sudo apt-get --no-upgrade install libgtk-3.0 libwebkit2gtk-4.0-dev libsoup2.4-de
 
 #### bootstrap clisp
 
-sudo apt-get install clisp
+# sudo apt-get install clisp
 
-cat >"${HOME}/clisp-wrapper.lisp" <<EOF
-(load "${QL_HOME}/setup.lisp")
-(ql:quickload (list "cl-webkit2" "cl-webkit2-tests"))
-(load "./demo/simple-browser.lisp")
-(ext:exit)
-EOF
+# cat >"${HOME}/clisp-wrapper.lisp" <<EOF
+# (load "${QL_HOME}/setup.lisp")
+# (ql:quickload (list "cl-webkit2" "cl-webkit2-tests"))
+# (load "./demo/simple-browser.lisp")
+# (ext:exit)
+# EOF
 
 #### bootstrap SBCL
 
@@ -60,8 +60,6 @@ sbcl --load ./quicklisp.lisp --eval '(quicklisp-quickstart:install)' --quit
 #### install lisp dependencies
 
 mkdir -p "$LOCAL_LISP_TREE"
-git clone https://github.com/OdonataResearchLLC/lisp-unit.git ${LOCAL_LISP_TREE}/lisp-unit
-git clone https://github.com/crategus/cl-cffi-gtk.git ${LOCAL_LISP_TREE}/cl-cffi-gtk
 
 #### run
 
