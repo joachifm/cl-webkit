@@ -58,10 +58,23 @@
   (defcfun "webkit_javascript_error_quark" glib:g-quark)
   (defcfun "webkit_snapshot_error_quark" glib:g-quark))
 
-(defparameter *webkit-network-error* (webkit-network-error-quark))
-(defparameter *webkit-plugin-error* (webkit-plugin-error-quark))
-(defparameter *webkit-policy-error* (webkit-policy-error-quark))
-(defparameter *webkit-download-error* (webkit-download-error-quark))
-(defparameter *webkit-print-error* (webkit-print-error-quark))
-(defparameter *webkit-javascript-error* (webkit-javascript-error-quark))
-(defparameter *webkit-snapshot-error* (webkit-snapshot-error-quark))
+(defparameter +webkit-network-error+ (webkit-network-error-quark))
+(export '+webkit-network-error+)
+
+(defparameter +webkit-plugin-error+ (webkit-plugin-error-quark))
+(export '+webkit-plugin-error+)
+
+(defparameter +webkit-policy-error+ (webkit-policy-error-quark))
+(export '+webkit-policy-error+)
+
+(defparameter +webkit-download-error+ (webkit-download-error-quark))
+(export '+webkit-download-error+)
+
+(defparameter +webkit-print-error+ (webkit-print-error-quark))
+(export '+webkit-print-error+)
+
+(defparameter +webkit-javascript-error+ (webkit-javascript-error-quark))
+(export '+webkit-javascript-error+)
+
+(defparameter +webkit-snapshot-error+ (webkit-snapshot-error-quark))
+(export '+webkit-snapshot-error+)
