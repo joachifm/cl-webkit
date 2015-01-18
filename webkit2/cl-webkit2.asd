@@ -61,4 +61,5 @@
                (:file "webkit2.web-inspector")
                (:file "webkit2.web-view")
                (:file "webkit2.window-properties"))
-  :depends-on (:cffi :cl-cffi-gtk :cl-soup :cl-webkit-dom))
+  :depends-on (:cffi :cl-cffi-gtk
+               :cl-soup :cl-webkit-dom))
