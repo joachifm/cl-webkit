@@ -12,11 +12,22 @@
 
 ;; XXX: grovel these
 (defparameter +webkit-editing-command-cut+ "Cut") ; XXX: WEBKIT_EDITING_COMMAND_CUT
+(export '+webkit-editing-command-cut+)
+
 (defparameter +webkit-editing-command-copy+ "Copy") ; XXX: WEBKIT_EDITING_COMMAND_COPY
+(export '+webkit-editing-command-copy+)
+
 (defparameter +webkit-editing-command-paste+ "Paste") ; XXX: WEBKIT_EDITING_COMMAND_PASTE
+(export '+webkit-editing-command-paste+)
+
 (defparameter +webkit-editing-command-select-all+ "SelectAll") ; XXX: WEBKIT_EDITING_COMMAND_SELECT_ALL
+(export '+webkit-editing-command-select-all+)
+
 (defparameter +webkit-editing-command-undo+ "Undo") ; XXX: WEBKIT_EDITING_COMMAND_UNDO
+(export '+webkit-editing-command-undo+)
+
 (defparameter +webkit-editing-command-redo+ "Redo") ; XXX: WEBKIT_EDITING_COMMAND_REDO
+(export '+webkit-editing-command-redo+)
 
 (define-webkit-class "WebKitWebView"
   (:superclass gtk-widget
