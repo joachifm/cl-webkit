@@ -17,7 +17,7 @@
   `(cffi:defcallback ,name :void ((source-object :pointer)
                                   (result g-async-result)
                                   (user-data :pointer))
-                     `@body))
+                     ,@body))
 
 (defmacro with-g-async-ready-callback ((var &body callback-body) &body body)
   (let ((g (gensym "CALLBACK")))
@@ -26,4 +26,4 @@
            ,@callback-body)
        (let ((,var (callback ,g)))
          ,@body)
-       (fmakeunbound ,g))))
+       (fmakunbound ',g))))
