@@ -26,4 +26,4 @@
            ,@callback-body)
        (let ((,var (callback ,g)))
          ,@body)
-       (fmakeunbound ,g))))
+       (fmakunbound ',g))))
