@@ -12,4 +12,4 @@
 
 (defpackage #:cl-webkit-dom
   (:nicknames :webkit-dom)
-  (:use :cl :cffi))
+  (:use :cl :cffi :gobject))

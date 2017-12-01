@@ -29,4 +29,4 @@
                (:file "event")
                (:file "keyboard-event")
                (:file "mouse-event"))
-  :depends-on (:cffi :cl-cffi-gtk))
+  :depends-on (:cffi :cl-cffi-gtk :cl-cffi-gtk-gobject))
