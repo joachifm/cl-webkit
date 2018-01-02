@@ -8,7 +8,7 @@
 
 ;;; Code:
 
-#-(or clisp sbcl)
+#-(or clisp sbcl ccl)
 (warn "unsupported implementation, satisfaction uncertain!")
 
 #-asdf3
