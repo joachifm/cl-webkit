@@ -23,7 +23,6 @@ The binding targets the latest version of Webkit2Gtk+ available on mainstream
 distributions.
 
 ## Status
-[![Build Status](https://travis-ci.org/joachifm/cl-webkit.svg?branch=master)](https://travis-ci.org/joachifm/cl-webkit)
 
 The binding currently covers most of the WebKit 2.4 API.
 
