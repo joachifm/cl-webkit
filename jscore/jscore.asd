@@ -24,5 +24,4 @@
   :components ((:file "jscore.package")
                (:file "jscore.init")
                (:file "jscore.js-value-ref"))
-  :depends-on (:cffi :cl-cffi-gtk
-               :cl-soup :cl-webkit-dom))
+  :depends-on (:cffi))

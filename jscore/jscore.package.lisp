@@ -11,5 +11,4 @@
 (in-package :cl-user)
 
 (defpackage #:jscore
-  (:nicknames :webkit2 :webkit)
-  (:use :cl :cffi :gtk :gobject))
+  (:use :cl :cffi))

@@ -11,7 +11,6 @@
 (in-package #:webkit-dom)
 
 (define-foreign-library libwebkit2
-    (:unix (:or "libwebkit2gtk-4.0.so"         ; webkit2gtk-2.6.4
-                )))
+    (:unix (:or "libwebkit2gtk-3.0.so")))
 
 (use-foreign-library libwebkit2)
