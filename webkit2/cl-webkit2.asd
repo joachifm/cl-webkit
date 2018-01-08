@@ -46,6 +46,7 @@
                (:file "webkit2.print-operation")
                (:file "webkit2.script-world")
                (:file "webkit2.frame")
+               (:file "jscore.js-value-ref")
                (:file "webkit2.security-manager")
                (:file "webkit2.settings")
                (:file "webkit2.policy-decision")
