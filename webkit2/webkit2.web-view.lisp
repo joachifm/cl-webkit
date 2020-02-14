@@ -161,6 +161,39 @@
   (user-data :pointer))
 (export 'webkit-web-view-run-javascript)
 
+(defvar callback-counter 0)
+(defvar callbacks ())
+(defstruct callback
+  (id)
+  (web-view)
+  (function))
+
+(cffi:defcallback javascript-evaluation-complete
+    :void ((source-object :pointer) (result :pointer) (user-data :pointer))
+  (declare (ignore source-object))
+  (let* ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id)))
+         (js-result (webkit-web-view-run-javascript-finish (callback-web-view callback) result))
+         (context (webkit-javascript-result-get-global-context js-result))
+         (value (webkit-javascript-result-get-value js-result))
+         (js-str-value (jscore:js-value-to-string-copy context value (cffi:null-pointer)))
+         (js-str-length (jscore:js-string-get-maximum-utf-8-c-string-size js-str-value))
+         (str-value (cffi:foreign-alloc :char :count (cffi:convert-from-foreign js-str-length :unsigned-int))))
+    (jscore:js-string-get-utf-8-c-string js-str-value str-value js-str-length)
+    (remove callback callbacks)
+    (when (callback-function callback)
+      (funcall (callback-function callback) (cffi:foreign-string-to-lisp str-value)))))
+
+(defun webkit-web-view-evaluate-javascript (web-view javascript &optional call-back)
+  "Evaluate javascript in web-view calling call-back upon completion."
+  (incf callback-counter)
+  (push (make-callback :id callback-counter :web-view web-view :function call-back) callbacks)
+  (webkit-web-view-run-javascript
+   web-view javascript
+   (cffi:null-pointer)
+   (cffi:callback javascript-evaluation-complete)
+   (cffi:make-pointer callback-counter)))
+(export 'webkit-web-view-evaluate-javascript)
+
 (defcfun ("webkit_web_view_run_javascript_finish" %webkit-web-view-run-javascript-finish) webkit-javascript-result
   (web-view (g-object webkit-web-view))
   (result g-async-result)
