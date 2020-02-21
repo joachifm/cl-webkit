@@ -183,7 +183,11 @@
         (remove callback callbacks)
         (when (callback-function callback)
           (funcall (callback-function callback) (cffi:foreign-string-to-lisp str-value))))
-    (error (c) (format t "Could not evaluate JavaScript: ~a" c))))
+    (error (c)
+      (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
+        (funcall (callback-function callback) nil) ; call back callback with nil to indicate failure
+        (remove callback callbacks)
+        (format t "Could not evaluate JavaScript: ~a" c)))))
 
 (defun webkit-web-view-evaluate-javascript (web-view javascript &optional call-back)
   "Evaluate javascript in web-view calling call-back upon completion."
