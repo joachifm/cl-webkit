@@ -180,7 +180,7 @@
              (js-str-length (jscore:js-string-get-maximum-utf-8-c-string-size js-str-value))
              (str-value (cffi:foreign-alloc :char :count (cffi:convert-from-foreign js-str-length :unsigned-int))))
         (jscore:js-string-get-utf-8-c-string js-str-value str-value js-str-length)
-        (remove callback callbacks)
+        (setf callbacks (delete callback callbacks))
         (when (callback-function callback)
           (funcall (callback-function callback) (cffi:foreign-string-to-lisp str-value))))
     (error (c)
