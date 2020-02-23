@@ -54,6 +54,7 @@
                (:file "webkit2.response-policy-decision")
                (:file "webkit2.navigation-action")
                (:file "webkit2.user-content-manager")
+               (:file "webkit2.network-proxy-settings")
                (:file "webkit2.web-context")
                (:file "webkit2.web-page")
                (:file "webkit2.web-resource")
