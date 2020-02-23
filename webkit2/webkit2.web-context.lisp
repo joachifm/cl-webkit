@@ -27,6 +27,11 @@
   :webkit-process-model-shared-secondary-process
   :webkit-process-model-multiple-secondary-processes)
 
+(define-g-enum "WebKitNetworkProxyMode" webkit-network-proxy-mode ()
+  :webkit-network-proxy-mode-default
+  :webkit-network-proxy-mode-no-proxy
+  :webkit-network-proxy-mode-custom)
+
 (defcfun "webkit_web_context_get_default" (g-object webkit-web-context))
 (export 'webkit-web-context-get-default)
 
@@ -164,3 +169,9 @@
   (user_data :pointer)
   (gdestroynotify :pointer))
 (export 'webkit-web-context-register-uri-scheme)
+
+(defcfun "webkit_web_context_set_network_proxy_settings" :void
+  (webkit-web-context (g-object webkit-web-context))
+  (proxy-mode webkit-network-proxy-mode)
+  (proxy-settings (g-object webkit-network-proxy-settings)))
+(export 'webkit-web-context-set-network-proxy-settings)
