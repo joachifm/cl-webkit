@@ -12,7 +12,3 @@
 
 (define-webkit-class "WebKitURIRequest" ()
   (("uri" "gchararray" t t)))
-
-(defcfun "webkit_uri_request_get_http_headers" soup:soup-message-headers
-  (request (g-object webkit-uri-request)))
-(export 'webkit-request-get-http-headers)
