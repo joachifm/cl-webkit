@@ -26,7 +26,7 @@
 
 (defcfun "webkit_navigation_action_get_mouse_button" :int
   (navigation webkit-navigation-action))
-(export 'wekbkit-navigation-action-get-mouse-button)
+(export 'webkit-navigation-action-get-mouse-button)
 
 (defcfun "webkit_navigation_action_get_modifiers" :int ;; XXX GdkModifierType bitmask
   (navigation webkit-navigation-action))
