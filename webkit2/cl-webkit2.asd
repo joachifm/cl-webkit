@@ -8,7 +8,7 @@
 
 ;;; Code:
 
-#-(or clisp sbcl)
+#-(or clisp sbcl ccl)
 (warn "unsupported implementation, satisfaction uncertain!")
 
 #-asdf3
@@ -46,20 +46,20 @@
                (:file "webkit2.print-operation")
                (:file "webkit2.script-world")
                (:file "webkit2.frame")
+               (:file "jscore.js-value-ref")
                (:file "webkit2.security-manager")
                (:file "webkit2.settings")
                (:file "webkit2.uri-request")
-               (:file "webkit2.uri-response")
                (:file "webkit2.policy-decision")
                (:file "webkit2.navigation-policy-decision")
                (:file "webkit2.response-policy-decision")
                (:file "webkit2.navigation-action")
                (:file "webkit2.user-content-manager")
+               (:file "webkit2.network-proxy-settings")
                (:file "webkit2.web-context")
                (:file "webkit2.web-page")
                (:file "webkit2.web-resource")
                (:file "webkit2.web-inspector")
                (:file "webkit2.web-view")
                (:file "webkit2.window-properties"))
-  :depends-on (:cffi :cl-cffi-gtk
-               :cl-soup :cl-webkit-dom))
+  :depends-on (:cffi :cl-cffi-gtk))

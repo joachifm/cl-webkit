@@ -13,3 +13,6 @@
 (defpackage #:cl-webkit2
   (:nicknames :webkit2 :webkit)
   (:use :cl :cffi :gtk :gobject))
+
+(defpackage #:jscore
+  (:use :cl :cffi))

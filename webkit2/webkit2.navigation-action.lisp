@@ -12,6 +12,10 @@
 
 (defctype webkit-navigation-action :pointer) ; XXX: GBoxed
 
+(defcfun "webkit_navigation_policy_decision_get_navigation_action" webkit-navigation-action
+  (policy-decision (g-object webkit-navigation-policy-decision)))
+(export 'webkit-navigation-policy-decision-get-navigation-action)
+
 (defcfun "webkit_navigation_action_copy" webkit-navigation-action
   (navigation webkit-navigation-action))
 (export 'webkit-navigation-action-copy)
@@ -26,9 +30,9 @@
 
 (defcfun "webkit_navigation_action_get_mouse_button" :int
   (navigation webkit-navigation-action))
-(export 'wekbkit-navigation-action-get-mouse-button)
+(export 'webkit-navigation-action-get-mouse-button)
 
-(defcfun "webkit_navigation_action_get_modifiers" :int ;; XXX GdkModifierType bitmask
+(defcfun "webkit_navigation_action_get_modifiers" gdk:gdk-modifier-type
   (navigation webkit-navigation-action))
 (export 'webkit-navigation-action-get-modifiers)
 

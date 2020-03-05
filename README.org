@@ -1,0 +1,52 @@
+* cl-webkit - WebKitGTK+ binding for Common Lisp
+
+** About
+ cl-webkit is a binding to [WebKitGTK+] for Common Lisp, currently
+ targeting WebKit version 2.  The WebKitGTK+ library adds web browsing
+ capabilities to an application, leveraging the full power of the
+ WebKit browsing engine.
+
+** API overview
+The cl-webkit API closely follows the WebKit2 API, with the exception
+that class based interfaces are preferred over functional interfaces
+in cases where both are provided.
+
+That is, ~*_{new,get,set}~ methods are excluded in favour of
+~make-instance~ and slot accessors wherever possible.
+
+For documentation on how to use the WebKit2 API, please refer to the C
+API documentation.
+
+Backwards compatibility (with older WebKit2 API versions) is not a
+priority.  The binding targets the latest version of Webkit2Gtk+
+available on mainstream distributions.
+
+** Dependencies
+- A working installation of WebKit2GTK+ (whichever package provides
+  ~libwebkit2gtk-4.0.so~, e.g., ~libwebkit2gtk~ on Debian).
+- A [CFFI] compatible Common Lisp implementation.  The package is
+  developed using [SBCL] but should work on any implementation that
+  supports CFFI.
+- A recent checkout of [cl-cffi-gtk]
+
+** Installation
+Assuming you have [Quicklisp] installed, do
+
+1. Clone to =~/common-lisp/quicklisp/local-projects/cl-webkit=
+2. > lisp
+3. > (ql:quickload :cl-webkit2)
+
+** Contributing
+Contributing implies an agreement to redistribute the work under the
+project's license (see below); please make sure that you own the
+rights to the work you contribute.
+
+** Resources
+- [[WebKit2GTK+ Stable API reference]]
+- [[http://common-lisp.net/project/cffi/manual/html_node/index.html][CFFI User Manual]]
+
+** Copying
+cl-webkit is distributed under the MIT license.
+
+Please note that this licence only covers the binding itself. Refer to
+the distribution terms of the third-party dependencies for details.
