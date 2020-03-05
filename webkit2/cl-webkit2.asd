@@ -48,8 +48,6 @@
                (:file "webkit2.frame")
                (:file "webkit2.security-manager")
                (:file "webkit2.settings")
-               (:file "webkit2.uri-request")
-               (:file "webkit2.uri-response")
                (:file "webkit2.policy-decision")
                (:file "webkit2.navigation-policy-decision")
                (:file "webkit2.response-policy-decision")
@@ -61,5 +59,4 @@
                (:file "webkit2.web-inspector")
                (:file "webkit2.web-view")
                (:file "webkit2.window-properties"))
-  :depends-on (:cffi :cl-cffi-gtk
-               :cl-soup :cl-webkit-dom))
+  :depends-on (:cffi :cl-cffi-gtk))
