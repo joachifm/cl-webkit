@@ -30,6 +30,7 @@
     ("enable-hyperlink-auditing" "gboolean" t t)
     ("enable-java" "gboolean" t t)
     ("enable-javascript" "gboolean" t t)
+    ("enable-javascript-markup" "gboolean" t t)
     ("enable-media-stream" "gboolean" t t)
     ("enable-mediasource" "gboolean" t t)
     ("enable-offline-web-application-cache" "gboolean" t t)
