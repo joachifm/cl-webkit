@@ -35,6 +35,10 @@
   (exception :pointer))
 (export 'js-value-to-string-copy)
 
+(cffi:defcfun ("JSValueToString" js-value-to-string) :pointer
+  (value js-value-ref))
+(export 'js-value-to-string)
+
 (cffi:defcfun ("JSStringGetMaximumUTF8CStringSize" js-string-get-maximum-utf-8-c-string-size) :unsigned-int
   (string js-string-ref))
 (export 'js-string-get-maximum-utf-8-c-string-size)
