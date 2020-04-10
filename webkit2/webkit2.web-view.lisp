@@ -386,6 +386,11 @@
   (js-result webkit-javascript-result))
 (export 'webkit-javascript-result-get-global-context)
 
+;; Deprecated, use webkit-javascript-result-get-js-value instead.
 (defcfun "webkit_javascript_result_get_value" js-value-ref
   (js-result webkit-javascript-result))
 (export 'webkit-javascript-result-get-value)
+
+(defcfun "webkit_javascript_result_get_js_value" js-value-ref
+  (js-result webkit-javascript-result))
+(export 'webkit-javascript-result-get-js-value)
