@@ -28,9 +28,17 @@
 
 (eval-when (:load-toplevel :execute)
   (with-standard-io-syntax
-    (let ((versym (intern (format nil "WEBKIT2-~a.~a"
-                                  (webkit-get-major-version)
-                                  (webkit-get-minor-version))
-                          :keyword)))
+    (let* ((version (format nil "~a.~a"
+                            (webkit-get-major-version)
+                            (webkit-get-minor-version)))
+           (versym (intern (format nil "WEBKIT2-~a" version)
+                           :keyword)))
+      (when (uiop:version<= "2.26" version)
+        ;; Sandboxing only works on Linux as of 2.28.  See
+        ;; https://webkitgtk.org/reference/webkit2gtk/unstable/WebKitWebContext.html.
+        ;; TODO: Only set feature on Linux?
+        (pushnew (intern "WEBKIT2-SANDBOXING" :keyword)
+                 *features*))
       (pushnew versym *features*)))
+
   (pushnew :WEBKIT2 *features*))

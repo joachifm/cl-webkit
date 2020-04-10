@@ -175,3 +175,18 @@
   (proxy-mode webkit-network-proxy-mode)
   (proxy-settings (g-object webkit-network-proxy-settings)))
 (export 'webkit-web-context-set-network-proxy-settings)
+
+#+webkit2-sandboxing
+(progn
+  (defcfun "webkit_web_context_get_sandbox_enabled" :boolean
+    (webkit-web-context (g-object webkit-web-context)))
+  (export 'webkit-web-context-get-sandbox-enabled)
+  (defcfun "webkit_web_context_set_sandbox_enabled" :void
+    (webkit-web-context (g-object webkit-web-context))
+    (enabled :boolean))
+  (export 'webkit-web-context-set-sandbox-enabled)
+  (defcfun "webkit_web_context_add_path_to_sandbox" :void
+    (webkit-web-context (g-object webkit-web-context))
+    (path :string)
+    (read-only :boolean))
+  (export 'webkit-web-context-add-path-to-sandbox))
