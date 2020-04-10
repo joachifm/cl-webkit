@@ -27,24 +27,20 @@
 (cffi:defcfun ("JSValueIsString" js-value-is-string) :bool
   (ctx js-context-ref)
   (value js-value-ref))
-
 (export 'js-value-is-string)
 
 (cffi:defcfun ("JSValueToStringCopy" js-value-to-string-copy) :pointer
   (ctx js-context-ref)
   (value js-value-ref)
   (exception :pointer))
-
 (export 'js-value-to-string-copy)
 
 (cffi:defcfun ("JSStringGetMaximumUTF8CStringSize" js-string-get-maximum-utf-8-c-string-size) :unsigned-int
   (string js-string-ref))
-
 (export 'js-string-get-maximum-utf-8-c-string-size)
 
 (cffi:defcfun ("JSStringGetUTF8CString" js-string-get-utf-8-c-string) :void
   (js-str-value :pointer)
   (str-value :pointer)
   (str-length :unsigned-int))
-
 (export 'js-string-get-utf-8-c-string)
