@@ -43,3 +43,7 @@
 (defcfun "webkit_navigation_action_is_user_gesture" :boolean
   (navigation webkit-navigation-action))
 (export 'webkit-navigation-action-is-user-gesture)
+
+(defcfun "webkit_navigation_action_is_redirect" :boolean
+  (navigation webkit-navigation-action))
+(export 'webkit-navigation-action-is-redirect)
