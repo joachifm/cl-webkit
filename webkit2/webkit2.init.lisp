@@ -37,8 +37,8 @@
         ;; Sandboxing only works on Linux as of 2.28.  See
         ;; https://webkitgtk.org/reference/webkit2gtk/unstable/WebKitWebContext.html.
         ;; TODO: Only set feature on Linux?
-        (pushnew (intern "WEBKIT2-SANDBOXING" :keyword)
-                 *features*))
+        (dolist (sym '("WEBKIT2-SANDBOXING" "WEBKIT2-MEDIA"))
+          (pushnew (intern sym :keyword) *features*)))
       (pushnew versym *features*)))
 
   (pushnew :WEBKIT2 *features*))
