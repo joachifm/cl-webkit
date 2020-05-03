@@ -58,4 +58,6 @@
     ("sans-serif-font-family" "gchararray" t t)
     ("serif-font-family" "gchararray" t t)
     ("user-agent" "gchararray" t t)
-    ("zoom-text-only" "gboolean" t t)))
+    ("zoom-text-only" "gboolean" t t)
+    #+webkit2-media
+    ("enable-media" "gboolean" t t)))
