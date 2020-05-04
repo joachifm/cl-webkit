@@ -56,6 +56,8 @@
   :webkit-context-menu-action-media-mute
   :webkit-context-menu-action-download-video-to-disk
   :webkit-context-menu-action-download-audio-to-disk
+  #+webkit2-emoji
+  :webkit-context-menu-action-insert-emoji
   :webkit-context-menu-action-action-custom)
 
 (defcfun "webkit_context_menu_item_new" (g-object webkit-context-menu-item)
