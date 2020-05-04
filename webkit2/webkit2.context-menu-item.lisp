@@ -87,8 +87,8 @@
   (label :string))
 (export 'webkit-context-menu-item-new-from-stock-action-with-label)
 
-(defcfun "webkit_context_menu_item_get_stock_action" (g-object webkit-context-menu-action)
-  (action (g-object webkit-context-menu-action)))
+(defcfun "webkit_context_menu_item_get_stock_action" webkit-context-menu-action
+  (item (g-object webkit-context-menu-item)))
 (export 'webkit-context-menu-item-get-stock-action)
 
 (defcfun "webkit_context_menu_item_set_submenu" :void
