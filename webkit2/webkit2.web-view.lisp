@@ -36,6 +36,16 @@
    ("is-loading" "gboolean")
    ("title" "gchararray")
    ("uri" "gchararray")
+   ;; TODO: Find out why this prevents CCL from initializing a webview:
+   ;;
+   ;; The value NIL is not of the expected type GOBJECT::PARAM-SPEC.
+   ;; [Condition of type TYPE-ERROR]
+   ;;
+   ;; Backtrace:
+   ;; 0: (GOBJECT::CLASS-PROPERTY-TYPE #<GTYPE :name "WebKitWebView" :id 140010365825456> "view-mode" :ASSERT-READABLE T :ASSERT-WRITABLE NIL)
+   ;; 1: (#<STANDARD-METHOD SLOT-BOUNDP-USING-CLASS (GOBJECT:GOBJECT-CLASS T GOBJECT::GOBJECT-PROPERTY-EFFECTIVE-SLOT-DEFINITION)> #<GOBJECT:GOBJECT-CLASS CL-WEBKIT2:WEBKIT-WEB-VIEW> #<CL-WEBKIT2:WEBKIT-WEB-VI..
+   ;; 2: (CCL::%SHARED-INITIALIZE #<CL-WEBKIT2:WEBKIT-WEB-VIEW #x302006F475AD> T (:POINTER #<A Foreign Pointer #x7F56A00D4E60>))
+   #-ccl
    ("view-mode" "WebKitViewMode" t t)
    ("web-context" "WebKitWebContext" t t)
    ("zoom-level" "gdouble" t t)))
