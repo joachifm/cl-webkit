@@ -21,8 +21,13 @@
   "A single-window browser with no keyboard or mouse input.
 Loads and renders a single web page."
   (gtk:within-main-loop
-    (let ((win (make-instance 'gtk:gtk-window))
-          (view (make-instance 'webkit2:webkit-web-view)))
+    (let* ((win (make-instance 'gtk:gtk-window))
+           (manager (make-instance 'webkit:webkit-website-data-manager
+                                   :base-data-directory "testing-data-manager"))
+           (context (make-instance 'webkit:webkit-web-context
+                                   :website-data-manager manager))
+           (view (make-instance 'webkit2:webkit-web-view
+                                :web-context context)))
       (gobject:g-signal-connect win "destroy"
                                 #'(lambda (widget)
                                     (declare (ignore widget))
