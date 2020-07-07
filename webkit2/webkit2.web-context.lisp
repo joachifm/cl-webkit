@@ -12,7 +12,8 @@
 
 (in-package #:webkit2)
 
-(define-webkit-class "WebKitWebContext" () ())
+(define-webkit-class "WebKitWebContext" ()
+    (("website-data-manager" "WebKitWebsiteDataManager" t t)))
 
 (define-g-enum "WebKitCacheModel" webkit-cache-model ()
   :webkit-cache-model-document-viewer
@@ -34,6 +35,14 @@
 
 (defcfun "webkit_web_context_get_default" (g-object webkit-web-context))
 (export 'webkit-web-context-get-default)
+
+(defcfun "webkit_web_context_new_with_website_data_manager" (g-object webkit-web-context)
+  (manager (g-object webkit-website-data-manager)))
+(export 'webkit-web-context-new-with-website-data-manager)
+
+(defcfun "webkit_web_context_get_website_data_manager" (g-object webkit-website-data-manager)
+  (context (g-object webkit-web-context)))
+(export 'webkit-web-context-get-website-data-manager)
 
 (defcfun "webkit_web_context_set_cache_model" :void
   (webkit-web-context (g-object webkit-web-context))
@@ -149,6 +158,7 @@
 (export 'webkit-web-context-prefetch-dns)
 
 (defcfun "webkit_web_context_set_disk_cache_directory" :void
+  "Deprecated since 2.10. Don't use it in a newly-written code!"
   (webkit-web-context (g-object webkit-web-context))
   (hostname :string))
 (export 'webkit-web-context-set-disk-cache-directory)
