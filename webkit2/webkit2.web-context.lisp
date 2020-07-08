@@ -35,6 +35,13 @@
 (defcfun "webkit_web_context_get_default" (g-object webkit-web-context))
 (export 'webkit-web-context-get-default)
 
+(defcfun "webkit_web_context_new_ephemeral" (g-object webkit-web-context))
+(export 'webkit-web-context-new-ephemeral)
+
+(defcfun "webkit_web_context_is_ephemeral" :boolean
+  (context (g-object webkit-web-context)))
+(export 'webkit-web-context-is-ephemeral)
+
 (defcfun "webkit_web_context_set_cache_model" :void
   (webkit-web-context (g-object webkit-web-context))
   (webkit-cache-model webkit-cache-model))

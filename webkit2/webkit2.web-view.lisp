@@ -33,6 +33,7 @@
   (:superclass gtk-widget
    :interfaces ("AtkImplementorIface" "GtkBuildable"))
   (("estimated-load-progress" "gdouble")
+   ("is-ephemeral" "gboolean")
    ("is-loading" "gboolean")
    ("title" "gchararray")
    ("uri" "gchararray")
