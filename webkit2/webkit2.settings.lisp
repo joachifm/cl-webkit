@@ -36,7 +36,7 @@
     ("enable-offline-web-application-cache" "gboolean" t t)
     ("enable-page-cache" "gboolean" t t)
     ("enable-plugins" "gboolean" t t)
-    ("enable-private-browsing" "gboolean" t t)
+    ("enable-private-browsing" "gboolean" t t) ;; Deprecated since 2.16
     ("enable-resizable-text-areas" "gboolean" t t)
     ("enable-site-specific-quirks" "gboolean" t t)
     ("enable-smooth-scrolling" "gboolean" t t)
