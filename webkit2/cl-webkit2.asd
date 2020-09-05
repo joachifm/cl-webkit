@@ -62,5 +62,6 @@
                (:file "webkit2.website-data-manager")
                (:file "webkit2.web-inspector")
                (:file "webkit2.web-view")
-               (:file "webkit2.window-properties"))
+               (:file "webkit2.window-properties")
+               (:file "webkit2.uri-utilities"))
   :depends-on (:cffi :cl-cffi-gtk))
