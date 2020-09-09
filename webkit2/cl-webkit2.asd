@@ -63,5 +63,6 @@
                (:file "webkit2.web-inspector")
                (:file "webkit2.web-view")
                (:file "webkit2.window-properties")
-               (:file "webkit2.uri-utilities"))
+               (:file "webkit2.uri-utilities")
+               (:file "webkit2.user-message"))
   :depends-on (:cffi :cl-cffi-gtk))
