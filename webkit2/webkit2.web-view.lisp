@@ -83,6 +83,10 @@
 
 (defctype js-value-ref :pointer)
 
+(defcfun "webkit_web_view_get_user_content_manager" (g-object webkit-user-content-manager)
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-get-user-content-manager)
+
 (defcfun "webkit_web_view_get_website_data_manager" (g-object webkit-website-data-manager)
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-get-website-data-manager)

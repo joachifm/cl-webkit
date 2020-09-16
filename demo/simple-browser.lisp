@@ -36,6 +36,32 @@ Loads and renders a single web page."
       (webkit2:webkit-web-view-load-uri view "http://www.example.com")
       (gtk:gtk-widget-show-all win))))
 
+(defun styled-browser-main ()
+  "A red-text version of `simple-browser-main'."
+  (gtk:within-main-loop
+    (let* ((win (make-instance 'gtk:gtk-window))
+           (manager (make-instance 'webkit:webkit-website-data-manager
+                                   :base-data-directory "testing-data-manager"))
+           (context (make-instance 'webkit:webkit-web-context
+                                   :website-data-manager manager))
+           (view (make-instance 'webkit:webkit-web-view
+                                :web-context context))
+           (content-manager (webkit:webkit-web-view-get-user-content-manager view)))
+      (webkit:webkit-user-content-manager-add-style-sheet
+       content-manager
+       (webkit:webkit-user-style-sheet-new "body { color: #F00; };"
+                                           :webkit-user-content-inject-all-frames
+                                           :webkit-user-style-level-author
+                                           (cffi:null-pointer)
+                                           (cffi:null-pointer)))
+      (gobject:g-signal-connect win "destroy"
+                                #'(lambda (widget)
+                                    (declare (ignore widget))
+                                    (gtk:leave-gtk-main)))
+      (gtk:gtk-container-add win view)
+      (webkit2:webkit-web-view-load-uri view "http://www.example.com")
+      (gtk:gtk-widget-show-all win))))
+
 (defun private-browser-main ()
   "An ephemeral (a.k.a private) mode version of `simple-browser-main'."
   (gtk:within-main-loop
@@ -50,8 +76,9 @@ Loads and renders a single web page."
      (webkit2:webkit-web-view-load-uri view "http://www.example.com")
      (gtk:gtk-widget-show-all win))))
 
-(defun do-simple-browser-main (&key (private nil))
-  (if private
-      (private-browser-main)
-      (simple-browser-main))
+(defun do-simple-browser-main (&key (private nil) (styled nil))
+  (cond
+    (private (private-browser-main))
+    (styled (styled-browser-main))
+    (t (simple-browser-main)))
   (gtk:join-gtk-main))
