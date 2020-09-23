@@ -35,6 +35,9 @@
   (("estimated-load-progress" "gdouble")
    ("is-ephemeral" "gboolean")
    ("is-loading" "gboolean")
+   #+webkit2-mute
+   ("is-muted" "gboolean")
+   ("is-playing-audio" "gboolean")
    ("title" "gchararray")
    ("uri" "gchararray")
    ("web-context" "WebKitWebContext" t t)
@@ -160,6 +163,19 @@
 (defcfun "webkit_web_view_stop_loading" :void
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-stop-loading)
+
+#+webkit2-mute
+(defcfun "webkit_web_view_set_is_muted" :void
+  (web-view (g-object webkit-web-view))
+  (muted :boolean))
+#+webkit2-mute
+(export 'webkit-web-view-set-is-muted)
+
+#+webkit2-mute
+(defcfun "webkit_web_view_get_is_muted" :boolean
+  (web-view (g-object webkit-web-view)))
+#+webkit2-mute
+(export 'webkit-web-view-get-is-muted)
 
 (defcfun "webkit_web_view_run_javascript" :void
   (web-view (g-object webkit-web-view))

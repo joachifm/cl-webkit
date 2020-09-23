@@ -39,6 +39,9 @@
         ;; TODO: Only set feature on Linux?
         (dolist (sym '("WEBKIT2-SANDBOXING" "WEBKIT2-MEDIA" "WEBKIT2-EMOJI"))
           (pushnew (intern sym :keyword) *features*)))
+      (when (uiop:version<= "2.30" version)
+        (dolist (sym '("WEBKIT2-MUTE"))
+          (pushnew (intern sym :keyword) *features*)))
       (pushnew versym *features*)))
 
   (pushnew :WEBKIT2 *features*))
