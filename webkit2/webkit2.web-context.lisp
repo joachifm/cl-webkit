@@ -131,7 +131,7 @@
 
 (defcfun "webkit_web_context_set_preferred_languages" :void
   (webkit-web-context (g-object webkit-web-context))
-  (languages :string))
+  (languages :pointer)) ; XXX: const gchar * const *
 (export 'webkit-web-context-set-preferred-languages)
 
 (defcfun "webkit_web_context_set_tls_errors_policy" :void
