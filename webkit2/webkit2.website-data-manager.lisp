@@ -17,10 +17,18 @@
      ("hsts-cache-directory" "gchararray")
      ("indexeddb-directory" "gchararray")
      ("is-ephemeral" "gboolean")
+     #+webkit2-tracking
+     ("itp-directory" "gchararray")
      ("local-storage-directory" "gchararray")
      ("offline-application-cache-directory" "gchararray")))
 
 (defctype webkit-website-data :pointer) ; XXX: GBoxed struct WebKitWebsiteData
+
+#+webkit2-tracking
+(defctype webkit-itp-first-party :pointer) ; XXX: GBoxed struct WebKitITPFirstParty
+
+#+webkit2-tracking
+(defctype webkit-itp-third-party :pointer) ; XXX: GBoxed struct WebKitITPThirdParty
 
 (define-g-enum "WebKitWebsiteDataTypes" webkit-website-data-types ()
   :webkit-website-data-memory-cache
@@ -62,6 +70,19 @@
 (defcfun "webkit_website_data_manager_get_cookie_manager" (g-object webkit-cookie-manager)
   (manager (g-object webkit-website-data-manager)))
 (export 'webkit-website-data-manager-get-cookie-manager)
+
+#+webkit2-tracking
+(defcfun "webkit_website_data_manager_set_itp_enabled" :void
+  (manager (g-object webkit-website-data-manager))
+  (enabled :boolean))
+#+webkit2-tracking
+(export 'webkit-website-data-manager-set-itp-enabled)
+
+#+webkit2-tracking
+(defcfun "webkit_website_data_manager_get_itp_enabled" :boolean
+  (manager (g-object webkit-website-data-manager)))
+#+webkit2-tracking
+(export 'webkit-website-data-manager-get-itp-enabled)
 
 (defcfun "webkit_website_data_manager_fetch" :void
   (manager (g-object webkit-website-data-manager))
@@ -106,3 +127,74 @@
   (result g-async-result)
   (error (:pointer (:struct glib:g-error))))
 (export 'webkit-website-data-manager-clear-finish)
+
+#+webkit2-tracking
+(defcfun "webkit_itp_first_party_ref" webkit-itp-first-party
+  (itp-first-party webkit-itp-first-party))
+#+webkit2-tracking
+(export 'webkit-itp-first-party-ref)
+
+#+webkit2-tracking
+(defcfun "webkit_itp_first_party_unref" :void
+  (itp-first-party webkit-itp-first-party))
+#+webkit2-tracking
+(export 'webkit-itp-first-party-unref)
+
+#+webkit2-tracking
+(defcfun "webkit_itp_first_party_get_domain" :string
+  (itp-first-party webkit-itp-first-party))
+#+webkit2-tracking
+(export 'webkit-itp-first-party-get-domain)
+
+#+webkit2-tracking
+(defcfun "webkit_itp_first_party_get_website_data_access_allowed" :boolean
+  (itp-first-party webkit-itp-first-party))
+#+webkit2-tracking
+(export 'webkit-itp-first-party-get-website-data-access-allowed)
+
+#+webkit2-tracking
+(defcfun "webkit_itp_first_party_get_last_update_time" :pointer ; GDateTime *
+  (itp-first-party webkit-itp-first-party))
+#+webkit2-tracking
+(export 'webkit-itp-first-party-get-last-update-time)
+
+#+webkit2-tracking
+(defcfun "webkit_itp_third_party_ref" webkit-itp-third-party
+  (itp-third-party webkit-itp-third-party))
+#+webkit2-tracking
+(export 'webkit-itp-third-party-ref)
+
+#+webkit2-tracking
+(defcfun "webkit_itp_third_party_unref" :void
+  (itp-third-party webkit-itp-third-party))
+#+webkit2-tracking
+(export 'webkit-itp-third-party-unref)
+
+#+webkit2-tracking
+(defcfun "webkit_itp_third_party_get_domain" :string
+  (itp-third-party webkit-itp-third-party))
+#+webkit2-tracking
+(export 'webkit-itp-third-party-get-domain)
+
+#+webkit2-tracking
+(defcfun "webkit_itp_third_party_get_first_parties" (glib:g-list webkit-itp-first-party)
+  (itp-third-party webkit-itp-third-party))
+#+webkit2-tracking
+(export 'webkit-itp-third-party-get-first-parties)
+
+#+webkit2-tracking
+(defcfun "webkit_website_data_manager_get_itp_summary" :void
+  (manager (g-object webkit-website-data-manager))
+  (cancellable :pointer) ; GCancellable
+  (callback g-async-ready-callback)
+  (user-data :pointer))
+#+webkit2-tracking
+(export 'webkit-website-data-manager-get-itp-summary)
+
+#+webkit2-tracking
+(defcfun "webkit_website_data_manager_get_itp_summary_finish" (glib:g-list webkit-itp-first-party)
+  (manager (g-object webkit-website-data-manager))
+  (result g-async-result)
+  (error (:pointer (:struct glib:g-error))))
+#+webkit2-tracking
+(export 'webkit-website-data-manager-get-itp-summary-finish)
