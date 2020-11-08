@@ -50,8 +50,33 @@ Loads and renders a single web page."
      (webkit2:webkit-web-view-load-uri view "http://www.example.com")
      (gtk:gtk-widget-show-all win))))
 
-(defun do-simple-browser-main (&key (private nil))
-  (if private
-      (private-browser-main)
-      (simple-browser-main))
+(defun extended-browser-main ()
+  "A version of `simple-browser-main' that adds a simple WebKitWebExtension."
+  (gtk:within-main-loop
+    (let* ((win (make-instance 'gtk:gtk-window))
+           (manager (make-instance 'webkit:webkit-website-data-manager
+                                   :base-data-directory "testing-data-manager"))
+           (context (make-instance 'webkit:webkit-web-context
+                                   :website-data-manager manager))
+           (view (make-instance 'webkit2:webkit-web-view
+                                :web-context context)))
+      (gobject:g-signal-connect win "destroy"
+                                #'(lambda (widget)
+                                    (declare (ignore widget))
+                                    (gtk:leave-gtk-main)))
+      (webkit:webkit-web-context-set-web-extensions-directory
+       context (namestring
+                (merge-pathnames "demo/test-extensions/"
+                                 (uiop:pathname-parent-directory-pathname
+                                  (asdf:system-source-directory
+                                   (asdf:find-system :cl-webkit2))))))
+      (gtk:gtk-container-add win view)
+      (webkit2:webkit-web-view-load-uri view "http://www.example.com")
+      (gtk:gtk-widget-show-all win))))
+
+(defun test-browser-main (&key private extended)
+  (cond
+    (private (private-browser-main))
+    (extended (extended-browser-main))
+    (t (simple-browser-main)))
   (gtk:join-gtk-main))
