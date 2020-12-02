@@ -25,8 +25,12 @@
   (user-data :pointer))
 (export 'webkit-web-extension-send-message-to-context)
 
-(defcfun "webkit_web_extension_send_message_to_context_finish" (g-object webkit-user-message)
+(defcfun ("webkit_web_extension_send_message_to_context_finish" %webkit-web-extension-send-message-to-context-finish) (g-object webkit-user-message)
   (extension webkit-web-extension)
   (result g-async-result)
-  (error (:pointer (:struct glib:g-error))))
+  (g-error :pointer))
+
+(defun webkit-web-extension-send-message-to-context-finish (extension result)
+  (glib:with-g-error (err)
+    (%webkit-web-extension-send-message-to-context-finish extension result err)))
 (export 'webkit-web-extension-send-message-to-context-finish)

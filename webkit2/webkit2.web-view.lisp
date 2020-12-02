@@ -235,7 +235,7 @@
 (defcfun ("webkit_web_view_run_javascript_finish" %webkit-web-view-run-javascript-finish) webkit-javascript-result
   (web-view (g-object webkit-web-view))
   (result g-async-result)
-  (gerror :pointer))
+  (g-error :pointer))
 
 (defun webkit-web-view-run-javascript-finish (web-view result)
   (glib:with-g-error (err)
@@ -253,7 +253,7 @@
 (defcfun ("webkit_web_view_run_javascript_from_gresource_finish" %webkit-web-view-run-javascript-from-gresource-finish) webkit-javascript-result
   (web-view (g-object webkit-web-view))
   (result g-async-result)
-  (gerror :pointer))
+  (g-error :pointer))
 
 (defun webkit-web-view-run-javascript-from-gresource-finish (web-view result)
   (glib:with-g-error (err)
@@ -311,7 +311,7 @@
 (defcfun ("webkit_web_view_save_finish" %webkit-web-view-save-finish) :pointer ; XXX: GInputStream
   (web-view (g-object webkit-web-view))
   (result g-async-result)
-  (gerror :pointer))
+  (g-error :pointer))
 
 (defun webkit-web-view-save-finish (web-view result)
   (glib:with-g-error (err)
@@ -330,7 +330,7 @@
 (defcfun ("webkit_web_view_save_to_file_finish" %webkit-web-view-save-to-file-finish) :boolean
   (web-view (g-object webkit-web-view))
   (result g-async-result)
-  (gerror :pointer))
+  (g-error :pointer))
 
 (defun webkit-web-view-save-to-file-finish (web-view result)
   (glib:with-g-error (err)
@@ -349,7 +349,7 @@
 (defcfun ("webkit_web_view_get_snapshot_finish" %webkit-web-view-get-snapshot-finish) :pointer ; XXX: cairo_surface_t
   (web-view (g-object webkit-web-view))
   (result g-async-result)
-  (gerror :pointer))
+  (g-error :pointer))
 
 (defun webkit-web-view-get-snapshot-finish (web-view result)
   (glib:with-g-error (err)
@@ -389,7 +389,7 @@
 (defcfun ("webkit_web_view_can_execute_editing_command_finish" %webkit-web-view-can-execute-editing-command-finish) :boolean
   (web-view (g-object webkit-web-view))
   (result g-async-result)
-  (gerror :pointer))
+  (g-error :pointer))
 
 (defun webkit-web-view-can-execute-editing-command-finish (web-view result)
   (glib:with-g-error (err)
