@@ -92,10 +92,14 @@
   (user-data :pointer))
 (export 'webkit-website-data-manager-fetch)
 
-(defcfun "webkit_website_data_manager_fetch_finish" (glib:g-list webkit-website-data)
+(defcfun ("webkit_website_data_manager_fetch_finish" %webkit-website-data-manager-fetch-finish) (glib:g-list webkit-website-data)
   (manager (g-object webkit-website-data-manager))
   (result g-async-result)
-  (error (:pointer (:struct glib:g-error))))
+  (g-error :pointer))
+
+(defun webkit-website-data-manager-fetch-finish (manager result)
+  (glib:with-g-error (err)
+    (%webkit-website-data-manager-fetch-finish manager result err)))
 (export 'webkit-website-data-manager-fetch-finish)
 
 (defcfun "webkit_website_data_manager_remove" :void
@@ -107,10 +111,14 @@
   (user-data :pointer))
 (export 'webkit-website-data-manager-remove)
 
-(defcfun "webkit_website_data_manager_remove_finish" :boolean
+(defcfun ("webkit_website_data_manager_remove_finish" %webkit-website-data-manager-remove-finish) :boolean
   (manager (g-object webkit-website-data-manager))
   (result g-async-result)
-  (error (:pointer (:struct glib:g-error))))
+  (g-error :pointer))
+
+(defun webkit-website-data-manager-remove-finish (manager result)
+  (glib:with-g-error (err)
+    (%webkit-website-data-manager-remove-finish manager result err)))
 (export 'webkit-website-data-manager-remove-finish)
 
 (defcfun "webkit_website_data_manager_clear" :void
@@ -122,10 +130,14 @@
   (user-data :pointer))
 (export 'webkit-website-data-manager-clear)
 
-(defcfun "webkit_website_data_manager_clear_finish" :boolean
+(defcfun ("webkit_website_data_manager_clear_finish" %webkit-website-data-manager-clear-finish) :boolean
   (manager (g-object webkit-website-data-manager))
   (result g-async-result)
-  (error (:pointer (:struct glib:g-error))))
+  (g-error :pointer))
+
+(defun webkit-website-data-manager-clear-finish (manager result)
+  (glib:with-g-error (err)
+    (%webkit-website-data-manager-clear-finish manager result err)))
 (export 'webkit-website-data-manager-clear-finish)
 
 #+webkit2-tracking
@@ -192,9 +204,14 @@
 (export 'webkit-website-data-manager-get-itp-summary)
 
 #+webkit2-tracking
-(defcfun "webkit_website_data_manager_get_itp_summary_finish" (glib:g-list webkit-itp-first-party)
+(defcfun ("webkit_website_data_manager_get_itp_summary_finish" %webkit-website-data-manager-get-itp-summary-finish) (glib:g-list webkit-itp-first-party)
   (manager (g-object webkit-website-data-manager))
   (result g-async-result)
-  (error (:pointer (:struct glib:g-error))))
+  (g-error :pointer))
+
+#+webkit2-tracking
+(defun webkit-website-data-manager-get-itp-summary-finish (manager result)
+  (glib:with-g-error (err)
+    (%webkit-website-data-manager-get-itp-summary-finish manager result err)))
 #+webkit2-tracking
 (export 'webkit-website-data-manager-get-itp-summary-finish)

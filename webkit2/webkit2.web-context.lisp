@@ -103,7 +103,7 @@
 (defcfun ("webkit_web_context_get_plugins_finish" %webkit-web-context-get-plugins-finish) (glib:g-list webkit-plugin)
   (webkit-web-context (g-object webkit-web-context))
   (result g-async-result)
-  (gerror :pointer))
+  (g-error :pointer))
 
 (defun webkit-web-context-get-plugins-finish (web-context result)
   (glib:with-g-error (err)
