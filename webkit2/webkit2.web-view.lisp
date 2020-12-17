@@ -189,7 +189,7 @@
 (defvar callbacks ())
 (defstruct callback
   (id callback-counter :type number)
-  web-view
+  data
   (function nil :type (or function null))
   (error-function nil :type (or function null)))
 
@@ -198,7 +198,7 @@
   (declare (ignore source-object))
   (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
     (handler-case
-        (let* ((js-result (webkit-web-view-run-javascript-finish (callback-web-view callback) result))
+        (let* ((js-result (webkit-web-view-run-javascript-finish (callback-data callback) result))
                (context (webkit-javascript-result-get-global-context js-result))
                (value (webkit-javascript-result-get-value js-result))
                (js-str-value (jscore:js-value-to-string-copy context value (cffi:null-pointer)))
@@ -221,7 +221,7 @@
 (defun webkit-web-view-evaluate-javascript (web-view javascript &optional call-back error-call-back)
   "Evaluate javascript in web-view calling call-back upon completion."
   (incf callback-counter)
-  (push (make-callback :id callback-counter :web-view web-view
+  (push (make-callback :id callback-counter :data web-view
                        :function call-back
                        :error-function error-call-back)
         callbacks)
