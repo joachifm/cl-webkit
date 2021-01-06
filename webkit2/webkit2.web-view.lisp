@@ -33,6 +33,7 @@
   (:superclass gtk-widget
    :interfaces ("AtkImplementorIface" "GtkBuildable"))
   (("estimated-load-progress" "gdouble")
+   ("favicon" "gpointer")
    ("is-ephemeral" "gboolean")
    ("is-loading" "gboolean")
    #+webkit2-mute
@@ -93,6 +94,10 @@
 (defcfun "webkit_web_view_get_website_data_manager" (g-object webkit-website-data-manager)
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-get-website-data-manager)
+
+(defcfun "webkit_web_view_get_favicon" :pointer
+  (web-view (g-object webkit-web-view)))
+(export 'webkit-web-view-get-favicon)
 
 (defcfun "webkit_web_view_load_uri" :void
   (web-view (g-object webkit-web-view))
