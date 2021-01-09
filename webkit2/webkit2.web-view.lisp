@@ -253,7 +253,7 @@
   (cancellable :pointer) ; GCancellable
   (callback g-async-ready-callback)
   (user-data :pointer))
-(export 'webkit-web-view-run-javascript-from-resource)
+(export 'webkit-web-view-run-javascript-from-gresource)
 
 (defcfun ("webkit_web_view_run_javascript_from_gresource_finish" %webkit-web-view-run-javascript-from-gresource-finish) webkit-javascript-result
   (web-view (g-object webkit-web-view))
