@@ -224,7 +224,7 @@
           (setf callbacks (delete callback callbacks)))))))
 
 (defun webkit-web-view-evaluate-javascript (web-view javascript &optional call-back error-call-back)
-  "Evaluate javascript in web-view calling call-back upon completion."
+  "Evaluate JAVASCRIPT in WEB-VIEW calling CALL-BACK upon completion."
   (incf callback-counter)
   (push (make-callback :id callback-counter :web-view web-view
                        :function call-back
@@ -264,6 +264,20 @@
   (glib:with-g-error (err)
     (%webkit-web-view-run-javascript-from-gresource-finish web-view result err)))
 (export 'webkit-web-view-run-javascript-from-gresource-finish)
+
+(defun webkit-web-view-evaluate-javascript-from-gresource (web-view resource &optional call-back error-call-back)
+  "Evaluate JavaScript from RESOURCE in WEB-VIEW calling CALL-BACK upon completion and ERROR-CALL-BACK on error."
+  (incf callback-counter)
+  (push (make-callback :id callback-counter :web-view web-view
+                       :function call-back
+                       :error-function error-call-back)
+        callbacks)
+  (webkit-web-view-run-javascript-from-gresource
+   web-view resource
+   (cffi:null-pointer)
+   (cffi:callback javascript-evaluation-complete)
+   (cffi:make-pointer callback-counter)))
+(export 'webkit-web-view-evaluate-javascript-from-gresource)
 
 (defcfun "webkit_web_view_download_uri" (g-object webkit-download)
   (web-view (g-object webkit-web-view))
