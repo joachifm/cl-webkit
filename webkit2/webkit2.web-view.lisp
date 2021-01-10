@@ -41,6 +41,7 @@
    ("is-playing-audio" "gboolean")
    ("title" "gchararray")
    ("uri" "gchararray")
+   ("user-content-manager" "WebKitUserContentManager")
    ("web-context" "WebKitWebContext" t t)
    ("zoom-level" "gdouble" t t)))
 
@@ -86,6 +87,10 @@
 (defctype webkit-javascript-result :pointer) ; XXX: GBoxed struct
 
 (defctype js-value-ref :pointer)
+
+(defcfun "webkit_web_view_new_with_user_content_manager" (g-object webkit-web-view)
+  (user-content-manager (g-object webkit-user-content-manager)))
+(export 'webkit-web-view-new-with-user-content-manager)
 
 (defcfun "webkit_web_view_get_user_content_manager" (g-object webkit-user-content-manager)
   (web-view (g-object webkit-web-view)))
