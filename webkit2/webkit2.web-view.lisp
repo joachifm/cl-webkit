@@ -214,10 +214,14 @@
                (js-str-value (jscore:js-value-to-string-copy context value (cffi:null-pointer)))
                (js-str-length (jscore:js-string-get-maximum-utf-8-c-string-size js-str-value))
                (str-value (cffi:foreign-alloc :char :count (cffi:convert-from-foreign js-str-length :unsigned-int))))
+          (webkit-javascript-result-unref js-result)
           (jscore:js-string-get-utf-8-c-string js-str-value str-value js-str-length)
           (setf callbacks (delete callback callbacks))
           (when (callback-function callback)
-            (funcall (callback-function callback) (cffi:foreign-string-to-lisp str-value))))
+            (funcall (callback-function callback)
+                     (prog1
+                         (cffi:foreign-string-to-lisp str-value)
+                       (cffi:foreign-free str-value)))))
       (error (c)
         (when callback
           (when  (callback-error-function callback)
