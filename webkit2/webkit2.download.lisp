@@ -17,3 +17,12 @@
    ("estimated-progress" "gdouble")
    ("response" "WebKitURIResponse")
    ("allow-overwrite" "gboolean")))
+
+(defcfun "webkit_download_set_destination" :void
+  (webkit-download (g-object webkit-download))
+  (uri :string))
+(export 'webkit-download-set-destination)
+
+(defcfun "webkit_download_cancel" :void
+  (webkit-download (g-object webkit-download)))
+(export 'webkit-download-cancel)
