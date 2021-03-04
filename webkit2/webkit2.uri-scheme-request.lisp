@@ -39,9 +39,12 @@
   (request webkit-uri-scheme-request)
   (g-error :pointer))
 
-(defun webkit-uri-scheme-request-finish-error (request)
-  (glib:with-g-error (err)
-    (%webkit-uri-scheme-request-finish-error request err)))
+(defun webkit-uri-scheme-request-finish-error (request error-string)
+  (%webkit-uri-scheme-request-finish-error
+   request (glib::%g-error-new-literal
+            +webkit-plugin-error+
+            :webkit-plugin-error-connection-cancelled
+            error-string)))
 (export 'webkit-uri-scheme-request-finish-error)
 
 (cffi:defcallback uri-scheme-processed :void ((request :pointer) (user-data :pointer))
@@ -75,7 +78,9 @@
                   ;; That's why g-memory-input-stream-new-from-data returns the string
                   (cffi:foreign-string-free ffi-string)))))
         (error (c)
-          (webkit-uri-scheme-request-finish-error request)
+          (webkit-uri-scheme-request-finish-error
+           request (format nil "The custom url request for URI ~a failed"
+                           (webkit-uri-scheme-request-ger-uri request)))
           (when callback
             (when (callback-error-function callback)
               (funcall (callback-error-function callback) c))
