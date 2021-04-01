@@ -12,6 +12,9 @@
 
 (defctype webkit-navigation-action :pointer) ; XXX: GBoxed
 
+(define-g-boxed-opaque webkit-navigation-action "WebKitNavigationAction"
+  :alloc (error "WebKitNavigationAction can not be created from Lisp side."))
+
 (defcfun "webkit_navigation_policy_decision_get_navigation_action" webkit-navigation-action
   (policy-decision (g-object webkit-navigation-policy-decision)))
 (export 'webkit-navigation-policy-decision-get-navigation-action)
