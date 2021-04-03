@@ -64,42 +64,33 @@
 
 (cffi:defcallback uri-scheme-processed :void ((request :pointer) (user-data :pointer))
   (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
-    (flet ((g-memory-input-stream-new-from-data (data-string)
-             (let* ((ffi-string (cffi:foreign-string-alloc data-string))
-                    ;; TODO: Can we rely on lisp's `length' here?
-                    ;; Will it give the same result as strlen on ffi-string?
-                    (ffi-string-length (length data-string))
-                    (stream (cffi:foreign-funcall "g_memory_input_stream_new_from_data"
-                                                  :string ffi-string
-                                                  :unsigned-int ffi-string-length
-                                                  ;; TODO: This should ideally be g_free()
-                                                  ;; to free the ffi-string automatically.
-                                                  :pointer (cffi:null-pointer))))
-               ;; ffi-string is returned because we need to free it afterwards
-               (values stream ffi-string ffi-string-length))))
-      (handler-case
-          (progn
-            (setf callbacks (delete callback callbacks))
-            ;; TODO: Use `unwind-protect' to free the allocated objects?
-            (when (callback-function callback)
-              (multiple-value-bind (data-type data)
-                  ;; Callback function should return data type (e.g., "text/html") as a first value
-                  ;; and data-string itself as a second value.
-                  (funcall (callback-function callback) request)
-                (multiple-value-bind (stream ffi-string data-length)
-                    (g-memory-input-stream-new-from-data data)
-                  (webkit-uri-scheme-request-finish request stream data-length data-type)
-                  (g:g-object-unref stream)
-                  ;; That's why g-memory-input-stream-new-from-data returns the string
-                  (cffi:foreign-string-free ffi-string)))))
-        (error (c)
-          (webkit-uri-scheme-request-finish-error
-           request (format nil "The custom url request for URI ~a failed"
-                           (webkit-uri-scheme-request-ger-uri request)))
-          (when callback
-            (when (callback-error-function callback)
-              (funcall (callback-error-function callback) c))
-            (setf callbacks (delete callback callbacks))))))))
+    (handler-case
+        (progn
+          (setf callbacks (delete callback callbacks))
+          ;; TODO: Use `unwind-protect' to free the allocated objects?
+          (when (callback-function callback)
+            (multiple-value-bind (data-type data)
+                ;; Callback function should return data type (e.g., "text/html") as a first value
+                ;; and data-string itself as a second value.
+                (funcall (callback-function callback) request)
+              (let* ((ffi-string (cffi:foreign-string-alloc data))
+                     ;; TODO: Can we rely on lisp's `length' here?
+                     ;; Will it give the same result as strlen on ffi-string?
+                     (ffi-string-length (length data))
+                     (stream (g-memory-input-stream-new-from-data
+                              ffi-string ffi-string-length (cffi:null-pointer))))
+                (webkit-uri-scheme-request-finish request stream ffi-string-length data-type)
+                (g:g-object-unref stream)
+                ;; That's why g-memory-input-stream-new-from-data returns the string
+                (cffi:foreign-string-free ffi-string)))))
+      (error (c)
+        (webkit-uri-scheme-request-finish-error
+         request (format nil "The custom url request for URI ~a failed"
+                         (webkit-uri-scheme-request-get-uri request)))
+        (when callback
+          (when (callback-error-function callback)
+            (funcall (callback-error-function callback) c))
+          (setf callbacks (delete callback callbacks)))))))
 
 (defun webkit-web-context-register-uri-scheme-callback (context scheme &optional call-back error-call-back)
   (incf callback-counter)
