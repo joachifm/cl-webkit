@@ -12,6 +12,16 @@
 
 (define-webkit-class "WebKitURISchemeRequest" () ())
 
+(define-g-object-class "GInputStream" g-input-stream
+    (:export nil
+     :type-initializer "g_input_stream_get_type")
+    ())
+(define-g-object-class "GMemoryInputStream" g-memory-input-stream
+    (:superclass g-input-stream
+     :export nil
+     :type-initializer "g_memory_input_stream_get_type")
+    ())
+
 (defcfun "webkit_uri_scheme_request_get_scheme" :string
   (request (g-object webkit-uri-scheme-request)))
 (export 'webkit-uri-scheme-request-get-scheme)
@@ -46,6 +56,11 @@
             :webkit-plugin-error-connection-cancelled
             error-string)))
 (export 'webkit-uri-scheme-request-finish-error)
+
+(defcfun "g_memory_input_stream_new_from_data" (g-object g-memory-input-stream)
+  (data :pointer)
+  (length :unsigned-int)
+  (destroy :pointer))
 
 (cffi:defcallback uri-scheme-processed :void ((request :pointer) (user-data :pointer))
   (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
