@@ -49,11 +49,12 @@ Loads and renders a single web page."
            (content-manager (webkit:webkit-web-view-get-user-content-manager view)))
       (webkit:webkit-user-content-manager-add-style-sheet
        content-manager
-       (webkit:webkit-user-style-sheet-new "body { color: #F00; };"
-                                           :webkit-user-content-inject-all-frames
-                                           :webkit-user-style-level-author
-                                           (cffi:null-pointer)
-                                           (cffi:null-pointer)))
+       (webkit:webkit-user-style-sheet-new
+        "body { color: #F00 !important; background-color: #000 !important; };"
+        :webkit-user-content-inject-all-frames
+        :webkit-user-style-level-author
+        (cffi:null-pointer)
+        (cffi:null-pointer)))
       (gobject:g-signal-connect win "destroy"
                                 #'(lambda (widget)
                                     (declare (ignore widget))
@@ -100,9 +101,10 @@ Loads and renders a single web page."
       (webkit2:webkit-web-view-load-uri view "http://www.example.com")
       (gtk:gtk-widget-show-all win))))
 
-(defun test-browser-main (&key private extended)
+(defun test-browser-main (&key private extended styled)
   (cond
     (private (private-browser-main))
     (extended (extended-browser-main))
+    (styled (styled-browser-main))
     (t (simple-browser-main)))
   (gtk:join-gtk-main))
