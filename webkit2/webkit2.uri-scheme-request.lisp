@@ -53,7 +53,7 @@
   (%webkit-uri-scheme-request-finish-error
    request (glib::%g-error-new-literal
             +webkit-plugin-error+
-            :webkit-plugin-error-connection-cancelled
+            4
             error-string)))
 (export 'webkit-uri-scheme-request-finish-error)
 
