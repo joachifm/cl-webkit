@@ -103,7 +103,7 @@
 
 (defun webkit-web-context-register-uri-scheme-callback (context scheme &optional call-back error-call-back)
   (incf callback-counter)
-  (push (make-callback :id callback-counter :object context
+  (push (make-callback :id callback-counter :web-view context
                        :function call-back
                        :error-function error-call-back)
         callbacks)
