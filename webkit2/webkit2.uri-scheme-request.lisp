@@ -10,33 +10,33 @@
 
 (in-package #:webkit2)
 
-(defctype webkit-uri-scheme-request :pointer)
+(define-webkit-class "WebKitURISchemeRequest" () ())
 
 (defcfun "webkit_uri_scheme_request_get_scheme" :string
-  (request webkit-uri-scheme-request))
+  (request (g-object webkit-uri-scheme-request)))
 (export 'webkit-uri-scheme-request-get-scheme)
 
 (defcfun "webkit_uri_scheme_request_get_uri" :string
-  (request webkit-uri-scheme-request))
+  (request (g-object webkit-uri-scheme-request)))
 (export 'webkit-uri-scheme-request-get-uri)
 
 (defcfun "webkit_uri_scheme_request_get_path" :string
-  (request webkit-uri-scheme-request))
+  (request (g-object webkit-uri-scheme-request)))
 (export 'webkit-uri-scheme-request-get-path)
 
 (defcfun "webkit_uri_scheme_request_get_web-view" (g-object webkit-web-view)
-  (request webkit-uri-scheme-request))
+  (request (g-object webkit-uri-scheme-request)))
 (export 'webkit-uri-scheme-request-get-web-view)
 
 (defcfun "webkit_uri_scheme_request_finish" :void
-  (request webkit-uri-scheme-request)
+  (request (g-object webkit-uri-scheme-request))
   (stream :pointer)  ; XXX: GInputStream
   (stream-length :int)
   (contents :string))
 (export 'webkit-uri-scheme-request-finish)
 
 (defcfun ("webkit_uri_scheme_request_finish_error" %webkit-uri-scheme-request-finish-error) :void
-  (request webkit-uri-scheme-request)
+  (request (g-object webkit-uri-scheme-request))
   (g-error :pointer))
 
 (defun webkit-uri-scheme-request-finish-error (request error-string)
