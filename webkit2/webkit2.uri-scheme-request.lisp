@@ -40,8 +40,8 @@
 
 (defcfun "webkit_uri_scheme_request_finish" :void
   (request (g-object webkit-uri-scheme-request))
-  (stream :pointer)  ; XXX: GInputStream
-  (stream-length :int)
+  (stream (g-object g-memory-input-stream))
+  (stream-length :long)
   (contents :string))
 (export 'webkit-uri-scheme-request-finish)
 
