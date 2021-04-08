@@ -64,33 +64,28 @@
 
 (cffi:defcallback uri-scheme-processed :void ((request :pointer) (user-data :pointer))
   (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
-    (handler-case
-        (progn
-          (setf callbacks (delete callback callbacks))
-          ;; TODO: Use `unwind-protect' to free the allocated objects?
-          (when (callback-function callback)
-            (multiple-value-bind (data-type data)
-                ;; Callback function should return data type (e.g., "text/html") as a first value
-                ;; and data-string itself as a second value.
-                (funcall (callback-function callback) request)
-              (let* ((ffi-string (cffi:foreign-string-alloc data))
-                     ;; TODO: Can we rely on lisp's `length' here?
-                     ;; Will it give the same result as strlen on ffi-string?
-                     (ffi-string-length (length data))
-                     (stream (g-memory-input-stream-new-from-data
-                              ffi-string ffi-string-length (cffi:null-pointer))))
+    (setf callbacks (delete callback callbacks))
+    ;; TODO: Use `unwind-protect' to free the allocated objects?
+    (when (callback-function callback)
+      ;; Callback function returns data-string as a first value
+      ;; and data type (e.g., "text/html") as an optional second
+      ;; value.
+      (destructuring-bind (data &optional (data-type "text-html"))
+          (multiple-value-list (funcall (callback-function callback) request))
+        (handler-case
+            (multiple-value-bind (ffi-string ffi-string-length)
+                (cffi:foreign-string-alloc data)
+              (let* ((stream (g-memory-input-stream-new-from-data
+                              ffi-string ffi-string-length (cffi:make-pointer 0))))
                 (webkit-uri-scheme-request-finish request stream ffi-string-length data-type)
-                (g:g-object-unref stream)
-                ;; That's why g-memory-input-stream-new-from-data returns the string
-                (cffi:foreign-string-free ffi-string)))))
-      (error (c)
-        (webkit-uri-scheme-request-finish-error
-         request (format nil "The custom url request for URI ~a failed"
-                         (webkit-uri-scheme-request-get-uri request)))
-        (when callback
-          (when (callback-error-function callback)
-            (funcall (callback-error-function callback) c))
-          (setf callbacks (delete callback callbacks)))))))
+                (gobject:g-object-unref stream)
+                (cffi:foreign-string-free ffi-string)))
+          (error (c)
+            (webkit-uri-scheme-request-finish-error
+             request (format nil "The custom url request for URI ~S failed with ~A: ~A"
+                             (webkit-uri-scheme-request-get-uri request) (type-of c) c))
+            (when (and callback (callback-error-function callback))
+              (funcall (callback-error-function callback) c))))))))
 
 (defun webkit-web-context-register-uri-scheme-callback (context scheme &optional call-back error-call-back)
   (incf callback-counter)
