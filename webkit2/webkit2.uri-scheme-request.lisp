@@ -62,6 +62,11 @@
   (length :long)
   (destroy :pointer))
 
+(cffi:defcallback g-notify-destroy-null :void ((data :pointer))
+  (declare (ignore data)))
+(cffi:defcallback g-notify-destroy-free :void ((data :pointer))
+  (cffi:foreign-funcall "free" :pointer data))
+
 (cffi:defcallback uri-scheme-processed :void ((request :pointer) (user-data :pointer))
   (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
     (setf callbacks (delete callback callbacks))
@@ -76,7 +81,7 @@
             (multiple-value-bind (ffi-string ffi-string-length)
                 (cffi:foreign-string-alloc data)
               (let* ((stream (g-memory-input-stream-new-from-data
-                              ffi-string ffi-string-length (cffi:make-pointer 0))))
+                              ffi-string ffi-string-length (callback g-notify-destroy-null))))
                 (webkit-uri-scheme-request-finish request stream ffi-string-length data-type)
                 (gobject:g-object-unref stream)
                 (cffi:foreign-string-free ffi-string)))
