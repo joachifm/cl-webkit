@@ -59,7 +59,7 @@
 
 (defcfun "g_memory_input_stream_new_from_data" (g-object g-memory-input-stream)
   (data :pointer)
-  (length :unsigned-int)
+  (length :long)
   (destroy :pointer))
 
 (cffi:defcallback uri-scheme-processed :void ((request :pointer) (user-data :pointer))
