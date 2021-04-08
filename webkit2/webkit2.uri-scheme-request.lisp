@@ -67,7 +67,8 @@
 (cffi:defcallback g-notify-destroy-free :void ((data :pointer))
   (cffi:foreign-funcall "free" :pointer data))
 
-(cffi:defcallback uri-scheme-processed :void ((request :pointer) (user-data :pointer))
+(cffi:defcallback uri-scheme-processed :void ((request (g-object webkit-uri-scheme-request))
+                                              (user-data :pointer))
   (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
     (setf callbacks (delete callback callbacks))
     ;; TODO: Use `unwind-protect' to free the allocated objects?
