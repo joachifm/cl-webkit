@@ -33,10 +33,10 @@
   (manager (g-object webkit-user-content-manager)))
 (export 'webkit-user-content-manager-remove-all-scripts)
 
-(defcfun "webkit_user_content_manager_register_script_message_handle" :boolean
+(defcfun "webkit_user_content_manager_register_script_message_handler" :boolean
   (manager (g-object webkit-user-content-manager))
   (name :string))
-(export 'webkit-user-content-manager-register-script-message-handle)
+(export 'webkit-user-content-manager-register-script-message-handler)
 
 (defcfun "webkit_user_content_manager_unregister_script_message_handler" :void
   (manager (g-object webkit-user-content-manager))
