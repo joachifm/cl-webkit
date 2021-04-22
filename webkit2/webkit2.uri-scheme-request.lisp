@@ -70,8 +70,6 @@
 (cffi:defcallback uri-scheme-processed :void ((request (g-object webkit-uri-scheme-request))
                                               (user-data :pointer))
   (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
-    (setf callbacks (delete callback callbacks))
-    ;; TODO: Use `unwind-protect' to free the allocated objects?
     (when (callback-function callback)
       ;; Callback function returns data-string as a first value
       ;; and data type (e.g., "text/html") as an optional second
