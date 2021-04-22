@@ -34,7 +34,7 @@
   (request (g-object webkit-uri-scheme-request)))
 (export 'webkit-uri-scheme-request-get-path)
 
-(defcfun "webkit_uri_scheme_request_get_web-view" (g-object webkit-web-view)
+(defcfun "webkit_uri_scheme_request_get_web_view" (g-object webkit-web-view)
   (request (g-object webkit-uri-scheme-request)))
 (export 'webkit-uri-scheme-request-get-web-view)
 
