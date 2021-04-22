@@ -42,7 +42,7 @@
   (request (g-object webkit-uri-scheme-request))
   (stream (g-object g-memory-input-stream))
   (stream-length :long)
-  (contents :string))
+  (content-type :string))
 (export 'webkit-uri-scheme-request-finish)
 
 (defcfun ("webkit_uri_scheme_request_finish_error" %webkit-uri-scheme-request-finish-error) :void
