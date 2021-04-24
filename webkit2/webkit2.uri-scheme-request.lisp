@@ -21,6 +21,9 @@
      :export nil
      :type-initializer "g_memory_input_stream_get_type")
     ())
+(defvar +webkit-plugin-error-connection-cancelled+ 4
+  "A separate value for the connection cancelled plugin error for use
+  in WebKitURISchemeRequest callbacks.")
 
 (defcfun "webkit_uri_scheme_request_get_scheme" :string
   (request (g-object webkit-uri-scheme-request)))
@@ -53,7 +56,7 @@
   (%webkit-uri-scheme-request-finish-error
    request (glib::%g-error-new-literal
             +webkit-plugin-error+
-            4
+            +webkit-plugin-error-connection-cancelled+
             error-string)))
 (export 'webkit-uri-scheme-request-finish-error)
 
