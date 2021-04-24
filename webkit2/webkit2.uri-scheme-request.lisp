@@ -71,7 +71,7 @@
                 (cffi:foreign-string-free ffi-string)))
           (error (c)
             (webkit-uri-scheme-request-finish-error
-             request (format nil "The custom url request for URI ~S failed with ~A: ~A"
+             request (format nil "The custom url request for URI ~a failed with ~a: ~a"
                              (webkit-uri-scheme-request-get-uri request) (type-of c) c))
             (when (and callback (callback-error-function callback))
               (funcall (callback-error-function callback) c))))))))
