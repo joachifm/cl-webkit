@@ -92,6 +92,14 @@
               (funcall (callback-error-function callback) c))))))))
 
 (defun webkit-web-context-register-uri-scheme-callback (context scheme &optional call-back error-call-back)
+  "Register the custom scheme.
+Hide all the unpretty details (callbacks, WebKit functions, C objects
+allocation) from the Lisp-side.
+
+CONTEXT is the `webkit-web-context' to register scheme for.
+SCHEME is the name of the scheme as a string.
+CALL-BACK is a callback of one argument -- a WebKitURISchemeRequest for this scheme.
+ERROR-CALL-BACK is the one-argument function to call on error if it happens."
   (incf callback-counter)
   (push (make-callback :id callback-counter :web-view context
                        :function call-back
