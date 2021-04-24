@@ -63,10 +63,11 @@
         (handler-case
             (multiple-value-bind (ffi-string ffi-string-length)
                 (cffi:foreign-string-alloc data)
-              (let* ((stream (g-memory-input-stream-new-from-data
-                              ffi-string ffi-string-length (callback g-notify-destroy-null))))
-                (webkit-uri-scheme-request-finish request stream ffi-string-length data-type)
-                (gobject:g-object-unref (pointer stream))
+              (unwind-protect
+                   (let* ((stream (g-memory-input-stream-new-from-data
+                                   ffi-string ffi-string-length (callback g-notify-destroy-null))))
+                     (webkit-uri-scheme-request-finish request stream ffi-string-length data-type)
+                     (gobject:g-object-unref (pointer stream)))
                 (cffi:foreign-string-free ffi-string)))
           (error (c)
             (webkit-uri-scheme-request-finish-error
