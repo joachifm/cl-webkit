@@ -12,15 +12,6 @@
 
 (define-webkit-class "WebKitURISchemeRequest" () ())
 
-(define-g-object-class "GInputStream" g-input-stream
-    (:export nil
-     :type-initializer "g_input_stream_get_type")
-    ())
-(define-g-object-class "GMemoryInputStream" g-memory-input-stream
-    (:superclass g-input-stream
-     :export nil
-     :type-initializer "g_memory_input_stream_get_type")
-    ())
 (defvar +webkit-plugin-error-connection-cancelled+ 4
   "A separate value for the connection cancelled plugin error for use
   in WebKitURISchemeRequest callbacks.")
@@ -59,16 +50,6 @@
             +webkit-plugin-error-connection-cancelled+
             error-string)))
 (export 'webkit-uri-scheme-request-finish-error)
-
-(defcfun "g_memory_input_stream_new_from_data" (g-object g-memory-input-stream)
-  (data :pointer)
-  (length :long)
-  (destroy :pointer))
-
-(cffi:defcallback g-notify-destroy-null :void ((data :pointer))
-  (declare (ignore data)))
-(cffi:defcallback g-notify-destroy-free :void ((data :pointer))
-  (cffi:foreign-funcall "free" :pointer data))
 
 (cffi:defcallback uri-scheme-processed :void ((request (g-object webkit-uri-scheme-request))
                                               (user-data :pointer))
