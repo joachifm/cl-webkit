@@ -16,6 +16,13 @@
 
 (in-package #:webkit2)
 
+(define-g-interface "GSeekable" g-seekable
+    (:export nil
+     :type-initializer "g_seekable_get_type"))
+(define-g-interface "GPollableInputStream" g-pollable-input-stream
+    (:export nil
+     :type-initializer "g_pollable_input_stream_get_type"))
+
 (define-g-object-class "GInputStream" g-input-stream
     (:export nil
      :type-initializer "g_input_stream_get_type")
@@ -23,6 +30,7 @@
 (define-g-object-class "GMemoryInputStream" g-memory-input-stream
     (:superclass g-input-stream
      :export nil
+     :interfaces ("GPollableInputStream" "GSeekable")
      :type-initializer "g_memory_input_stream_get_type")
     ())
 
