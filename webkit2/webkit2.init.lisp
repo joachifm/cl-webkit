@@ -16,11 +16,9 @@
               "libwebkit2gtk-4.0.37.39.3.dylib"
               "libwebkit2gtk-4.0.37.dylib"
               "libwebkit2gtk-4.0.dylib"))
-    (:unix (:or "libwebkit2gtk-4.0.so"         ; webkit2gtk-2.6.4
-                "libwebkit2gtk-3.0.so.25.10.9" ; webkit2gtk-2.4.6
-                "libwebkit2gtk-3.0.so.25.10.8" ; webkit2gtk-2.4.5
-                "libwebkit2gtk-3.0.so.25.10.7" ; webkit2gtk-2.4.4
-                "libwebkit2gtk-3.0.so.25")))
+    (:unix (:or "libwebkit2gtk-4.0.so"
+                ;; Fedora only has this one?
+                "libwebkit2gtk-4.0.so.37")))
   (use-foreign-library libwebkit2))
 
 (defcfun "webkit_get_major_version" :int)
