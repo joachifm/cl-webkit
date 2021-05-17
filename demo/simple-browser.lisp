@@ -115,9 +115,8 @@ Loads and renders a single web page."
       (webkit:webkit-web-context-register-uri-scheme-callback
        context "hello"
        #'(lambda (request)
-           (values (format nil "Hello, ~:(~a~)!"
-                           (webkit:webkit-uri-scheme-request-get-path request))
-                   "text/plain")))
+           (format nil "<html><body><p>Hello, ~:(~a~)!</p></body></html>"
+                   (webkit:webkit-uri-scheme-request-get-path request))))
       (gtk:gtk-container-add win view)
       (webkit2:webkit-web-view-load-uri view "hello:stranger")
       (gtk:gtk-widget-show-all win))))
