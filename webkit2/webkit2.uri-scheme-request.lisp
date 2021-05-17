@@ -65,7 +65,8 @@
                 (cffi:foreign-string-alloc data)
               (unwind-protect
                    (let* ((stream (g-memory-input-stream-new-from-data
-                                   ffi-string ffi-string-length (callback g-notify-destroy-null))))
+                                   ffi-string -1 ; -1 is for auto-detection based on NULL character
+                                   (callback g-notify-destroy-null))))
                      (webkit-uri-scheme-request-finish request stream ffi-string-length data-type)
                      (gobject:g-object-unref (pointer stream)))
                 (cffi:foreign-string-free ffi-string)))
