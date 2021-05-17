@@ -43,3 +43,14 @@
   (declare (ignore data)))
 (cffi:defcallback g-notify-destroy-free :void ((data :pointer))
   (cffi:foreign-funcall "free" :pointer data))
+
+(cffi:defcfun ("g_input_stream_read" %g-input-stream-read) :uint
+  (stream (g:g-object webkit::g-input-stream))
+  (buffer :pointer)
+  (count :uint)
+  (cancellable :pointer)
+  (g-error :pointer))
+
+(defun g-input-stream-read (stream buffer count)
+  (glib:with-g-error (err)
+    (%g-input-stream-read stream buffer count (cffi:null-pointer) err)))
