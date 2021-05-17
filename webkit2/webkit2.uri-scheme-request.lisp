@@ -84,8 +84,12 @@ allocation) from the Lisp-side.
 
 CONTEXT is the `webkit-web-context' to register scheme for.
 SCHEME is the name of the scheme as a string.
-CALL-BACK is a callback of one argument -- a WebKitURISchemeRequest for this scheme.
-ERROR-CALL-BACK is the one-argument function to call on error if it happens."
+CALL-BACK is a callback of one argument -- a WebKitURISchemeRequest
+for this scheme.  It should return two values: the content of the
+response (as a string) and an optional MIME type (e.g. \"text/html\")
+of that response.
+ERROR-CALL-BACK is the one-argument function to call on error if it
+happens."
   (incf callback-counter)
   (push (make-callback :id callback-counter :web-view context
                        :function call-back
