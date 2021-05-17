@@ -38,7 +38,7 @@
         (dolist (sym '("WEBKIT2-SANDBOXING" "WEBKIT2-MEDIA" "WEBKIT2-EMOJI"))
           (pushnew (intern sym :keyword) *features*)))
       (when (uiop:version<= "2.30" version)
-        (dolist (sym '("WEBKIT2-MUTE" "WEBKIT2-TRACKING"))
+        (dolist (sym '("WEBKIT2-MUTE" "WEBKIT2-TRACKING" "WEBKIT2-PASTE-PLAINTEXT"))
           (pushnew (intern sym :keyword) *features*)))
       (pushnew versym *features*)))
 
