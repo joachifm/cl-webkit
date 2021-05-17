@@ -52,6 +52,7 @@
   :webkit-context-menu-action-toggle-media-controls
   :webkit-context-menu-action-toggle-media-loop
   :webkit-context-menu-action-enter-video-fullscreen
+  :webkit-context-menu-action-media-play
   :webkit-context-menu-action-media-pause
   :webkit-context-menu-action-media-mute
   :webkit-context-menu-action-download-video-to-disk
