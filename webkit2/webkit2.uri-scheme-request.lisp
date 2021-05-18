@@ -79,7 +79,7 @@
 
 (defun webkit-web-context-register-uri-scheme-callback (context scheme &optional call-back error-call-back)
   "Register the custom scheme.
-Hide all the unpretty details (callbacks, WebKit functions, C objects
+Hide all the implementation details (callbacks, WebKit functions, C objects
 allocation) from the Lisp-side.
 
 CONTEXT is the `webkit-web-context' to register scheme for.
