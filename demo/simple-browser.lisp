@@ -101,10 +101,31 @@ Loads and renders a single web page."
       (webkit2:webkit-web-view-load-uri view "http://www.example.com")
       (gtk:gtk-widget-show-all win))))
 
-(defun test-browser-main (&key private extended styled)
+(defun custom-scheme-browser-main ()
+  "A version of `simple-browser-main' that adds a hello: scheme that greets the user."
+  (gtk:within-main-loop
+    (let* ((win (make-instance 'gtk:gtk-window))
+           (context (make-instance 'webkit:webkit-web-context))
+           (view (make-instance 'webkit2:webkit-web-view
+                                :web-context context)))
+      (gobject:g-signal-connect win "destroy"
+                                #'(lambda (widget)
+                                    (declare (ignore widget))
+                                    (gtk:leave-gtk-main)))
+      (webkit:webkit-web-context-register-uri-scheme-callback
+       context "hello"
+       #'(lambda (request)
+           (format nil "<html><body><p>Hello, ~:(~a~)!</p></body></html>"
+                   (webkit:webkit-uri-scheme-request-get-path request))))
+      (gtk:gtk-container-add win view)
+      (webkit2:webkit-web-view-load-uri view "hello:stranger")
+      (gtk:gtk-widget-show-all win))))
+
+(defun test-browser-main (&key private extended styled custom-scheme)
   (cond
     (private (private-browser-main))
     (extended (extended-browser-main))
     (styled (styled-browser-main))
+    (custom-scheme (custom-scheme-browser-main))
     (t (simple-browser-main)))
   (gtk:join-gtk-main))

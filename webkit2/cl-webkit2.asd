@@ -64,6 +64,8 @@
                (:file "webkit2.website-data-manager")
                (:file "webkit2.web-inspector")
                (:file "webkit2.web-view")
+               (:file "webkit2.g-input-stream")
+               (:file "webkit2.uri-scheme-request")
                (:file "webkit2.window-properties")
                (:file "webkit2.uri-utilities")
                (:file "webkit2.user-message")
