@@ -73,6 +73,10 @@
   :webkit-snapshot-region-visible
   :webkit-snapshot-region-full-document)
 
+(define-f-enum "WebKitWebProcessTerminationReason" webkit-web-process-termination-reason ()
+  :webkit-web-process-crashed
+  :webkit-web-process-exceeded-memory-limit)
+
 (define-g-enum "WebKitSnapshotOptions" webkit-snapshot-options ()
   :webkit-snapshot-options-none
   :webkit-snapshot-options-include-selection-highlighting)
