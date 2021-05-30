@@ -389,11 +389,11 @@
     (%webkit-web-view-get-snapshot-finish web-view result err)))
 (export 'webkit-web-view-get-snapshot-finish)
 
-(defcfun "webkit_script_dialog_ref" :string
+(defcfun "webkit_script_dialog_ref" :void
   (dialog (g-object webkit-script-dialog)))
 (export 'webkit-script-dialog-ref)
 
-(defcfun "webkit_script_dialog_unref" :string
+(defcfun "webkit_script_dialog_unref" :void
   (dialog (g-object webkit-script-dialog)))
 (export 'webkit-script-dialog-unref)
 
@@ -419,7 +419,7 @@
   (text :string))
 (export 'webkit-script-dialog-prompt-set-text)
 
-(defcfun "webkit_script_dialog_close" :string
+(defcfun "webkit_script_dialog_close" :void
   (dialog (g-object webkit-script-dialog)))
 (export 'webkit-script-dialog-close)
 
