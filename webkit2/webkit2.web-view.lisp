@@ -47,6 +47,9 @@
 
 (defctype webkit-script-dialog :pointer) ; XXX: GBoxed WebScriptDialog
 
+(define-g-boxed-opaque webkit-script-dialog "WebKitScriptDialog"
+  :alloc (error "WebKitScriptDialog can not be created from Lisp side."))
+
 (define-g-enum "WebKitLoadEvent" webkit-load-event ()
   :webkit-load-started
   :webkit-load-redirected
