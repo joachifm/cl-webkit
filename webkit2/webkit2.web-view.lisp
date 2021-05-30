@@ -84,7 +84,8 @@
 (define-g-enum "WebKitScriptDialogType" webkit-script-dialog-type ()
   :webkit-script-dialog-alert
   :webkit-script-dialog-confirm
-  :webkit-script-dialog-prompt)
+  :webkit-script-dialog-prompt
+  :webkit-script-dialog-before-unload-confirm)
 
 (defctype js-global-context-ref :pointer)
 
