@@ -393,11 +393,11 @@
 (export 'webkit-web-view-get-snapshot-finish)
 
 (defcfun "webkit_script_dialog_ref" :void
-  (dialog (g-object webkit-script-dialog)))
+  (dialog webkit-script-dialog))
 (export 'webkit-script-dialog-ref)
 
 (defcfun "webkit_script_dialog_unref" :void
-  (dialog (g-object webkit-script-dialog)))
+  (dialog webkit-script-dialog))
 (export 'webkit-script-dialog-unref)
 
 (defcfun "webkit_script_dialog_get_dialog_type" webkit-script-dialog-type
@@ -405,25 +405,25 @@
 (export 'webkit-script-dialog-get-dialog-type)
 
 (defcfun "webkit_script_dialog_get_message" :string
-  (dialog (g-object webkit-script-dialog)))
+  (dialog webkit-script-dialog))
 (export 'webkit-script-dialog-get-message)
 
 (defcfun "webkit_script_dialog_confirm_set_confirmed" :void
-  (dialog (g-object webkit-script-dialog))
+  (dialog webkit-script-dialog)
   (confirmed :boolean))
 (export 'webkit-script-dialog-confirm-set-confirmed)
 
 (defcfun "webkit_script_dialog_prompt_get_default_text" :string
-  (dialog (g-object webkit-script-dialog)))
+  (dialog webkit-script-dialog))
 (export 'webkit-script-dialog-prompt-get-default-text)
 
 (defcfun "webkit_script_dialog_prompt_set_text" :void
-  (dialog (g-object webkit-script-dialog))
+  (dialog webkit-script-dialog)
   (text :string))
 (export 'webkit-script-dialog-prompt-set-text)
 
 (defcfun "webkit_script_dialog_close" :void
-  (dialog (g-object webkit-script-dialog)))
+  (dialog webkit-script-dialog))
 (export 'webkit-script-dialog-close)
 
 (defcfun "webkit_web_view_can_execute_editing_command" :void
