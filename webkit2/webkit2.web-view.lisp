@@ -408,7 +408,7 @@
 (defcfun "webkit_script_dialog_confirm_set_confirmed" :void
   (dialog (g-object webkit-script-dialog))
   (confirmed :boolean))
-(export 'webkit-script-dialog-set-confirmed)
+(export 'webkit-script-dialog-confirm-set-confirmed)
 
 (defcfun "webkit_script_dialog_prompt_get_default_text" :string
   (dialog (g-object webkit-script-dialog)))
