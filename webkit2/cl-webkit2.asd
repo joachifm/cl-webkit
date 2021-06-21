@@ -48,6 +48,7 @@
                (:file "webkit2.print-operation")
                (:file "webkit2.script-world")
                (:file "webkit2.frame")
+               (:file "webkitdom.dom-object")
                (:file "jscore.js-value-ref")
                (:file "jscore.jsc-context")
                (:file "jscore.jsc-class")
