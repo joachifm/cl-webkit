@@ -11,7 +11,7 @@
 (in-package #:webkit2)
 
 (define-webkit-class "WebKitWebPage" ()
-  (("uri" "gchararray")))
+    (("uri" "gchararray")))
 
 (defcfun "webkit_web_page_get_dom_document" (g-object webkit-dom-document)
   (web-page (g-object webkit-web-page)))
