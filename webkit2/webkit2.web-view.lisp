@@ -39,6 +39,7 @@
    #+webkit2-mute
    ("is-muted" "gboolean")
    ("is-playing-audio" "gboolean")
+   ("page-id" "guint64")
    ("title" "gchararray")
    ("uri" "gchararray")
    ("user-content-manager" "WebKitUserContentManager")

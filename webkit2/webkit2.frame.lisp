@@ -21,3 +21,14 @@
   (frame (g-object webkit-frame))
   (world (g-object webkit-script-world)))
 (export 'webkit-frame-get-javascript-context-for-script-world)
+
+(defcfun "webkit_frame_get_js_value_for_dom_object" (g-object jsc-value)
+  (frame (g-object webkit-frame))
+  (dom-object (g-object webkit-dom-object)))
+(export 'webkit-frame-get-js-value-for-dom-object)
+
+(defcfun "webkit_frame_get_js_value_for_dom_object_in_script_world" (g-object jsc-value)
+  (frame (g-object webkit-frame))
+  (dom-object (g-object webkit-dom-object))
+  (world (g-object webkit-script-world)))
+(export 'webkit-frame-get-js-value-for-dom-object-in-script-world)
