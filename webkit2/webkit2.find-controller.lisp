@@ -23,21 +23,21 @@
   (:webkit-find-options-backwards 8)
   (:webkit-find-options-wrap-around 16))
 
-(defcfun ("webkit_find_controller_search" %webkit-find-controller-search) :void
+(defcfun "webkit_find_controller_search" :void
   (find-controller (g-object webkit-find-controller))
   (search-text :string)
   (find-options :uint)
   (max-match-count :uint))
 
-(defun webkit-find-controller-search (controller search-text
-                                      &key (max-match-count
-                                            ;; I.e., UINT_MAX
-                                            (1- (expt 2 (* 8 (cffi:foreign-type-size :uint)))))
-                                        (case-insensitive t)
-                                        at-word-starts
-                                        treat-medial-capital-as-word-start
-                                        backwards
-                                        (wrap-around t))
+(defun webkit-find-controller-search* (controller search-text
+                                       &key (max-match-count
+                                             ;; I.e., UINT_MAX
+                                             (1- (expt 2 (* 8 (cffi:foreign-type-size :uint)))))
+                                         (case-insensitive t)
+                                         at-word-starts
+                                         treat-medial-capital-as-word-start
+                                         backwards
+                                         (wrap-around t))
   "A smarter version of webkit_find_controller_search with sensible defaults.
 CONTROLLER is a `webkit:webkit-find-controller'.
 SEARCH-TEXT is a string to search for.
