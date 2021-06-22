@@ -33,11 +33,11 @@
                                        &key (max-match-count
                                              ;; I.e., UINT_MAX
                                              (1- (expt 2 (* 8 (cffi:foreign-type-size :uint)))))
-                                         (case-insensitive t)
-                                         at-word-starts
-                                         treat-medial-capital-as-word-start
-                                         backwards
-                                         (wrap-around t))
+                                         (case-insensitive-p t)
+                                         at-word-starts-p
+                                         treat-medial-capital-as-word-start-p
+                                         backwards-p
+                                         (wrap-around-p t))
   "A smarter version of webkit_find_controller_search with sensible defaults.
 CONTROLLER is a `webkit:webkit-find-controller'.
 SEARCH-TEXT is a string to search for.
@@ -46,20 +46,20 @@ Other keys regulate search. CASE-INSENSITIVE and WRAP-AROUND are set to true by 
   (%webkit-find-controller-search
    controller search-text
    (logior
-    (if case-insensitive
+    (if case-insensitive-p
         (cffi:foreign-enum-value 'webkit-find-options :webkit-find-options-case-insensitive)
         0)
-    (if at-word-starts
+    (if at-word-starts-p
         (cffi:foreign-enum-value 'webkit-find-options :webkit-find-options-at-word-starts)
         0)
-    (if treat-medial-capital-as-word-start
+    (if treat-medial-capital-as-word-start-p
         (cffi:foreign-enum-value 'webkit-find-options
                                  :webkit-find-options-treat-medial-capital-as-word-start)
         0)
-    (if backwards
+    (if backwards-p
         (cffi:foreign-enum-value 'webkit-find-options :webkit-find-options-backwards)
         0)
-    (if wrap-around
+    (if wrap-around-p
         (cffi:foreign-enum-value 'webkit-find-options :webkit-find-options-wrap-around)
         0))
    max-match-count))
