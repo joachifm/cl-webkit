@@ -52,7 +52,7 @@
                (:file "jscore.js-value-ref")
                (:file "jscore.jsc-context")
                (:file "jscore.jsc-class")
-               (:file "jscore.js-value")
+               (:file "jscore.jsc-value")
                (:file "webkit2.security-manager")
                (:file "webkit2.settings")
                (:file "webkit2.uri-request")
