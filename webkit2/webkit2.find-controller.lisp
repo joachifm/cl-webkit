@@ -28,6 +28,7 @@
   (search-text :string)
   (find-options :uint)
   (max-match-count :uint))
+(export 'webkit-find-controller-search)
 
 (defun webkit-find-controller-search* (controller search-text
                                        &key (max-match-count
@@ -63,7 +64,7 @@ Other keys regulate search. CASE-INSENSITIVE and WRAP-AROUND are set to true by 
         (cffi:foreign-enum-value 'webkit-find-options :webkit-find-options-wrap-around)
         0))
    max-match-count))
-(export 'webkit-find-controller-search)
+(export 'webkit-find-controller-search*)
 
 (defcfun "webkit_find_controller_search_next" :void
   (find-controller (g-object webkit-find-controller)))
