@@ -71,6 +71,6 @@
               :initarg :exception))
   (:documentation "Condition to signal when a JSCException is raised.")
   (:report (lambda (condition stream)
-             (format stream "~a~&~%~%~a"
+             (format stream "~a~&~%~a"
                      (jsc-exception-report (exception condition))
                      (jsc-exception-get-backtrace-string (exception condition))))))
