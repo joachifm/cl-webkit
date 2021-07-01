@@ -66,7 +66,7 @@
 (export 'jsc-exception-report)
 
 (define-condition jsc-exception-condition (error)
-  ((exception :initform (error "There should be a JSCException.")
+  ((exception :initform (error "JSCException required.")
               :accessor exception
               :initarg :exception))
   (:documentation "Condition to signal when a JSCException is raised.")
