@@ -28,8 +28,10 @@
 (defcfun "jsc_context_get_virtual_machine" (g-object jsc-virtual-machine))
 (export 'jsc_context-get-virtual-machine)
 
+(defcfun "jsc_context_get_exception" (g-object jsc-exception)
+  (context (g-object jsc-context)))
+
 ;; TODO:
-;; JSCException *	jsc_context_get_exception ()
 ;; void	jsc_context_throw ()
 ;; void	jsc_context_throw_printf ()
 ;; void	jsc_context_throw_with_name ()

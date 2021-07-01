@@ -50,6 +50,7 @@
                (:file "webkit2.frame")
                (:file "webkitdom.dom-object")
                (:file "jscore.js-value-ref")
+               (:file "jscore.jsc-exception")
                (:file "jscore.jsc-context")
                (:file "jscore.jsc-class")
                (:file "jscore.jsc-value")
