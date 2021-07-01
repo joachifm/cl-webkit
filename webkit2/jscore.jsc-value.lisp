@@ -241,12 +241,12 @@ Translates:
                                (cons (cffi:foreign-string-to-lisp property-name) property-value)))
                    into properties
                  finally (return
-                           (prog1
-                               properties
+                           (progn
                              (dotimes (i index)
                                (cffi:foreign-array-free
                                 (cffi:mem-aref property-names '(:pointer (:pointer :char)) i)))
-                             (cffi:foreign-array-free property-names))))))
+                             (cffi:foreign-array-free property-names)
+                             properties)))))
     (cond
       ((jsc-value-is-null jsc-value) null-value)
       ((jsc-value-is-undefined jsc-value) undefined-value)
