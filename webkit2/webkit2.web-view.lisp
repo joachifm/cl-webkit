@@ -218,19 +218,11 @@
   (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
     (handler-case
         (let* ((js-result (webkit-web-view-run-javascript-finish (callback-web-view callback) result))
-               (context (webkit-javascript-result-get-global-context js-result))
-               (value (webkit-javascript-result-get-value js-result))
-               (js-str-value (jscore:js-value-to-string-copy context value (cffi:null-pointer)))
-               (js-str-length (jscore:js-string-get-maximum-utf-8-c-string-size js-str-value))
-               (str-value (cffi:foreign-alloc :char :count (cffi:convert-from-foreign js-str-length :unsigned-int))))
-          (webkit-javascript-result-unref js-result)
-          (jscore:js-string-get-utf-8-c-string js-str-value str-value js-str-length)
+               (value (webkit-javascript-result-get-js-value js-result)))
           (setf callbacks (delete callback callbacks))
           (when (callback-function callback)
-            (funcall (callback-function callback)
-                     (prog1
-                         (cffi:foreign-string-to-lisp str-value)
-                       (cffi:foreign-free str-value)))))
+            (funcall (callback-function callback) (jsc-value-to-lisp value)))
+          (webkit-javascript-result-unref js-result))
       (error (c)
         (when callback
           (when  (callback-error-function callback)
