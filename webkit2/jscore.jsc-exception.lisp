@@ -64,3 +64,13 @@
 (defcfun "jsc_exception_report" :string
   (exception (g-object jsc-exception)))
 (export 'jsc-exception-report)
+
+(define-condition jsc-exception-condition (error)
+  ((exception :initform (error "There should be a JSCException.")
+              :accessor exception
+              :initarg :exception))
+  (:documentation "Condition to signal when a JSCException is raised.")
+  (:report (lambda (condition stream)
+             (format stream "~a~&~%~%~a"
+                     (jsc-exception-report (exception condition))
+                     (jsc-exception-get-backtrace-string (exception condition))))))

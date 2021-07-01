@@ -218,7 +218,10 @@
   (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
     (handler-case
         (let* ((js-result (webkit-web-view-run-javascript-finish (callback-web-view callback) result))
-               (value (webkit-javascript-result-get-js-value js-result)))
+               (value (webkit-javascript-result-get-js-value js-result))
+               (exception (jsc-context-get-exception (jsc-value-get-context value))))
+          (when exception
+            (signal 'jsc-exception-condition :exception exception))
           (setf callbacks (delete callback callbacks))
           (when (callback-function callback)
             (funcall (callback-function callback) (jsc-value-to-lisp value)))
