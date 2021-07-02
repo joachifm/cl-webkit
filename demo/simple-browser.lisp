@@ -121,11 +121,70 @@ Loads and renders a single web page."
       (webkit2:webkit-web-view-load-uri view "hello:stranger")
       (gtk:gtk-widget-show-all win))))
 
-(defun test-browser-main (&key private extended styled custom-scheme)
+(defun js-transform-browser-main ()
+  "A JS transformation-checking version of `simple-browser-main'."
+  (gtk:within-main-loop
+    (let* ((win (make-instance 'gtk:gtk-window))
+           (context (make-instance 'webkit:webkit-web-context))
+           (view (make-instance 'webkit2:webkit-web-view
+                                :web-context context)))
+      (macrolet ((with-js-transform-tests (view callback &body clauses)
+                   `(let ((result '()))
+                      ,@(loop for (js-string lisp-value) in clauses
+                              for index from 0 to (length clauses)
+                              collect
+                              `(webkit2:webkit-web-view-evaluate-javascript
+                                ,view
+                                ,js-string
+                                (lambda (object)
+                                  (push (let ((success (equalp ,lisp-value object)))
+                                          (list success ,js-string ,lisp-value))
+                                        result)
+                                  (when (= (length result) ,(length clauses))
+                                    (funcall ,callback result))))))))
+        (gobject:g-signal-connect win "destroy"
+                                  #'(lambda (widget)
+                                      (declare (ignore widget))
+                                      (gtk:leave-gtk-main)))
+        (gtk:gtk-container-add win view)
+        (setf webkit:*js-object-type* :alist)
+        (with-js-transform-tests view
+          (lambda (result)
+            (webkit:webkit-web-view-load-html
+             view
+             (format nil "
+<html>
+<body>
+<h1>Testing Javascript values transformation</h1>
+<table>
+<tr>
+<th>Status</td>
+<th>JS value</td>
+<th>Lisp value</td>
+</tr>
+~:{<tr>
+<td>~:[X~;✓~]</td>
+<td>~S</td>
+<td>~S</td>
+</tr>~%~}
+</table>
+</body>
+</html>" result)
+             (cffi:null-pointer)))
+          ("5" 5)
+          ("\"hello\"" "hello")
+          ("[1, 2, 3, 4, 5]" '(1 2 3 4 5))
+          ("[1, null, undefined, \"hello\", 7]" '(1 :null :undefined "hello" 7))
+          ("var obj = {hello: 5, how: \"are\", you: null, today: undefined}; obj"
+           '(("hello" . 5) ("how" . "are") ("you" . :null) ("today" . :undefined))))
+        (gtk:gtk-widget-show-all win)))))
+
+(defun test-browser-main (&key private extended styled custom-scheme js-transform)
   (cond
     (private (private-browser-main))
     (extended (extended-browser-main))
     (styled (styled-browser-main))
     (custom-scheme (custom-scheme-browser-main))
+    (js-transform (js-transform-browser-main))
     (t (simple-browser-main)))
   (gtk:join-gtk-main))
