@@ -184,7 +184,6 @@
 (defvar *js-function-value* :function
   "The value used when translating function values from JavaScript to Lisp.
 Likely to get deprecated.")
-(export '*js-function-value*)
 
 (defvar *js-array-type* :list
   "The Lisp data type used when translating arrays from JavaScript to Lisp.")
