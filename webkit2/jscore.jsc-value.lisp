@@ -216,8 +216,6 @@ Translates:
 - false to FALSE-VALUE (nil by default). Also see `*js-false-value*'.
 - null to NULL-VALUE (:null by default). Also see `*js-null-value*'.
 - undefined to UNDEFINED-VALUE (:undefined by default). Also see `*js-undefined-value*'.
-- JS functions to FUNCTION-VALUE (:function by default). This will change in the future!
-  Also see `*js-function-value*'.
 - JS arrays to either lists or vectors (:list and :vector ARRAY-TYPE respectively).
   Also see `*js-array-type*'.
 - JS objects (also see `*js-object-type*') to:
