@@ -247,7 +247,6 @@ Translates:
     (cond
       ((jsc-value-is-null jsc-value) null-value)
       ((jsc-value-is-undefined jsc-value) undefined-value)
-      ((jsc-value-is-function jsc-value) function-value)
       ((jsc-value-is-number jsc-value) (jsc-value-to-double jsc-value))
       ((jsc-value-is-string jsc-value) (jsc-value-to-string jsc-value))
       ((jsc-value-is-boolean jsc-value)
@@ -272,4 +271,5 @@ Translates:
                                     (lambda (property)
                                       (cons (intern (first property) :keyword)
                                             (rest property)))
-                                    properties)))))))))
+                                    properties))))))
+      ((jsc-value-is-function jsc-value) function-value))))
