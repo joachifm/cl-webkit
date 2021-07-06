@@ -16,9 +16,6 @@
 
 (defvar *webkit-environment* (make-hash-table :test 'equal))
 
-(setf (gethash "lock" *webkit-environment*)
-      (bt:make-lock "WebKit tests lock"))
-
 (defmacro with-js-transform-result (js-string &body body)
   `(let ((channel (make-instance
                    'calispel:channel
