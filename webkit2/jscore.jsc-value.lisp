@@ -110,13 +110,13 @@
 
 (defcfun "jsc_value_object_set_property_at_index" :void
   (value (g-object jsc-value))
-  (index :int)
+  (index :uint)
   (property (g-object jsc-value)))
 (export 'jsc_value_object_set-property-at-index)
 
 (defcfun "jsc_value_object_get_property_at_index" (g-object jsc-value)
   (value (g-object jsc-value))
-  (index :int))
+  (index :uint))
 (export 'jsc_value_object_get-property-at-index)
 
 (defcfun "jsc_value_object_has_property" :boolean
@@ -154,7 +154,6 @@
   (value (g-object jsc-value)))
 (export 'jsc-value-is-constructor)
 
-
 (defcfun "jsc_value_new_from_json" (g-object jsc-value)
   (context (g-object jsc-context))
   (json :string))
@@ -162,7 +161,7 @@
 
 (defcfun "jsc_value_to_json" :string
   (value (g-object jsc-value))
-  (indent :int))
+  (indent :uint))
 (export 'jsc-value-to-json)
 
 (defvar *js-null-value* :null
