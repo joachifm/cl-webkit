@@ -149,29 +149,22 @@ there" %result%))))
     (is (equal (list t nil t t nil) %result%))))
 
 (def-test everything-array (:suite js-tests)
-  (setf webkit:*js-object-type* :alist)
   (with-js-transform-result "[true, false, undefined, null, 100000, \"hello\", {one: 1}]"
-    (is (equal (list t nil :undefined :null 100000 "hello" '(("one" . 1))) %result%)))
-  (setf webkit:*js-object-type* :hash-table))
+    (is (equal (list t nil :undefined :null 100000 "hello" '(("one" . 1))) %result%))))
 
 (def-test everything-array-vector (:suite js-tests)
-  (setf webkit:*js-object-type* :alist
-        webkit:*js-array-type* :vector)
+  (setf webkit:*js-array-type* :vector)
   (with-js-transform-result "[true, false, undefined, null, 100000, \"hello\", {one: 1}]"
     (is (equalp (vector t nil :undefined :null 100000 "hello" '(("one" . 1))) %result%)))
-  (setf webkit:*js-object-type* :hash-table
-        webkit:*js-array-type* :list))
+  (setf webkit:*js-array-type* :list))
 
 ;;; Objects
 
 (def-test single-field-object (:suite js-tests)
-  (setf webkit:*js-object-type* :alist)
   (with-js-transform-result "var obj = {one: 1}; obj"
-    (is (equal (list (cons "one"  1)) %result%)))
-  (setf webkit:*js-object-type* :hash-table))
+    (is (equal (list (cons "one"  1)) %result%))))
 
 (def-test long-object (:suite js-tests)
-  (setf webkit:*js-object-type* :alist)
   (with-js-transform-result
       "var obj = {one: 1, two: 2, three: 3, five: 5, ten: 10, googol: Math.pow(10, 100)}; obj"
     (is (equal (list (cons "one"  1)
@@ -180,11 +173,9 @@ there" %result%))))
                      (cons "five" 5)
                      (cons "ten" 10)
                      (cons "googol" 1.0000000000000002d100))
-               %result%)))
-  (setf webkit:*js-object-type* :hash-table))
+               %result%))))
 
 (def-test everything-object (:suite js-tests)
-  (setf webkit:*js-object-type* :alist)
   (with-js-transform-result
       "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
 nil: false, t: true,
@@ -203,10 +194,10 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
                          ("ten" . 10)
                          ("googol" . -1.0000000000000002d100)))
                  ("arr" . (t nil :undefined :null 100000 "hello" (("one" . 1)))))
-               %result%)))
-  (setf webkit:*js-object-type* :hash-table))
+               %result%))))
 
 (def-test everything-object-hash (:suite js-tests)
+  (setf webkit:*js-object-type* :hash-table)
   (with-js-transform-result
       "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
 nil: false, t: true,
@@ -235,7 +226,8 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
                     ,(let ((ht (make-hash-table :test 'equal)))
                        (setf (gethash "one" ht) 1)
                        ht))
-                (gethash "arr" %result%)))))
+                (gethash "arr" %result%))))
+  (setf webkit:*js-object-type* :alist))
 
 (def-test everything-object-plist (:suite js-tests)
   (setf webkit:*js-object-type* :plist)
@@ -258,7 +250,7 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
                      :googol -1.0000000000000002d100)
                  :arr (t nil :undefined :null 100000 "hello" (:one 1)))
                %result%)))
-  (setf webkit:*js-object-type* :hash-table))
+  (setf webkit:*js-object-type* :alist))
 
 (run! 'webkit-tests)
 
