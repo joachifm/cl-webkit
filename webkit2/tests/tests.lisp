@@ -16,7 +16,7 @@
 
 (defvar *webkit-environment* (make-hash-table :test 'equal))
 
-(defmacro with-js-transform-result (js-string &body body)
+(defmacro with-js-transform-result ((var js-string) &body body)
   `(let ((channel (make-instance
                    'calispel:channel
                    :buffer (make-instance 'jpl-queues:bounded-fifo-queue :capacity 1))))
@@ -24,7 +24,7 @@
        (webkit2:webkit-web-view-evaluate-javascript
         (gethash "view" *webkit-environment*) ,js-string
         (lambda (result) (calispel:! channel result))))
-     (let ((%result% (calispel:? channel)))
+     (let ((,var (calispel:? channel)))
        ,@body)))
 
 (gtk:within-main-loop
@@ -49,121 +49,122 @@
 ;;; Literal types
 
 (def-test undefined (:suite js-tests)
-  (with-js-transform-result "undefined"
+  (with-js-transform-result (%result% "undefined")
     (is (eq :undefined %result%))))
 
 (def-test null (:suite js-tests)
-  (with-js-transform-result "null"
+  (with-js-transform-result (%result% "null")
     (is (eq :null %result%))))
 
 (def-test null-as-nil (:suite js-tests)
   (setf webkit::*js-null-value* nil)
-  (with-js-transform-result "null"
+  (with-js-transform-result (%result% "null")
     (is (eq nil %result%)))
   (setf webkit::*js-null-value* :null))
 
 (def-test false (:suite js-tests)
-  (with-js-transform-result "false"
+  (with-js-transform-result (%result% "false")
     (is (eq nil %result%))))
 
 (def-test false-as-keyword (:suite js-tests)
   (setf webkit::*js-false-value* :false)
-  (with-js-transform-result "false"
+  (with-js-transform-result (%result% "false")
     (is (eq :false %result%)))
   (setf webkit::*js-false-value* nil))
 
 (def-test true (:suite js-tests)
-  (with-js-transform-result "true"
+  (with-js-transform-result (%result% "true")
     (is (eq t %result%))))
 
 (def-test true-as-keyword (:suite js-tests)
   (setf webkit::*js-true-value* :true)
-  (with-js-transform-result "true"
+  (with-js-transform-result (%result% "true")
     (is (eq :true %result%)))
   (setf webkit::*js-true-value* t))
 
 ;;; Numbers
 
 (def-test integers (:suite js-tests)
-  (with-js-transform-result "0"
+  (with-js-transform-result (%result% "0")
     (is (= 0 %result%)))
-  (with-js-transform-result "8"
+  (with-js-transform-result (%result% "8")
     (is (= 8 %result%)))
-  (with-js-transform-result "-6"
+  (with-js-transform-result (%result% "-6")
     (is (= -6 %result%)))
-  (with-js-transform-result "Math.pow(10, 100)"
+  (with-js-transform-result (%result% "Math.pow(10, 100)")
     (is (= 1.0000000000000002d100 %result%)))
-  (with-js-transform-result "-Math.pow(10, 100)"
+  (with-js-transform-result (%result% "-Math.pow(10, 100)")
     (is (= -1.0000000000000002d100 %result%))))
 
 ;; REVIEW: CCL? ECL?
 #+sbcl
 (def-test special-numbers (:suite js-tests)
-  (with-js-transform-result "NaN"
+  (with-js-transform-result (%result% "NaN")
     (is (sb-ext:float-nan-p %result%)))
-  (with-js-transform-result "Infinity"
+  (with-js-transform-result (%result% "Infinity")
     (is (sb-ext:float-infinity-p %result%))
     (is (equal 1.0d0 (float-sign %result% 1.0))))
-  (with-js-transform-result "-Infinity"
+  (with-js-transform-result (%result% "-Infinity")
     (is (sb-ext:float-infinity-p %result%))
     (is (equal -1.0d0 (float-sign %result% 1.0)))))
 
 (def-test fractional-number (:suite js-tests)
-  (with-js-transform-result "5.3"
+  (with-js-transform-result (%result% "5.3")
     (is (= 5.3d0 %result%))))
 
 (def-test periodic-number (:suite js-tests)
-  (with-js-transform-result "var num = 5/3; num"
+  (with-js-transform-result (%result% "var num = 5/3; num")
     (is (equal 1.6666666666666667d0 %result%))))
 
 ;;; Strings
 
 (def-test simple-string (:suite js-tests)
-  (with-js-transform-result "\"hello\""
+  (with-js-transform-result (%result% "\"hello\"")
     (is (equal "hello" %result%))))
 
 (def-test escaped-string (:suite js-tests)
-  (with-js-transform-result "\"hello\\nthere\""
+  (with-js-transform-result (%result% "\"hello\\nthere\"")
     (is (equal "hello
 there" %result%))))
 
 (def-test templated-string (:suite js-tests)
-  (with-js-transform-result "var num = 5; `${num} + ${num} = ${10}`"
+  (with-js-transform-result (%result% "var num = 5; `${num} + ${num} = ${10}`")
     (is (equal "5 + 5 = 10" %result%))))
 
 (def-test concatenated-string (:suite js-tests)
-  (with-js-transform-result "\"hello \" + \"there!\""
+  (with-js-transform-result (%result% "\"hello \" + \"there!\"")
     (is (equal "hello there!" %result%))))
 
 ;;; Arrays
 
 (def-test simple-array (:suite js-tests)
-  (with-js-transform-result "[1, 2, 3, 4, 5]"
+  (with-js-transform-result (%result% "[1, 2, 3, 4, 5]")
     (is (equal (list 1 2 3 4 5) %result%)))
-  (with-js-transform-result "[\"h\", \"e\", \"l\", \"l\", \"o\"]"
+  (with-js-transform-result (%result% "[\"h\", \"e\", \"l\", \"l\", \"o\"]")
     (is (equal (list "h" "e" "l" "l" "o") %result%)))
-  (with-js-transform-result "[true, false, true, true, false]"
+  (with-js-transform-result (%result% "[true, false, true, true, false]")
     (is (equal (list t nil t t nil) %result%))))
 
 (def-test everything-array (:suite js-tests)
-  (with-js-transform-result "[true, false, undefined, null, 100000, \"hello\", {one: 1}]"
+  (with-js-transform-result (%result% "[true, false, undefined, null, 100000, \"hello\", {one: 1}]")
     (is (equal (list t nil :undefined :null 100000 "hello" '(("one" . 1))) %result%))))
 
 (def-test everything-array-vector (:suite js-tests)
   (setf webkit:*js-array-type* :vector)
-  (with-js-transform-result "[true, false, undefined, null, 100000, \"hello\", {one: 1}]"
+  (with-js-transform-result (%result% "[true, false, undefined, null, 100000, \"hello\", {one: 1}]")
     (is (equalp (vector t nil :undefined :null 100000 "hello" '(("one" . 1))) %result%)))
   (setf webkit:*js-array-type* :list))
 
 ;;; Objects
 
 (def-test single-field-object (:suite js-tests)
-  (with-js-transform-result "var obj = {one: 1}; obj"
+  (with-js-transform-result (%result% "var obj = {one: 1}; obj")
     (is (equal (list (cons "one"  1)) %result%))))
 
 (def-test long-object (:suite js-tests)
   (with-js-transform-result
-      "var obj = {one: 1, two: 2, three: 3, five: 5, ten: 10, googol: Math.pow(10, 100)}; obj"
+      (%result%
+       "var obj = {one: 1, two: 2, three: 3, five: 5, ten: 10, googol: Math.pow(10, 100)}; obj")
     (is (equal (list (cons "one"  1)
                      (cons "two" 2)
                      (cons "three" 3)
@@ -174,10 +175,11 @@ there" %result%))))
 
 (def-test everything-object (:suite js-tests)
   (with-js-transform-result
-      "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
+      (%result%
+       "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
 nil: false, t: true,
 o: {one: 1, two: 2, three: 3, five: 5, ten: 10, googol: -Math.pow(10, 100)},
-arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
+arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj")
     (is (equal `(("one" . 1)
                  ("nul" . :null)
                  ("undef" . :undefined)
@@ -196,10 +198,11 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
 (def-test everything-object-hash (:suite js-tests)
   (setf webkit:*js-object-type* :hash-table)
   (with-js-transform-result
-      "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
+      (%result%
+       "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
 nil: false, t: true,
 o: {one: 1, two: 2, three: 3, five: 5, ten: 10, googol: -Math.pow(10, 100)},
-arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
+arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj")
     (is (hash-table-p %result%))
     (is (equal 8 (hash-table-count %result%)))
     (is (equal 1 (gethash "one" %result%)))
@@ -229,10 +232,11 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
 (def-test everything-object-plist (:suite js-tests)
   (setf webkit:*js-object-type* :plist)
   (with-js-transform-result
-      "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
+      (%result%
+       "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
 nil: false, t: true,
 o: {one: 1, two: 2, three: 3, five: 5, ten: 10, googol: -Math.pow(10, 100)},
-arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
+arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj")
     (is (equal `(:one 1
                  :nul :null
                  :undef :undefined
