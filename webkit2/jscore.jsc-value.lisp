@@ -10,6 +10,11 @@
 
 (in-package #:webkit2)
 
+(define-g-enum "JSCValuePropertyFlags" jsc-value-property-flags ()
+  (:jsc-value-property-configurable 1)
+  (:jsc-value-property-enumberable 2)
+  (:jsc-value-property-writable 4))
+
 (define-webkit-class "JSCValue"
     (:type-initializer "jsc_value_get_type")
     (("context" "JSCContext")))
@@ -133,18 +138,62 @@
   (value (g-object jsc-value)))
 (export 'jsc_value-object-enumerate-properties)
 
-;; TODO:
-;; JSCValue *	jsc_value_object_invoke_method ()
-;; JSCValue *	jsc_value_object_invoke_methodv ()
-;; void	jsc_value_object_define_property_data ()
-;; void	jsc_value_object_define_property_accessor ()
-;; JSCValue *	jsc_value_new_function ()
-;; JSCValue *	jsc_value_new_functionv ()
-;; JSCValue *	jsc_value_new_function_variadic ()
-;; JSCValue *	jsc_value_function_call ()
-;; JSCValue *	jsc_value_function_callv ()
-;; JSCValue *	jsc_value_constructor_call ()
-;; JSCValue *	jsc_value_constructor_callv ()
+(defcfun "jsc_value_object_invoke_methodv" (g-object jsc-value)
+  (value (g-object jsc-value))
+  (name :string)
+  (n-parameters :uint)
+  (parameters (:pointer (g-object jsc-value))))
+(export 'jsc-value-object-invoke-methodv)
+
+(defcfun "jsc_value_object_define_property_data" :void
+  (value (g-object jsc-value))
+  (property-name :string)
+  (property-flags :uint)
+  (property-value (g-object jsc-value)))
+(export 'jsc-value-object-define-property-data)
+
+(defcfun "jsc_value_object_define_property_accessor" :void
+  (value (g-object jsc-value))
+  (property-name :string)
+  (property-flags :uint)
+  (property-type g-type)
+  (getter :pointer) ;; XXX: GCallback
+  (setter :pointer) ;; XXX: GCallback
+  (user-data :pointer)
+  (destroy-notify :pointer)) ;; XXX: GDestroyNotify
+(export 'jsc-value-object-define-property-accessor)
+
+(defcfun "jsc_value_new_functionv" (g-object jsc-value)
+  (context (g-object jsc-context))
+  (name :string)
+  (callback :pointer) ;; XXX: GCallback
+  (user-data :pointer)
+  (destroy-notify :pointer) ;; XXX: GDestroyNotify
+  (return-type g-type)
+  (n-parameters :uint)
+  (parameter-types (:pointer g-type)))
+(export 'jsc-value-new-functionv)
+
+(defcfun "jsc_value_new_function_variadic" (g-object jsc-value)
+  (context (g-object jsc-context))
+  (name :string)
+  (callback :pointer) ;; XXX: GCallback
+  (user-data :pointer)
+  (destroy-notify :pointer) ;; XXX: GDestroyNotify
+  (return-type g-type))
+(export 'jsc-value-new-function-variadic)
+
+(defcfun "jsc_value_function_callv" (g-object jsc-value)
+  (value (g-object jsc-value))
+  (n-parameters :uint)
+  (parameters (:pointer (g-object jsc-value))))
+(export 'jsc-value-function-callv)
+
+(defcfun "jsc_value_constructor_callv" (g-object jsc-value)
+  (value (g-object jsc-value))
+  (n-parameters :uint)
+  (parameters (:pointer (g-object jsc-value))))
+(export 'jsc-value-constructor-callv)
 
 (defcfun "jsc_value_is_function" :boolean
   (value (g-object jsc-value)))
