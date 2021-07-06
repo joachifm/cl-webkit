@@ -44,7 +44,7 @@ CONTROLLER is a `webkit:webkit-find-controller'.
 SEARCH-TEXT is a string to search for.
 MAX-MATCH-COUNT is the maximum match-count. Set to the max-match-count of CONTROLLER by default.
 Other keys regulate search. CASE-INSENSITIVE and WRAP-AROUND are set to true by default."
-  (%webkit-find-controller-search
+  (webkit-find-controller-search
    controller search-text
    (logior
     (if case-insensitive-p
