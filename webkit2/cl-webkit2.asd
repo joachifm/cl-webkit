@@ -76,4 +76,14 @@
                (:file "webkit2.uri-utilities")
                (:file "webkit2.user-message")
                (:file "webkit2.web-extension"))
-  :depends-on (:cffi :cl-cffi-gtk))
+  :depends-on (:cffi :cl-cffi-gtk)
+  :in-order-to ((test-op (test-op :cl-webkit2/test))))
+
+(defsystem :cl-webkit2/test
+  :description "CL-WebKit tests, mainly to check JS result conversion."
+  :license "MIT"
+  :depends-on (:fiveam :calispel)
+  :pathname "tests/"
+  :components ((:file "package")
+               (:file "tests"))
+  :perform (test-op (o c) (symbol-call :5am :run! :webkit2.test)))
