@@ -189,7 +189,7 @@ Likely to get deprecated.")
   "The Lisp data type used when translating arrays from JavaScript to Lisp.")
 (export '*js-array-type*)
 
-(defvar *js-object-type* :hash-table
+(defvar *js-object-type* :alist
   "The Lisp data type used when translating objects from JavaScript to Lisp.")
 (export '*js-object-type*)
 
@@ -221,8 +221,8 @@ Translates:
 - JS arrays to either lists or vectors (:list and :vector ARRAY-TYPE respectively).
   Also see `*js-array-type*'.
 - JS objects (also see `*js-object-type*') to:
-  - hash-tables (if OBJECT-TYPE is :hash-table, default) with string keys,
-  - alists (if OBJECT-TYPE is :alist) with string keys,
+  - alists (if OBJECT-TYPE is :alist, deafult) with string keys,
+  - hash-tables (if OBJECT-TYPE is :hash-table) with string keys,
   - plists (if OBJECT-TYPE is :plist) with keyword keys,"
   (flet ((drain-properties (jsc-value array-p)
            (loop with property-names = (jsc-value-object-enumerate-properties jsc-value)
