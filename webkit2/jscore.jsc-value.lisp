@@ -211,7 +211,9 @@ Likely to get deprecated.")
   "Translate a JSC-VALUE to a lisp value.
 Translates:
 - JS strings to strings.
-- JS numbers to floating numbers.
+- JS numbers:
+  - to integers if the absolute value is less than 1.0d22,
+  - floating-point numbers otherwise.
 - true to TRUE-VALUE (t by default). Also see `*js-true-value*'.
 - false to FALSE-VALUE (nil by default). Also see `*js-false-value*'.
 - null to NULL-VALUE (:null by default). Also see `*js-null-value*'.
@@ -247,7 +249,15 @@ Translates:
     (cond
       ((jsc-value-is-null jsc-value) null-value)
       ((jsc-value-is-undefined jsc-value) undefined-value)
-      ((jsc-value-is-number jsc-value) (jsc-value-to-double jsc-value))
+      ((jsc-value-is-number jsc-value) (let ((num (jsc-value-to-double jsc-value)))
+                                         (handler-case
+                                             ;; Floats get too chaotic after 1.0d22.
+                                             ;; Looking at floating part doesn't help there.
+                                             (if (and (< (abs num) 1.0d22) (zerop (rem num 1.0)))
+                                                 (truncate num)
+                                                 num)
+                                           ;; Truncation/comparison can error out on infinity/NaN.
+                                           (error (c) (declare (ignore c)) num))))
       ((jsc-value-is-string jsc-value) (jsc-value-to-string jsc-value))
       ((jsc-value-is-boolean jsc-value)
        (if (jsc-value-to-boolean jsc-value)
