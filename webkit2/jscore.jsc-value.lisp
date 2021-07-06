@@ -279,7 +279,7 @@ Translates:
            (:alist properties)
            (:plist (apply #'append (mapcar
                                     (lambda (property)
-                                      (list (intern (first property) :keyword)
+                                      (list (intern (string-upcase (first property)) :keyword)
                                             (rest property)))
                                     properties))))))
       ((jsc-value-is-function jsc-value) function-value))))
