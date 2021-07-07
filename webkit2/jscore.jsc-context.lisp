@@ -83,6 +83,9 @@
   (name :string))
 (export 'jsc-context-get-value)
 
+(defcfun "jsc_context_get_current" (g-object jsc-context))
+(export 'jsc-context-get-current)
+
 (defcfun "jsc_context_register_class" (g-object jsc-class)
   (context (g-object jsc-context))
   (name :string)
