@@ -16,15 +16,22 @@
 
 (defvar *webkit-environment* (make-hash-table :test 'equal))
 
-(defmacro with-js-transform-result ((var js-string) &body body)
+(defmacro with-js-transform-result (js-string (var &optional (jsc-var (gensym))
+                                                     (context-var (gensym)))
+                                    &body body)
   `(let ((channel (make-instance
                    'calispel:channel
                    :buffer (make-instance 'jpl-queues:bounded-fifo-queue :capacity 1))))
      (gtk:within-gtk-thread
        (webkit2:webkit-web-view-evaluate-javascript
         (gethash "view" *webkit-environment*) ,js-string
-        (lambda (result) (calispel:! channel result))))
-     (let ((,var (calispel:? channel)))
+        (lambda (result jsc-value)
+          (calispel:! channel result)
+          (calispel:! channel jsc-value)
+          (calispel:! channel (webkit:jsc-value-get-context jsc-value)))))
+     (let ((,var (calispel:? channel))
+           (,jsc-var (calispel:? channel))
+           (,context-var (calispel:? channel)))
        ,@body)))
 
 (gtk:within-main-loop
@@ -49,100 +56,100 @@
 ;;; Literal types
 
 (def-test undefined (:suite js-tests)
-  (with-js-transform-result (%result% "undefined")
+  (with-js-transform-result "undefined" (%result%)
     (is (eq :undefined %result%))))
 
 (def-test null (:suite js-tests)
-  (with-js-transform-result (%result% "null")
+  (with-js-transform-result "null" (%result%)
     (is (eq :null %result%))))
 
 (def-test null-as-nil (:suite js-tests)
   (setf webkit::*js-null-value* nil)
-  (with-js-transform-result (%result% "null")
+  (with-js-transform-result "null" (%result%)
     (is (eq nil %result%)))
   (setf webkit::*js-null-value* :null))
 
 (def-test false (:suite js-tests)
-  (with-js-transform-result (%result% "false")
+  (with-js-transform-result "false" (%result%)
     (is (eq nil %result%))))
 
 (def-test false-as-keyword (:suite js-tests)
   (setf webkit::*js-false-value* :false)
-  (with-js-transform-result (%result% "false")
+  (with-js-transform-result "false" (%result%)
     (is (eq :false %result%)))
   (setf webkit::*js-false-value* nil))
 
 (def-test true (:suite js-tests)
-  (with-js-transform-result (%result% "true")
+  (with-js-transform-result "true" (%result%)
     (is (eq t %result%))))
 
 (def-test true-as-keyword (:suite js-tests)
   (setf webkit::*js-true-value* :true)
-  (with-js-transform-result (%result% "true")
+  (with-js-transform-result "true" (%result%)
     (is (eq :true %result%)))
   (setf webkit::*js-true-value* t))
 
 ;;; Numbers
 
 (def-test integers (:suite js-tests)
-  (with-js-transform-result (%result% "0")
+  (with-js-transform-result "0" (%result%)
     (is (= 0 %result%)))
-  (with-js-transform-result (%result% "8")
+  (with-js-transform-result "8" (%result%)
     (is (= 8 %result%)))
-  (with-js-transform-result (%result% "-6")
+  (with-js-transform-result "-6" (%result%)
     (is (= -6 %result%)))
-  (with-js-transform-result (%result% "Math.pow(10, 100)")
+  (with-js-transform-result "Math.pow(10, 100)" (%result%)
     (is (= 1.0000000000000002d100 %result%)))
-  (with-js-transform-result (%result% "-Math.pow(10, 100)")
+  (with-js-transform-result "-Math.pow(10, 100)" (%result%)
     (is (= -1.0000000000000002d100 %result%))))
 
 ;; REVIEW: CCL? ECL?
 #+sbcl
 (def-test special-numbers (:suite js-tests)
-  (with-js-transform-result (%result% "NaN")
+  (with-js-transform-result "NaN" (%result%)
     (is (sb-ext:float-nan-p %result%)))
-  (with-js-transform-result (%result% "Infinity")
+  (with-js-transform-result "Infinity" (%result%)
     (is (sb-ext:float-infinity-p %result%))
     (is (equal 1.0d0 (float-sign %result% 1.0))))
-  (with-js-transform-result (%result% "-Infinity")
+  (with-js-transform-result "-Infinity" (%result%)
     (is (sb-ext:float-infinity-p %result%))
     (is (equal -1.0d0 (float-sign %result% 1.0)))))
 
 (def-test fractional-number (:suite js-tests)
-  (with-js-transform-result (%result% "5.3")
+  (with-js-transform-result "5.3" (%result%)
     (is (= 5.3d0 %result%))))
 
 (def-test periodic-number (:suite js-tests)
-  (with-js-transform-result (%result% "var num = 5/3; num")
+  (with-js-transform-result "var num = 5/3; num" (%result%)
     (is (equal 1.6666666666666667d0 %result%))))
 
 ;;; Strings
 
 (def-test simple-string (:suite js-tests)
-  (with-js-transform-result (%result% "\"hello\"")
+  (with-js-transform-result "\"hello\"" (%result%)
     (is (equal "hello" %result%))))
 
 (def-test escaped-string (:suite js-tests)
-  (with-js-transform-result (%result% "\"hello\\nthere\"")
+  (with-js-transform-result "\"hello\\nthere\"" (%result%)
     (is (equal "hello
 there" %result%))))
 
 (def-test templated-string (:suite js-tests)
-  (with-js-transform-result (%result% "var num = 5; `${num} + ${num} = ${10}`")
+  (with-js-transform-result "var num = 5; `${num} + ${num} = ${10}`" (%result%)
     (is (equal "5 + 5 = 10" %result%))))
 
 (def-test concatenated-string (:suite js-tests)
-  (with-js-transform-result (%result% "\"hello \" + \"there!\"")
+  (with-js-transform-result "\"hello \" + \"there!\"" (%result%)
     (is (equal "hello there!" %result%))))
 
 ;;; Arrays
 
 (def-test simple-array (:suite js-tests)
-  (with-js-transform-result (%result% "[1, 2, 3, 4, 5]")
+  (with-js-transform-result "[1, 2, 3, 4, 5]" (%result%)
     (is (equal (list 1 2 3 4 5) %result%)))
-  (with-js-transform-result (%result% "[\"h\", \"e\", \"l\", \"l\", \"o\"]")
+  (with-js-transform-result "[\"h\", \"e\", \"l\", \"l\", \"o\"]" (%result%)
     (is (equal (list "h" "e" "l" "l" "o") %result%)))
-  (with-js-transform-result (%result% "[true, false, true, true, false]")
+  (with-js-transform-result "[true, false, true, true, false]" (%result%)
     (is (equal (list t nil t t nil) %result%))))
 
 (def-test everything-array (:suite js-tests)
