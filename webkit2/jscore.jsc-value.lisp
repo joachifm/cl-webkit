@@ -232,7 +232,7 @@
                      (jsc-value-to-lisp
                       (jsc-value-new-functionv
                        ,context ,js-name (cffi:callback ,callback-name)
-                       (cffi:null-pointer) (cffi:null-pointer)
+                       (cffi:null-pointer) (cffi:null-pointer) ;; TODO: Use g-notify-destroy-free?
                        ,jsc-value-type ,n-args
                        (cffi:foreign-alloc
                         :pointer :initial-contents (list ,@(loop for i below n-args collect jsc-value-type)))))))
@@ -375,6 +375,7 @@ Translates:
            jsc-value
            (length args)
            (if args
+               ;; TODO: Free this.
                (cffi:foreign-alloc :pointer
                                    :initial-contents
                                    (mapcar #'pointer
