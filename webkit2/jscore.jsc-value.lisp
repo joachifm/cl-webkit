@@ -86,6 +86,25 @@
 
 ;; TODO: jsc_value_new_array
 
+(defcstruct g-ptr-array
+  (data :pointer)
+  (length :uint))
+
+(defcfun "jsc_value_new_array_from_garray" (g-object jsc-value)
+  (context (g-object jsc-context))
+  (array :pointer))
+
+(defun jsc-value-new-array-from-list (context list)
+  "Create a JSCValue array in CONTEXT out of LIST of JSCValues."
+  (let* ((list-values (if (null list)
+                          (null-pointer)
+                          (foreign-alloc :pointer :initial-contents (mapcar #'pointer list)
+                                                  :count (length list)))))
+    (with-foreign-object (array '(:struct g-ptr-array))
+      (setf (foreign-slot-value array '(:struct g-ptr-array) 'data) list-values
+            (foreign-slot-value array '(:struct g-ptr-array) 'length) (length list))
+      (jsc-value-new-array-from-garray context array))))
+
 (defcfun "jsc_value_is_array" :boolean
   (value (g-object jsc-value)))
 (export 'jsc-value-is-array)
