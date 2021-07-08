@@ -40,6 +40,7 @@
      (let ((,var (calispel:? channel))
            (,jsc-var (calispel:? channel))
            (,context-var (calispel:? channel)))
+       (declare (ignorable ,var ,jsc-var ,context-var))
        ,@body)))
 
 (gtk:within-main-loop

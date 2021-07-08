@@ -221,7 +221,7 @@
              (defcallback ,callback-name (g-object jsc-value)
                  (,@(loop for arg in args
                           collect `(,arg :pointer)) (user-data :pointer))
-               (declare (ignore user-data))
+               (declare (ignorable user-data ,@args))
                (let (,@(loop for arg in args
                              collect `(,arg (jsc-value-to-lisp ,arg))))
                  (lisp-to-jsc-value
