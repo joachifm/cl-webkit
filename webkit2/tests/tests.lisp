@@ -53,6 +53,35 @@
           (gethash "context" *webkit-environment*) context
           (gethash "view" *webkit-environment*) view)))
 
+;;; General tests
+
+(def-test json-values (:suite js-tests)
+  (with-js-transform-result "null"
+      (%result% %jsc-result% %context%)
+    (is (equal "null" (webkit:jsc-value-to-json %jsc-result% 0))))
+  (with-js-transform-result "true"
+      (%result% %jsc-result% %context%)
+    (is (equal "true" (webkit:jsc-value-to-json %jsc-result% 0))))
+  (with-js-transform-result "false"
+      (%result% %jsc-result% %context%)
+    (is (equal "false" (webkit:jsc-value-to-json %jsc-result% 0))))
+  (with-js-transform-result "[1, 2, 3]"
+      (%result% %jsc-result% %context%)
+    (is (equalp "[1,2,3]" (webkit:jsc-value-to-json %jsc-result% 0))))
+  (with-js-transform-result "var obj = {num: 1.3}; obj"
+      (%result% %jsc-result% %context%)
+    (is (equalp "{\"num\":1.3}" (webkit:jsc-value-to-json %jsc-result% 0))))
+  (with-js-transform-result "var obj = {arr: [1, 2, 3], num: 1.3, str: \"hello\", obj: {field: null}}; obj"
+      (%result% %jsc-result% %context%)
+    (is (equalp "{\"arr\":[1,2,3],\"num\":1.3,\"str\":\"hello\",\"obj\":{\"field\":null}}"
+                (webkit:jsc-value-to-json %jsc-result% 0)))))
+
+(def-test back-and-forth (:suite js-tests)
+  (with-js-transform-result "var obj = {arr: [1, 2, 3], num: 1.3, str: \"hello\", obj: {field: null}}; obj"
+      (%result% %jsc-result% %context%)
+    (is (equalp (webkit::jsc-value-to-lisp (webkit::lisp-to-jsc-value %result% %context%))
+                %result%))))
+
 ;;; Literal types
 
 (def-test undefined (:suite js-tests)
