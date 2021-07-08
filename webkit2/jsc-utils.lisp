@@ -10,6 +10,33 @@
 
 (in-package #:webkit2)
 
+(defvar %context-lock (bt:make-lock))
+(defvar %context nil)
+
+(export 'get-jsc-context)
+(declaim (ftype (function (webkit-web-view (or null string jsc-context))) get-jsc-context))
+(defun get-jsc-context (view &optional designator)
+  "Get a JSCContext for VIEW, matching DESIGNATOR.
+DESIGNATOR could be:
+- A `jsc-context' -- return it back.
+- A string -- return a context of the world named by DESIGNATOR.
+- A nil -- return the default context of VIEW."
+  (bt:with-lock-held (%context-lock)
+    (let ((context-callback
+            (lambda (result jsc-value)
+              (declare (ignore result))
+              (setf %context (jsc-value-get-context jsc-value)))))
+      (gtk:within-gtk-thread
+        (typecase designator
+          (jsc-context (setf %context designator))
+          (string (webkit:webkit-web-view-evaluate-javascript
+                   view "null" context-callback nil designator))
+          (null (webkit:webkit-web-view-evaluate-javascript
+                 view "null" context-callback))))
+      (loop until %context
+            finally (return (prog1 %context
+                              (setf %context nil)))))))
+
 (export 'jsc-value-to-lisp)
 (declaim (ftype (function (t &key (:null-value t)
                              (:undefined-value t)
@@ -155,46 +182,43 @@ In case no suitable method was found, create a JSCValue for undefined."))
     (jsc-value-new-from-json context (format nil "{~{~s:~a~}~:{,~s:~a~}}" (first json-alist) (rest json-alist)))))
 
 (export 'define-jsc-function)
-(defmacro define-jsc-function (name-and-options (&rest args) &body body)
+(defmacro define-jsc-function (name ((view &optional context-designator) &rest args) &body body)
   "Define a new JSCValue function with a callback having ARGS and BODY.
-NAME-AND-OPTIONS is either:
-- A single symbol treated as a name of the function.
-- A list of a form (NAMES &KEY CONTEXT) where NAMES is:
-  - A symbol, like above, or
-  - A list of (LISPY-NAME &OPTIONAL JS-NAME) where
-    the second will be assigned to the created JavaScript function.
+NAME is either:
+- A symbol or
+- A list of (LISPY-NAME &OPTIONAL JS-NAME) where
+  the second will be assigned to the created JavaScript function.
 
-In case no JavaScript name is provided, it's generated as camelcase versin of LISPY-NAME."
-  (destructuring-bind
-      (names &key (context (jsc-context-get-current)))
-      (uiop:ensure-list name-and-options)
-    (destructuring-bind
-        (lispy-name &optional (js-name (cffi:translate-camelcase-name lispy-name)))
-        (uiop:ensure-list names)
-      (let* ((callback-name (intern (format nil "~a-CALLBACK" lispy-name)))
-             (jsc-value-type (foreign-funcall "jsc_value_get_type" :pointer))
-             (n-args (length args)))
-        (multiple-value-bind (body-forms declarations documentation)
-            (uiop:parse-body body :documentation t)
-          `(progn
-             (defcallback ,callback-name (g-object jsc-value)
-                 (,@(loop for arg in args
-                          collect `(,arg :pointer)) (user-data :pointer))
-               (declare (ignorable user-data ,@args))
-               (let (,@(loop for arg in args
-                             collect `(,arg (jsc-value-to-lisp ,arg))))
-                 (lisp-to-jsc-value
-                  (progn
-                    ,@declarations
-                    ,@body-forms))))
-             (let ((,lispy-name
-                     (jsc-value-to-lisp
-                      (jsc-value-new-functionv
-                       ,context ,js-name (cffi:callback ,callback-name)
-                       (cffi:null-pointer) (cffi:null-pointer) ;; TODO: Use g-notify-destroy-free?
-                       ,jsc-value-type ,n-args
-                       (cffi:foreign-alloc
-                        :pointer :initial-contents (list ,@(loop for i below n-args collect jsc-value-type)))))))
-               (defun ,lispy-name (,@args)
-                 ,documentation
-                 (funcall ,lispy-name ,@args)))))))))
+The function is only defined in the VIEW, in the JSCContext designated by CONTEXT-DESIGNATOR.
+See `get-jsc-context' for what CONTEXT-DESIGNATOR could be.
+
+In case no JavaScript name is provided, it's generated as camelcase version of LISPY-NAME."
+  (destructuring-bind (lispy-name &optional (js-name (cffi:translate-camelcase-name lispy-name)))
+      (uiop:ensure-list name)
+    (let* ((callback-name (intern (format nil "~a-CALLBACK" lispy-name)))
+           (jsc-value-type (foreign-funcall "jsc_value_get_type" :pointer))
+           (n-args (length args)))
+      (multiple-value-bind (body-forms declarations documentation)
+          (uiop:parse-body body :documentation t)
+        `(progn
+           (defcallback ,callback-name (g-object jsc-value)
+               (,@(loop for arg in args
+                        collect `(,arg :pointer)) (user-data :pointer))
+             (declare (ignorable user-data ,@args))
+             (let (,@(loop for arg in args
+                           collect `(,arg (jsc-value-to-lisp ,arg))))
+               (lisp-to-jsc-value
+                (progn
+                  ,@declarations
+                  ,@body-forms))))
+           (let ((,lispy-name
+                   (jsc-value-to-lisp
+                    (jsc-value-new-functionv
+                     (get-jsc-context ,view ,context-designator) ,js-name (cffi:callback ,callback-name)
+                     (cffi:null-pointer) (cffi:null-pointer) ;; TODO: Use g-notify-destroy-free?
+                     ,jsc-value-type ,n-args
+                     (cffi:foreign-alloc
+                      :pointer :initial-contents (list ,@(loop for i below n-args collect jsc-value-type)))))))
+             (defun ,lispy-name (,@args)
+               ,documentation
+               (funcall ,lispy-name ,@args))))))))
