@@ -81,7 +81,6 @@
 
 (defsystem :cl-webkit2/test
   :description "CL-WebKit tests, mainly to check JS result conversion."
-  :license "MIT"
   :depends-on (:fiveam :calispel :float-features)
   :pathname "tests/"
   :components ((:file "package")
