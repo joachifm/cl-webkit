@@ -54,6 +54,7 @@
                (:file "jscore.jsc-context")
                (:file "jscore.jsc-class")
                (:file "jscore.jsc-value")
+               (:file "jsc-utils")
                (:file "webkit2.security-manager")
                (:file "webkit2.settings")
                (:file "webkit2.uri-request")
