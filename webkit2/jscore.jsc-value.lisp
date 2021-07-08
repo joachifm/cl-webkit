@@ -365,9 +365,13 @@ Translates:
                                             (second property)))
                                     properties)))))))))
 
-(defmethod lisp-to-jsc-value ((value t) &optional (context (jsc-context-get-current)))
-  (declare (ignore value))
-  (jsc-value-new-undefined context))
+(export 'lisp-to-jsc-value)
+(defgeneric lisp-to-jsc-value (value &optional context)
+  (:method ((value t) &optional (context (jsc-context-get-current)))
+    (declare (ignore value))
+    (jsc-value-new-undefined context))
+  (:documentation "Transform a provided Lisp value to the most sensible JSCValue counterpart.
+In case no suitable method was found, create a JSCValue for undefined."))
 
 (defmethod lisp-to-jsc-value ((number real) &optional (context (jsc-context-get-current)))
   (jsc-value-new-number context (coerce number 'double-float)))
