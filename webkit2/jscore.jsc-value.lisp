@@ -205,6 +205,42 @@
   (return-type :pointer))
 (export 'jsc-value-new-function-variadic)
 
+(defmacro define-jsc-function (name-and-options (&rest args) &body body)
+  (destructuring-bind
+      (names &key (context (jsc-context-get-current)))
+      (uiop:ensure-list name-and-options)
+    (destructuring-bind
+        (lispy-name &optional (js-name (cffi:translate-camelcase-name lispy-name)))
+        (uiop:ensure-list names)
+      (let* ((callback-name (intern (format nil "~a-CALLBACK" lispy-name)))
+             (jsc-value-type (foreign-funcall "jsc_value_get_type" :pointer))
+             (n-args (length args)))
+        (multiple-value-bind (body-forms declarations documentation)
+            (uiop:parse-body body :documentation t)
+          `(progn
+             (defcallback ,callback-name (g-object jsc-value)
+                 (,@(loop for arg in args
+                          collect `(,arg :pointer)) (user-data :pointer))
+               (declare (ignore user-data))
+               (let (,@(loop for arg in args
+                             collect `(,arg (jsc-value-to-lisp ,arg))))
+                 (lisp-to-jsc-value
+                  (progn
+                    ,@declarations
+                    ,@body-forms))))
+             (let ((,lispy-name
+                     (jsc-value-to-lisp
+                      (jsc-value-new-functionv
+                       ,context ,js-name (cffi:callback ,callback-name)
+                       (cffi:null-pointer) (cffi:null-pointer)
+                       ,jsc-value-type ,n-args
+                       (cffi:foreign-alloc
+                        :pointer :initial-contents (list ,@(loop for i below n-args collect jsc-value-type)))))))
+               (defun ,lispy-name (,@args)
+                 ,documentation
+                 (funcall ,lispy-name ,@args)))))))))
+(export 'define-jsc-function)
+
 (defcfun "jsc_value_function_callv" (g-object jsc-value)
   (value (g-object jsc-value))
   (n-parameters :uint)
@@ -251,10 +287,6 @@
   "The value used when translating true from JavaScript to Lisp.")
 (export '*js-true-value*)
 
-(defvar *js-function-value* :function
-  "The value used when translating function values from JavaScript to Lisp.
-Likely to get deprecated.")
-
 (defvar *js-array-type* :list
   "The Lisp data type used when translating arrays from JavaScript to Lisp.")
 (export '*js-array-type*)
@@ -267,7 +299,6 @@ Likely to get deprecated.")
                              (:undefined-value t)
                              (:false-value t)
                              (:true-value t)
-                             (:function-value t)
                              (:array-type (or null (member :list :vector)))
                              (:object-type (or null (member :alist :plist :hash-table)))))
                 jsc-value-to-lisp))
@@ -275,7 +306,6 @@ Likely to get deprecated.")
                                       (undefined-value *js-undefined-value*)
                                       (false-value *js-false-value*)
                                       (true-value *js-true-value*)
-                                      (function-value *js-function-value*)
                                       (array-type *js-array-type*)
                                       (object-type *js-object-type*))
   "Translate a JSC-VALUE to a lisp value.
@@ -338,6 +368,22 @@ Translates:
          (if (eq array-type :list)
              elements
              (coerce elements 'vector))))
+      ((jsc-value-is-function jsc-value)
+       (lambda (&rest args)
+         (jsc-value-to-lisp
+          (jsc-value-function-callv
+           jsc-value
+           (length args)
+           (if args
+               (cffi:foreign-alloc :pointer
+                                   :initial-contents
+                                   (mapcar #'pointer
+                                           (mapcar (lambda (arg)
+                                                     (lisp-to-jsc-value
+                                                      arg (jsc-value-get-context jsc-value)))
+                                                   args))
+                                   :count (length args))
+               (null-pointer))))))
       ((jsc-value-is-object jsc-value)
        (let ((properties (drain-properties jsc-value nil)))
          (case object-type
@@ -352,3 +398,37 @@ Translates:
                                       (list (intern (string-upcase (first property)) :keyword)
                                             (second property)))
                                     properties)))))))))
+
+(defmethod lisp-to-jsc-value ((value t) &optional (context (jsc-context-get-current)))
+  (declare (ignore value))
+  (jsc-value-new-undefined context))
+
+(defmethod lisp-to-jsc-value ((number real) &optional (context (jsc-context-get-current)))
+  (jsc-value-new-number context (coerce number 'double-float)))
+
+(defmethod lisp-to-jsc-value ((string string) &optional (context (jsc-context-get-current)))
+  (jsc-value-new-string context string))
+
+(defmethod lisp-to-jsc-value ((symbol symbol) &optional (context (jsc-context-get-current)))
+  (cond
+    ((eq symbol *js-null-value*) (jsc-value-new-null context))
+    ((eq symbol *js-undefined-value*) (jsc-value-new-undefined context))
+    ((eq symbol *js-true-value*) (jsc-value-new-boolean context t))
+    ((eq symbol *js-false-value*) (jsc-value-new-boolean context nil))
+    (t (call-next-method (symbol-name symbol) context))))
+
+(defmethod lisp-to-jsc-value ((list list) &optional (context (jsc-context-get-current)))
+  (jsc-value-new-array-from-list
+   context (mapcar (lambda (value) (lisp-to-jsc-value value context)) list)))
+
+(defmethod lisp-to-jsc-value ((vector vector) &optional (context (jsc-context-get-current)))
+  (jsc-value-new-array-from-list
+   context (map 'list (lambda (value) (lisp-to-jsc-value value context)) vector)))
+
+(defmethod lisp-to-jsc-value ((hash-table hash-table) &optional (context (jsc-context-get-current)))
+  (let (json-alist)
+    (maphash
+     (lambda (key value)
+       (push (list key (jsc-value-to-json (lisp-to-jsc-value value context) 0)) json-alist))
+     hash-table)
+    (jsc-value-new-from-json context (format nil "{~{~s:~a~}~:{,~s:~a~}}" (first json-alist) (rest json-alist)))))
