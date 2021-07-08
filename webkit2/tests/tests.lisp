@@ -132,17 +132,15 @@
   (with-js-transform-result "-Math.pow(10, 100)" (%result%)
     (is (= -1.0000000000000002d100 %result%))))
 
-;; REVIEW: CCL? ECL?
-#+sbcl
 (def-test special-numbers (:suite js-tests)
   (with-js-transform-result "NaN" (%result%)
-    (is (sb-ext:float-nan-p %result%)))
+    (is (float-features:float-nan-p %result%)))
   (with-js-transform-result "Infinity" (%result%)
-    (is (sb-ext:float-infinity-p %result%))
-    (is (equal 1.0d0 (float-sign %result% 1.0))))
+    (is (float-features:float-infinity-p %result%))
+    (is (equal 1 (truncate (float-sign %result% 1.0)))))
   (with-js-transform-result "-Infinity" (%result%)
     (is (sb-ext:float-infinity-p %result%))
-    (is (equal -1.0d0 (float-sign %result% 1.0)))))
+    (is (equal -1 (truncate (float-sign %result% 1.0))))))
 
 (def-test fractional-number (:suite js-tests)
   (with-js-transform-result "5.3" (%result%)
