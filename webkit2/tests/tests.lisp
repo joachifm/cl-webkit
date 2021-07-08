@@ -16,6 +16,14 @@
 
 (defvar *view* nil "A testing view.")
 
+(defvar *googol*
+  #+sbcl
+  1.0000000000000002d100
+  #+ecl
+  1.l100
+  #+ccl
+  1.0D+100)
+
 (defmacro with-js-transform-result (js-string (var &optional (jsc-var (gensym))
                                                      (context-var (gensym)))
                                     &body body)
@@ -125,9 +133,9 @@
   (with-js-transform-result "-6" (%result%)
     (is (= -6 %result%)))
   (with-js-transform-result "Math.pow(10, 100)" (%result%)
-    (is (= 1.0000000000000002d100 %result%)))
+    (is (= *googol* %result%)))
   (with-js-transform-result "-Math.pow(10, 100)" (%result%)
-    (is (= -1.0000000000000002d100 %result%))))
+    (is (= (- *googol*) %result%))))
 
 (def-test special-numbers (:suite js-tests)
   (with-js-transform-result "NaN" (%result%)
@@ -141,11 +149,13 @@
 
 (def-test fractional-number (:suite js-tests)
   (with-js-transform-result "5.3" (%result%)
-    (is (= 5.3d0 %result%))))
+    (is (= 5.3 (coerce %result% 'single-float))))
+  (with-js-transform-result "-34435.3044" (%result%)
+    (is (= -34435.3044 (coerce %result% 'single-float)))))
 
 (def-test periodic-number (:suite js-tests)
   (with-js-transform-result "var num = 5/3; num" (%result%)
-    (is (equal 1.6666666666666667d0 %result%))))
+    (is (equal 1.6666666666666667 (coerce %result% 'single-float)))))
 
 ;;; Strings
 
@@ -203,12 +213,12 @@ there" %result%))))
   (with-js-transform-result
       "var obj = {one: 1, two: 2, three: 3, five: 5, ten: 10, googol: Math.pow(10, 100)}; obj"
       (%result%)
-    (is (equal '(("one"  1)
+    (is (equal `(("one"  1)
                  ("two" 2)
                  ("three" 3)
                  ("five" 5)
                  ("ten" 10)
-                 ("googol" 1.0000000000000002d100))
+                 ("googol" ,*googol*))
                %result%)))
   (setf webkit:*js-object-type* :hash-table))
 
@@ -223,7 +233,7 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
     (is (equal `(("one" 1)
                  ("nul" :null)
                  ("undef" :undefined)
-                 ("googol" 1.0000000000000002d100)
+                 ("googol" ,*googol*)
                  ("nil" nil) ;; Maybe use non-dotted alists instead of this?
                  ("t" t)
                  ("o" (("one" 1)
@@ -231,7 +241,7 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
                        ("three" 3)
                        ("five" 5)
                        ("ten" 10)
-                       ("googol" -1.0000000000000002d100)))
+                       ("googol" ,(- *googol*))))
                  ("arr" (t nil :undefined :null 100000 "hello" (("one" 1)))))
                %result%)))
   (setf webkit:*js-object-type* :hash-table))
@@ -248,15 +258,15 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
     (is (equal 1 (gethash "one" %result%)))
     (is (eq :null (gethash "nul" %result%)))
     (is (eq :undefined (gethash "undef" %result%)))
-    (is (equal 1.0000000000000002d100 (gethash "googol" %result%)))
+    (is (equal *googol* (gethash "googol" %result%)))
     (is (eq nil (gethash "nil" %result%)))
     (is (eq t (gethash "t" %result%)))
-    (is (equalp (let ((alist '(("one" 1)
+    (is (equalp (let ((alist `(("one" 1)
                                ("two" 2)
                                ("three" 3)
                                ("five" 5)
                                ("ten" 10)
-                               ("googol" -1.0000000000000002d100)))
+                               ("googol" ,(- *googol*))))
                       (ht (make-hash-table :test 'equal)))
                   (dolist (pair alist)
                     (setf (gethash (first pair) ht) (second pair)))
@@ -279,7 +289,7 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
     (is (equal `(:one 1
                  :nul :null
                  :undef :undefined
-                 :googol 1.0000000000000002d100
+                 :googol ,*googol*
                  :nil nil
                  :t t
                  :o (:one 1
@@ -287,7 +297,7 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
                      :three 3
                      :five 5
                      :ten 10
-                     :googol -1.0000000000000002d100)
+                     :googol ,(- *googol*))
                  :arr (t nil :undefined :null 100000 "hello" (:one 1)))
                %result%)))
   (setf webkit:*js-object-type* :hash-table))
