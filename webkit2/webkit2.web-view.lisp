@@ -224,7 +224,7 @@
             (signal 'jsc-exception-condition :exception exception))
           (setf callbacks (delete callback callbacks))
           (when (callback-function callback)
-            (funcall (callback-function callback) (jsc-value-to-lisp value)))
+            (funcall (callback-function callback) (jsc-value-to-lisp value) value))
           (webkit-javascript-result-unref js-result))
       (error (c)
         (when callback
@@ -236,8 +236,13 @@
             (funcall (callback-error-function callback) c))
           (setf callbacks (delete callback callbacks)))))))
 
+
+(declaim (ftype (function (webkit-web-view string &optional (function (t t)) (function (condition))))
+                webkit-web-view-evaluate-javascript))
 (defun webkit-web-view-evaluate-javascript (web-view javascript &optional call-back error-call-back)
-  "Evaluate JAVASCRIPT in WEB-VIEW calling CALL-BACK upon completion."
+  "Evaluate JAVASCRIPT in WEB-VIEW calling CALL-BACK upon completion.
+CALL-BACK is called over the result of Lisp transformation of result and original result JSCValue.
+ERROR-CALL-BACK is called with the signaled condition."
   (incf callback-counter)
   (push (make-callback :id callback-counter :web-view web-view
                        :function call-back
