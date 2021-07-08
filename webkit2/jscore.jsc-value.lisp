@@ -259,6 +259,7 @@
   "The Lisp data type used when translating objects from JavaScript to Lisp.")
 (export '*js-object-type*)
 
+(export 'jsc-value-to-lisp)
 (declaim (ftype (function (t &key (:null-value t)
                              (:undefined-value t)
                              (:false-value t)
