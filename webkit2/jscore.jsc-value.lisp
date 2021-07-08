@@ -1,4 +1,4 @@
-;;; jscore.js-value.lisp --- bindings for JSCValue
+;;; jscore.jsc-value.lisp --- bindings for JSCValue
 
 ;; This file is part of cl-webkit.
 ;;
