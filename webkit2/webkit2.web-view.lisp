@@ -204,6 +204,15 @@
   (user-data :pointer))
 (export 'webkit-web-view-run-javascript)
 
+(defcfun "webkit_web_view_run_javascript_in_world" :void
+  (web-view (g-object webkit-web-view))
+  (script :string)
+  (world-name :string)
+  (cancellable :pointer)
+  (callback g-async-ready-callback)
+  (user-data :pointer))
+(export 'webkit-web-view-run-javascript-in-world)
+
 (defvar callback-counter 0)
 (defvar callbacks ())
 (defstruct callback
@@ -236,11 +245,13 @@
             (funcall (callback-error-function callback) c))
           (setf callbacks (delete callback callbacks)))))))
 
-
-(declaim (ftype (function (webkit-web-view string &optional (function (t t)) (function (condition))))
+(declaim (ftype (function (webkit-web-view string &optional
+                                           (or null (function (t t)))
+                                           (or null (function (condition))) string))
                 webkit-web-view-evaluate-javascript))
-(defun webkit-web-view-evaluate-javascript (web-view javascript &optional call-back error-call-back)
-  "Evaluate JAVASCRIPT in WEB-VIEW calling CALL-BACK upon completion.
+(defun webkit-web-view-evaluate-javascript (web-view javascript
+                                            &optional call-back error-call-back world)
+  "Evaluate JAVASCRIPT in WEB-VIEW (and WORLD, if present) calling CALL-BACK upon completion.
 CALL-BACK is called over the result of Lisp transformation of result and original result JSCValue.
 ERROR-CALL-BACK is called with the signaled condition."
   (incf callback-counter)
@@ -248,11 +259,17 @@ ERROR-CALL-BACK is called with the signaled condition."
                        :function call-back
                        :error-function error-call-back)
         callbacks)
-  (webkit-web-view-run-javascript
-   web-view javascript
-   (cffi:null-pointer)
-   (cffi:callback javascript-evaluation-complete)
-   (cffi:make-pointer callback-counter)))
+  (if world
+      (webkit-web-view-run-javascript-in-world
+       web-view javascript world
+       (cffi:null-pointer)
+       (cffi:callback javascript-evaluation-complete)
+       (cffi:make-pointer callback-counter))
+      (webkit-web-view-run-javascript
+       web-view javascript
+       (cffi:null-pointer)
+       (cffi:callback javascript-evaluation-complete)
+       (cffi:make-pointer callback-counter))))
 (export 'webkit-web-view-evaluate-javascript)
 
 (defcfun ("webkit_web_view_run_javascript_finish" %webkit-web-view-run-javascript-finish) webkit-javascript-result
