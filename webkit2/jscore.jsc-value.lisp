@@ -259,7 +259,7 @@ Likely to get deprecated.")
   "The Lisp data type used when translating arrays from JavaScript to Lisp.")
 (export '*js-array-type*)
 
-(defvar *js-object-type* :alist
+(defvar *js-object-type* :hash-table
   "The Lisp data type used when translating objects from JavaScript to Lisp.")
 (export '*js-object-type*)
 
@@ -291,8 +291,8 @@ Translates:
 - JS arrays to either lists or vectors (:list and :vector ARRAY-TYPE respectively).
   Also see `*js-array-type*'.
 - JS objects (also see `*js-object-type*') to:
-  - alists (if OBJECT-TYPE is :alist, deafult) with string keys,
-  - hash-tables (if OBJECT-TYPE is :hash-table) with string keys,
+  - hash-tables (if OBJECT-TYPE is :hash-table, default) with string keys,
+  - alists (if OBJECT-TYPE is :alist) with string keys,
   - plists (if OBJECT-TYPE is :plist) with keyword keys,"
   (flet ((drain-properties (jsc-value array-p)
            (loop with property-names = (jsc-value-object-enumerate-properties jsc-value)
@@ -307,7 +307,7 @@ Translates:
                                       (jsc-value-object-get-property jsc-value property-name)))))
                            (if array-p
                                property-value
-                               (cons (cffi:foreign-string-to-lisp property-name) property-value)))
+                               (list (cffi:foreign-string-to-lisp property-name) property-value)))
                    into properties
                  finally (return
                            (progn
@@ -343,13 +343,12 @@ Translates:
          (case object-type
            (:hash-table
             (loop with object = (make-hash-table :test 'equal)
-                  for (name . value) in properties
+                  for (name value) in properties
                   do (setf (gethash name object) value)
                   finally (return object)))
            (:alist properties)
            (:plist (apply #'append (mapcar
                                     (lambda (property)
                                       (list (intern (string-upcase (first property)) :keyword)
-                                            (rest property)))
-                                    properties))))))
-      ((jsc-value-is-function jsc-value) function-value))))
+                                            (second property)))
+                                    properties)))))))))
