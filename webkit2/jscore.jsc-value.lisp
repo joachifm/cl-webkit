@@ -40,7 +40,8 @@
 (export 'jsc-value-is-null)
 
 (defcfun "jsc_value_new_number" (g-object jsc-value)
-  (context (g-object jsc-context)))
+  (context (g-object jsc-context))
+  (number :double))
 (export 'jsc-value-new-number)
 
 (defcfun "jsc_value_is_number" :boolean
@@ -56,7 +57,8 @@
 (export 'jsc-value-to-int32)
 
 (defcfun "jsc_value_new_boolean" (g-object jsc-value)
-  (context (g-object jsc-context)))
+  (context (g-object jsc-context))
+  (value :boolean))
 (export 'jsc-value-new-boolean)
 
 (defcfun "jsc_value_is_boolean" :boolean
@@ -68,7 +70,8 @@
 (export 'jsc-value-to-boolean)
 
 (defcfun "jsc_value_new_string" (g-object jsc-value)
-  (value (g-object jsc-value)))
+  (context (g-object jsc-context))
+  (value :string))
 (export 'jsc-value-new-string)
 
 ;; TODO: jsc_value_new_string_from_bytes
@@ -156,7 +159,7 @@
   (value (g-object jsc-value))
   (property-name :string)
   (property-flags :uint)
-  (property-type g-type)
+  (property-type :pointer)
   (getter :pointer) ;; XXX: GCallback
   (setter :pointer) ;; XXX: GCallback
   (user-data :pointer)
@@ -169,9 +172,9 @@
   (callback :pointer) ;; XXX: GCallback
   (user-data :pointer)
   (destroy-notify :pointer) ;; XXX: GDestroyNotify
-  (return-type g-type)
+  (return-type :pointer)
   (n-parameters :uint)
-  (parameter-types (:pointer g-type)))
+  (parameter-types :pointer))
 (export 'jsc-value-new-functionv)
 
 (defcfun "jsc_value_new_function_variadic" (g-object jsc-value)
@@ -180,7 +183,7 @@
   (callback :pointer) ;; XXX: GCallback
   (user-data :pointer)
   (destroy-notify :pointer) ;; XXX: GDestroyNotify
-  (return-type g-type))
+  (return-type :pointer))
 (export 'jsc-value-new-function-variadic)
 
 (defcfun "jsc_value_function_callv" (g-object jsc-value)
