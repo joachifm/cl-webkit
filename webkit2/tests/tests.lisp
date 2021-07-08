@@ -14,7 +14,7 @@
 
 (def-suite js-tests :description "Testing JS value transformation." :in webkit-tests)
 
-(defvar *webkit-environment* (make-hash-table :test 'equal))
+(defvar *view* nil "A testing view.")
 
 (defmacro with-js-transform-result (js-string (var &optional (jsc-var (gensym))
                                                      (context-var (gensym)))
@@ -24,7 +24,7 @@
                    :buffer (make-instance 'jpl-queues:bounded-fifo-queue :capacity 1))))
      (gtk:within-gtk-thread
        (webkit2:webkit-web-view-evaluate-javascript
-        (gethash "view" *webkit-environment*) ,js-string
+        *view* ,js-string
         (lambda (result jsc-value)
           (calispel:! channel result)
           (calispel:! channel jsc-value)
@@ -48,10 +48,7 @@
                                   (gtk:leave-gtk-main)))
     (gtk:gtk-container-add win view)
     (webkit2:webkit-web-view-load-uri view "http://www.example.com")
-    (setf (gethash "win" *webkit-environment*) win
-          (gethash "manager" *webkit-environment*) manager
-          (gethash "context" *webkit-environment*) context
-          (gethash "view" *webkit-environment*) view)))
+    (setf *view* view)))
 
 ;;; General tests
 
