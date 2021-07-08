@@ -136,7 +136,7 @@
     (is (float-features:float-infinity-p %result%))
     (is (equal 1 (truncate (float-sign %result% 1.0)))))
   (with-js-transform-result "-Infinity" (%result%)
-    (is (sb-ext:float-infinity-p %result%))
+    (is (float-features:float-infinity-p %result%))
     (is (equal -1 (truncate (float-sign %result% 1.0))))))
 
 (def-test fractional-number (:suite js-tests)
