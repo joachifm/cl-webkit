@@ -205,42 +205,6 @@
   (return-type :pointer))
 (export 'jsc-value-new-function-variadic)
 
-(defmacro define-jsc-function (name-and-options (&rest args) &body body)
-  (destructuring-bind
-      (names &key (context (jsc-context-get-current)))
-      (uiop:ensure-list name-and-options)
-    (destructuring-bind
-        (lispy-name &optional (js-name (cffi:translate-camelcase-name lispy-name)))
-        (uiop:ensure-list names)
-      (let* ((callback-name (intern (format nil "~a-CALLBACK" lispy-name)))
-             (jsc-value-type (foreign-funcall "jsc_value_get_type" :pointer))
-             (n-args (length args)))
-        (multiple-value-bind (body-forms declarations documentation)
-            (uiop:parse-body body :documentation t)
-          `(progn
-             (defcallback ,callback-name (g-object jsc-value)
-                 (,@(loop for arg in args
-                          collect `(,arg :pointer)) (user-data :pointer))
-               (declare (ignorable user-data ,@args))
-               (let (,@(loop for arg in args
-                             collect `(,arg (jsc-value-to-lisp ,arg))))
-                 (lisp-to-jsc-value
-                  (progn
-                    ,@declarations
-                    ,@body-forms))))
-             (let ((,lispy-name
-                     (jsc-value-to-lisp
-                      (jsc-value-new-functionv
-                       ,context ,js-name (cffi:callback ,callback-name)
-                       (cffi:null-pointer) (cffi:null-pointer) ;; TODO: Use g-notify-destroy-free?
-                       ,jsc-value-type ,n-args
-                       (cffi:foreign-alloc
-                        :pointer :initial-contents (list ,@(loop for i below n-args collect jsc-value-type)))))))
-               (defun ,lispy-name (,@args)
-                 ,documentation
-                 (funcall ,lispy-name ,@args)))))))))
-(export 'define-jsc-function)
-
 (defcfun "jsc_value_function_callv" (g-object jsc-value)
   (value (g-object jsc-value))
   (n-parameters :uint)
@@ -433,3 +397,39 @@ Translates:
        (push (list key (jsc-value-to-json (lisp-to-jsc-value value context) 0)) json-alist))
      hash-table)
     (jsc-value-new-from-json context (format nil "{~{~s:~a~}~:{,~s:~a~}}" (first json-alist) (rest json-alist)))))
+
+(defmacro define-jsc-function (name-and-options (&rest args) &body body)
+  (destructuring-bind
+      (names &key (context (jsc-context-get-current)))
+      (uiop:ensure-list name-and-options)
+    (destructuring-bind
+        (lispy-name &optional (js-name (cffi:translate-camelcase-name lispy-name)))
+        (uiop:ensure-list names)
+      (let* ((callback-name (intern (format nil "~a-CALLBACK" lispy-name)))
+             (jsc-value-type (foreign-funcall "jsc_value_get_type" :pointer))
+             (n-args (length args)))
+        (multiple-value-bind (body-forms declarations documentation)
+            (uiop:parse-body body :documentation t)
+          `(progn
+             (defcallback ,callback-name (g-object jsc-value)
+                 (,@(loop for arg in args
+                          collect `(,arg :pointer)) (user-data :pointer))
+               (declare (ignorable user-data ,@args))
+               (let (,@(loop for arg in args
+                             collect `(,arg (jsc-value-to-lisp ,arg))))
+                 (lisp-to-jsc-value
+                  (progn
+                    ,@declarations
+                    ,@body-forms))))
+             (let ((,lispy-name
+                     (jsc-value-to-lisp
+                      (jsc-value-new-functionv
+                       ,context ,js-name (cffi:callback ,callback-name)
+                       (cffi:null-pointer) (cffi:null-pointer) ;; TODO: Use g-notify-destroy-free?
+                       ,jsc-value-type ,n-args
+                       (cffi:foreign-alloc
+                        :pointer :initial-contents (list ,@(loop for i below n-args collect jsc-value-type)))))))
+               (defun ,lispy-name (,@args)
+                 ,documentation
+                 (funcall ,lispy-name ,@args)))))))))
+(export 'define-jsc-function)
