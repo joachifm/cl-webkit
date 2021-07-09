@@ -190,7 +190,8 @@ In case no suitable method was found, create a JSCValue for undefined."))
       (cffi:null-pointer) (cffi:null-pointer) ;; TODO: Use g-notify-destroy-free?
       jsc-value-type n-args
       (cffi:foreign-alloc
-       :pointer :initial-contents (loop repeat n-args collect jsc-value-type))))))
+       :pointer :initial-contents (loop repeat n-args collect jsc-value-type)
+       :count n-args)))))
 
 (export 'make-jsc-function)
 (defmacro make-jsc-function (meta-data args &body body)
