@@ -100,9 +100,10 @@
 
 (def-test null-as-nil (:suite js-tests)
   (setf webkit::*js-null-value* nil)
-  (with-js-transform-result "null" (%result%)
-    (is (eq nil %result%)))
-  (setf webkit::*js-null-value* :null))
+  (unwind-protect
+       (with-js-transform-result "null" (%result%)
+         (is (eq nil %result%)))
+    (setf webkit::*js-null-value* :null)))
 
 (def-test false (:suite js-tests)
   (with-js-transform-result "false" (%result%)
@@ -110,9 +111,10 @@
 
 (def-test false-as-keyword (:suite js-tests)
   (setf webkit::*js-false-value* :false)
-  (with-js-transform-result "false" (%result%)
-    (is (eq :false %result%)))
-  (setf webkit::*js-false-value* nil))
+  (unwind-protect
+       (with-js-transform-result "false" (%result%)
+         (is (eq :false %result%)))
+    (setf webkit::*js-false-value* nil)))
 
 (def-test true (:suite js-tests)
   (with-js-transform-result "true" (%result%)
@@ -120,9 +122,10 @@
 
 (def-test true-as-keyword (:suite js-tests)
   (setf webkit::*js-true-value* :true)
-  (with-js-transform-result "true" (%result%)
-    (is (eq :true %result%)))
-  (setf webkit::*js-true-value* t))
+  (unwind-protect
+       (with-js-transform-result "true" (%result%)
+         (is (eq :true %result%)))
+    (setf webkit::*js-true-value* t)))
 
 ;;; Numbers
 
@@ -189,63 +192,68 @@ there" %result%))))
 
 (def-test everything-array (:suite js-tests)
   (setf webkit:*js-object-type* :alist)
-  (with-js-transform-result "[true, false, undefined, null, 100000, \"hello\", {one: 1}]" (%result%)
-    (is (equal (list t nil :undefined :null 100000 "hello" '(("one" 1))) %result%)))
-  (setf webkit:*js-object-type* :hash-table))
+  (unwind-protect
+       (with-js-transform-result "[true, false, undefined, null, 100000, \"hello\", {one: 1}]" (%result%)
+         (is (equal (list t nil :undefined :null 100000 "hello" '(("one" 1))) %result%)))
+    (setf webkit:*js-object-type* :hash-table)))
 
 (def-test everything-array-vector (:suite js-tests)
   (setf webkit:*js-array-type* :vector
         webkit:*js-object-type* :alist)
-  (with-js-transform-result "[true, false, undefined, null, 100000, \"hello\", {one: 1}]" (%result%)
-    (is (equalp (vector t nil :undefined :null 100000 "hello" '(("one" 1))) %result%)))
-  (setf webkit:*js-array-type* :list
-        webkit:*js-object-type* :hash-table))
+  (unwind-protect
+       (with-js-transform-result "[true, false, undefined, null, 100000, \"hello\", {one: 1}]" (%result%)
+         (is (equalp (vector t nil :undefined :null 100000 "hello" '(("one" 1))) %result%)))
+    (setf webkit:*js-array-type* :list
+          webkit:*js-object-type* :hash-table)))
 
 ;;; Objects
 
 (def-test single-field-object (:suite js-tests)
   (setf webkit:*js-object-type* :alist)
-  (with-js-transform-result "var obj = {one: 1}; obj" (%result%)
-    (is (equal '(("one"  1)) %result%)))
-  (setf webkit:*js-object-type* :hash-table))
+  (unwind-protect
+       (with-js-transform-result "var obj = {one: 1}; obj" (%result%)
+         (is (equal '(("one"  1)) %result%)))
+    (setf webkit:*js-object-type* :hash-table)))
 
 (def-test long-object (:suite js-tests)
   (setf webkit:*js-object-type* :alist)
-  (with-js-transform-result
-      "var obj = {one: 1, two: 2, three: 3, five: 5, ten: 10, googol: Math.pow(10, 100)}; obj"
-      (%result%)
-    (is (equal `(("one"  1)
-                 ("two" 2)
-                 ("three" 3)
-                 ("five" 5)
-                 ("ten" 10)
-                 ("googol" ,*googol*))
-               %result%)))
-  (setf webkit:*js-object-type* :hash-table))
+  (unwind-protect
+       (with-js-transform-result
+           "var obj = {one: 1, two: 2, three: 3, five: 5, ten: 10, googol: Math.pow(10, 100)}; obj"
+           (%result%)
+         (is (equal `(("one"  1)
+                      ("two" 2)
+                      ("three" 3)
+                      ("five" 5)
+                      ("ten" 10)
+                      ("googol" ,*googol*))
+                    %result%)))
+    (setf webkit:*js-object-type* :hash-table)))
 
 (def-test everything-object (:suite js-tests)
   (setf webkit:*js-object-type* :alist)
-  (with-js-transform-result
-      "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
+  (unwind-protect
+       (with-js-transform-result
+           "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
 nil: false, t: true,
 o: {one: 1, two: 2, three: 3, five: 5, ten: 10, googol: -Math.pow(10, 100)},
 arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
-      (%result%)
-    (is (equal `(("one" 1)
-                 ("nul" :null)
-                 ("undef" :undefined)
-                 ("googol" ,*googol*)
-                 ("nil" nil) ;; Maybe use non-dotted alists instead of this?
-                 ("t" t)
-                 ("o" (("one" 1)
-                       ("two" 2)
-                       ("three" 3)
-                       ("five" 5)
-                       ("ten" 10)
-                       ("googol" ,(- *googol*))))
-                 ("arr" (t nil :undefined :null 100000 "hello" (("one" 1)))))
-               %result%)))
-  (setf webkit:*js-object-type* :hash-table))
+           (%result%)
+         (is (equal `(("one" 1)
+                      ("nul" :null)
+                      ("undef" :undefined)
+                      ("googol" ,*googol*)
+                      ("nil" nil) ;; Maybe use non-dotted alists instead of this?
+                      ("t" t)
+                      ("o" (("one" 1)
+                            ("two" 2)
+                            ("three" 3)
+                            ("five" 5)
+                            ("ten" 10)
+                            ("googol" ,(- *googol*))))
+                      ("arr" (t nil :undefined :null 100000 "hello" (("one" 1)))))
+                    %result%)))
+    (setf webkit:*js-object-type* :hash-table)))
 
 (def-test everything-object-hash (:suite js-tests)
   (with-js-transform-result
@@ -281,27 +289,28 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
 
 (def-test everything-object-plist (:suite js-tests)
   (setf webkit:*js-object-type* :plist)
-  (with-js-transform-result
-      "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
+  (unwind-protect
+       (with-js-transform-result
+           "var obj = {one: 1, nul: null, undef: undefined, googol: Math.pow(10, 100),
 nil: false, t: true,
 o: {one: 1, two: 2, three: 3, five: 5, ten: 10, googol: -Math.pow(10, 100)},
 arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
-      (%result%)
-    (is (equal `(:one 1
-                 :nul :null
-                 :undef :undefined
-                 :googol ,*googol*
-                 :nil nil
-                 :t t
-                 :o (:one 1
-                     :two 2
-                     :three 3
-                     :five 5
-                     :ten 10
-                     :googol ,(- *googol*))
-                 :arr (t nil :undefined :null 100000 "hello" (:one 1)))
-               %result%)))
-  (setf webkit:*js-object-type* :hash-table))
+           (%result%)
+         (is (equal `(:one 1
+                      :nul :null
+                      :undef :undefined
+                      :googol ,*googol*
+                      :nil nil
+                      :t t
+                      :o (:one 1
+                          :two 2
+                          :three 3
+                          :five 5
+                          :ten 10
+                          :googol ,(- *googol*))
+                      :arr (t nil :undefined :null 100000 "hello" (:one 1)))
+                    %result%)))
+    (setf webkit:*js-object-type* :hash-table)))
 
 ;;; Functions
 
