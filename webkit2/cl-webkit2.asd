@@ -54,7 +54,6 @@
                (:file "jscore.jsc-context")
                (:file "jscore.jsc-class")
                (:file "jscore.jsc-value")
-               (:file "jsc-utils")
                (:file "webkit2.security-manager")
                (:file "webkit2.settings")
                (:file "webkit2.uri-request")
@@ -76,7 +75,8 @@
                (:file "webkit2.window-properties")
                (:file "webkit2.uri-utilities")
                (:file "webkit2.user-message")
-               (:file "webkit2.web-extension"))
+               (:file "webkit2.web-extension")
+               (:file "jsc-utils"))
   :depends-on (:cffi :cl-cffi-gtk)
   :in-order-to ((test-op (test-op :cl-webkit2/test))))
 
