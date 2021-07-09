@@ -224,6 +224,5 @@ See `get-jsc-context' for what CONTEXT-DESIGNATOR could be."
            (let (,@(loop for arg in args collect `(,arg (jsc-value-to-lisp ,arg))))
              (lisp-to-jsc-value
               (progn
-                ,@body)
-              (get-jsc-context ,view ,context-designator))))
+                ,@body))))
          (%make-jsc-function ,view ,context-designator ,js-name (cffi:callback ,callback-name) ,n-args)))))
