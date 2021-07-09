@@ -208,9 +208,9 @@ NAME is either a symbol, a string, or nil:
 See `get-jsc-context' for what CONTEXT-DESIGNATOR could be."
   (let* ((js-name (etypecase name
                     (string name)
-                    (symbol (cffi:translate-camelcase-name name))
-                    (null (cffi:null-pointer))))
-         (callback-name (intern (format nil "~a-CALLBACK" (gensym js-name))))
+                    (null (null-pointer))
+                    (symbol (cffi:translate-camelcase-name name))))
+         (callback-name (gensym "js-callback"))
          (n-args (length args))
          (user-data (gensym)))
     `(progn
