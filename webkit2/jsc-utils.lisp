@@ -194,14 +194,11 @@ In case no suitable method was found, create a JSCValue for undefined."))
        :count n-args)))))
 
 (export 'make-jsc-function)
-(defmacro make-jsc-function (meta-data args &body body)
+(defmacro make-jsc-function ((view &optional name context-designator) args &body body)
   "Create a new JSCValue function with a callback having ARGS and BODY.
 
-META-DATA is either
-- a single value -- VIEW that the function will be defined in the context of, or
-- (VIEW &OPTIONAL NAME CONTEXT-DESIGNATOR) list. The function is only
-  defined in the VIEW, in the JSCContext designated by
-  CONTEXT-DESIGNATOR, with the NAME assigned to it.
+The function is only defined in the VIEW, in the JSCContext designated
+by CONTEXT-DESIGNATOR, with the NAME assigned to it.
 
 NAME is either a symbol, a string, or nil:
 - Symbol turn into a camelcase JS function name.
@@ -209,21 +206,19 @@ NAME is either a symbol, a string, or nil:
 - nil gives no name to the new function, making it anonymous.
 
 See `get-jsc-context' for what CONTEXT-DESIGNATOR could be."
-  (destructuring-bind (view &optional name context-designator)
-      (uiop:ensure-list meta-data)
-    (let* ((js-name (etypecase name
-                      (string name)
-                      (symbol (cffi:translate-camelcase-name name))
-                      (null (cffi:null-pointer))))
-           (callback-name (intern (format nil "~a-CALLBACK" (gensym js-name))))
-           (n-args (length args))
-           (user-data (gensym)))
-      `(progn
-         (defcallback ,callback-name (g-object jsc-value)
-             (,@(loop for arg in args collect `(,arg :pointer)) (,user-data :pointer))
-           (declare (ignorable ,user-data ,@args))
-           (let (,@(loop for arg in args collect `(,arg (jsc-value-to-lisp ,arg))))
-             (lisp-to-jsc-value
-              (progn
-                ,@body))))
-         (%make-jsc-function ,view ,context-designator ,js-name (cffi:callback ,callback-name) ,n-args)))))
+  (let* ((js-name (etypecase name
+                    (string name)
+                    (symbol (cffi:translate-camelcase-name name))
+                    (null (cffi:null-pointer))))
+         (callback-name (intern (format nil "~a-CALLBACK" (gensym js-name))))
+         (n-args (length args))
+         (user-data (gensym)))
+    `(progn
+       (defcallback ,callback-name (g-object jsc-value)
+           (,@(loop for arg in args collect `(,arg :pointer)) (,user-data :pointer))
+         (declare (ignorable ,user-data ,@args))
+         (let (,@(loop for arg in args collect `(,arg (jsc-value-to-lisp ,arg))))
+           (lisp-to-jsc-value
+            (progn
+              ,@body))))
+       (%make-jsc-function ,view ,context-designator ,js-name (cffi:callback ,callback-name) ,n-args))))
