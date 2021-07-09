@@ -181,7 +181,7 @@ In case no suitable method was found, create a JSCValue for undefined."))
      hash-table)
     (jsc-value-new-from-json context (format nil "{~{~s:~a~}~:{,~s:~a~}}" (first json-alist) (rest json-alist)))))
 
-(declaim (ftype (function (webkit-web-view (or null string jsc-context) string t integer)) %make-jsc-function))
+(declaim (ftype (function (webkit-web-view (or null string jsc-context) t t integer)) %make-jsc-function))
 (defun %make-jsc-function (view context-designator name callback n-args)
   (let ((jsc-value-type (foreign-funcall "jsc_value_get_type" :pointer)))
     (jsc-value-to-lisp
