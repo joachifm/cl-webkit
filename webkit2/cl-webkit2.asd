@@ -86,4 +86,4 @@
   :pathname "tests/"
   :components ((:file "package")
                (:file "tests"))
-  :perform (test-op (o c) (symbol-call :5am :run! :webkit2.test)))
+  :perform (test-op (o c) (symbol-call :webkit2/tests :run-tests)))

@@ -43,22 +43,6 @@
        (declare (ignorable ,var ,jsc-var ,context-var))
        ,@body)))
 
-(gtk:within-main-loop
-  (let* ((win (make-instance 'gtk:gtk-window))
-         (manager (make-instance 'webkit:webkit-website-data-manager
-                                 :base-data-directory "testing-data-manager"))
-         (context (make-instance 'webkit:webkit-web-context
-                                 :website-data-manager manager))
-         (view (make-instance 'webkit2:webkit-web-view
-                              :web-context context)))
-    (gobject:g-signal-connect win "destroy"
-                              #'(lambda (widget)
-                                  (declare (ignore widget))
-                                  (gtk:leave-gtk-main)))
-    (gtk:gtk-container-add win view)
-    (webkit2:webkit-web-view-load-uri view "http://www.example.com")
-    (setf *view* view)))
-
 ;;; General tests
 
 (def-test json-values (:suite js-tests)
@@ -352,6 +336,22 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
     (is (functionp hash-to-alist))
     (is (equalp '(("a" 1) ("b" (1 2 3)) ("c" "hello")) (funcall hash-to-alist hash)))))
 
-(run! 'webkit-tests)
-
-(gtk:join-gtk-main)
+(defun run-tests ()
+  (gtk:within-main-loop
+    (let* ((win (make-instance 'gtk:gtk-window))
+           (manager (make-instance 'webkit:webkit-website-data-manager
+                                   :base-data-directory "testing-data-manager"))
+           (context (make-instance 'webkit:webkit-web-context
+                                   :website-data-manager manager))
+           (view (make-instance 'webkit2:webkit-web-view
+                                :web-context context)))
+      (gobject:g-signal-connect win "destroy"
+                                #'(lambda (widget)
+                                    (declare (ignore widget))
+                                    (gtk:leave-gtk-main)))
+      (gtk:gtk-container-add win view)
+      (webkit2:webkit-web-view-load-uri view "http://www.example.com")
+      (setf *view* view)))
+  (run! 'webkit-tests)
+  (gtk:join-gtk-main)
+  (gtk:gtk-main-quit))
