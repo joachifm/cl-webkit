@@ -299,24 +299,24 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
 ;;; Functions
 
 (def-test zero-fn (:suite js-tests)
-  (let ((zero-fn (webkit:make-jsc-function *view* () 0)))
+  (let ((zero-fn (webkit:make-jsc-function (*view*) () 0)))
     (is (zerop (funcall zero-fn)))
     (is (functionp zero-fn))))
 
 (def-test simple-function (:suite js-tests)
-  (let ((add-one (webkit:make-jsc-function *view* (number)
+  (let ((add-one (webkit:make-jsc-function (*view*) (number)
                    (1+ number))))
     (is (= 6 (funcall add-one 5)))
     (is (functionp add-one))))
 
 (def-test five-arg-function (:suite js-tests)
-  (let ((five-args (webkit:make-jsc-function *view* (one two three four five)
+  (let ((five-args (webkit:make-jsc-function (*view*) (one two three four five)
                      (+ one (expt two three) (* four five)))))
     (is (= 9150 (funcall five-args 10 20 3 57 20)))
     (is (functionp five-args))))
 
 (def-test list-function (:suite js-tests)
-  (let ((js-append (webkit:make-jsc-function *view* (l1 l2)
+  (let ((js-append (webkit:make-jsc-function (*view*) (l1 l2)
                      (append l1 l2))))
     (is (functionp js-append))
     (is (equalp '(1 2 3) (funcall js-append '(1 2 3) nil)))
@@ -324,7 +324,7 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
 
 (def-test object-function (:suite js-tests)
   (let ((hash (make-hash-table :test 'equal))
-        (hash-to-alist (webkit:make-jsc-function *view* (hash)
+        (hash-to-alist (webkit:make-jsc-function (*view*) (hash)
                          (let ((alist '()))
                            (maphash (lambda (key value)
                                       (push (list key value) alist))
