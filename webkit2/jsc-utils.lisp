@@ -213,9 +213,11 @@ In case no suitable method was found, create a JSCValue for undefined."))
       (get-jsc-context view context-designator) name callback
       (cffi:null-pointer) (cffi:null-pointer) ;; TODO: Use g-notify-destroy-free?
       jsc-value-type n-args
-      (cffi:foreign-alloc
-       :pointer :initial-contents (loop repeat n-args collect jsc-value-type)
-       :count n-args)))))
+      (if (not (zerop n-args))
+          (cffi:foreign-alloc
+           :pointer :initial-contents (loop repeat n-args collect jsc-value-type)
+                    :count n-args)
+          (make-pointer (g-type-make-fundamental 1)))))))
 
 (export 'make-jsc-function)
 (defmacro make-jsc-function ((view &optional name context-designator) args &body body)
