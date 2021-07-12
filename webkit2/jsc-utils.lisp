@@ -10,6 +10,24 @@
 
 (in-package #:webkit2)
 
+(defmethod print-object ((val jsc-value) stream)
+  (print-unreadable-object (val stream :type t)
+    (format stream "~a: ~a"
+            (cond
+              ((jsc-value-is-null val) "null")
+              ((jsc-value-is-undefined val) "undefined")
+              ((jsc-value-is-boolean val) "bool")
+              ((jsc-value-is-number val) "number")
+              ((jsc-value-is-string val) "string")
+              ((jsc-value-is-array val) "array")
+              ((jsc-value-is-function val) "function")
+              ((jsc-value-is-object val) "object"))
+            (jsc-value-to-lisp val))))
+
+(defmethod print-object ((val jsc-class) stream)
+  (print-unreadable-object (val stream :type t)
+    (format stream "~a" (jsc-class-get-name val))))
+
 (defvar %context-lock (bt:make-lock))
 (defvar %context nil)
 
