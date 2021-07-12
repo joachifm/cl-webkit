@@ -136,7 +136,7 @@ Loads and renders a single web page."
                               `(webkit2:webkit-web-view-evaluate-javascript
                                 ,view
                                 ,js-string
-                                (lambda (object)
+                                (lambda (object jsc-object)
                                   (push (let ((success (equalp ,lisp-value object)))
                                           (list success ,js-string ,lisp-value))
                                         result)
@@ -176,7 +176,7 @@ Loads and renders a single web page."
           ("[1, 2, 3, 4, 5]" '(1 2 3 4 5))
           ("[1, null, undefined, \"hello\", 7]" '(1 :null :undefined "hello" 7))
           ("var obj = {hello: 5, how: \"are\", you: null, today: undefined}; obj"
-           '(("hello" . 5) ("how" . "are") ("you" . :null) ("today" . :undefined))))
+           '(("hello" 5) ("how" "are") ("you" :null) ("today" :undefined))))
         (gtk:gtk-widget-show-all win)))))
 
 (defun test-browser-main (&key private extended styled custom-scheme js-transform)
