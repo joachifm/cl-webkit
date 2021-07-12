@@ -234,27 +234,3 @@
   (value (g-object jsc-value))
   (indent :uint))
 (export 'jsc-value-to-json)
-
-(defvar *js-null-value* :null
-  "The value used when translating null from JavaScript to Lisp.")
-(export '*js-null-value*)
-
-(defvar *js-undefined-value* :undefined
-  "The value used when translating undefined from JavaScript to Lisp.")
-(export '*js-undefined-value*)
-
-(defvar *js-false-value* nil
-  "The value used when translating false from JavaScript to Lisp.")
-(export '*js-false-value*)
-
-(defvar *js-true-value* t
-  "The value used when translating true from JavaScript to Lisp.")
-(export '*js-true-value*)
-
-(defvar *js-array-type* :list
-  "The Lisp data type used when translating arrays from JavaScript to Lisp.")
-(export '*js-array-type*)
-
-(defvar *js-object-type* :hash-table
-  "The Lisp data type used when translating objects from JavaScript to Lisp.")
-(export '*js-object-type*)
