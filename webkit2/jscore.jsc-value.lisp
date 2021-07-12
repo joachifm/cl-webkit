@@ -122,43 +122,43 @@
 (defcfun "jsc_value_object_is_instance_of" :boolean
   (value (g-object jsc-value))
   (name :string))
-(export 'jsc_value_object-is-instance-of)
+(export 'jsc-value-object-is-instance-of)
 
 (defcfun "jsc_value_object_set_property" :void
   (value (g-object jsc-value))
   (name :string)
   (property (g-object jsc-value)))
-(export 'jsc_value-object-set-property)
+(export 'jsc-value-object-set-property)
 
 (defcfun "jsc_value_object_get_property" (g-object jsc-value)
   (value (g-object jsc-value))
   (name :string))
-(export 'jsc_value-object-get-property)
+(export 'jsc-value-object-get-property)
 
 (defcfun "jsc_value_object_set_property_at_index" :void
   (value (g-object jsc-value))
   (index :uint)
   (property (g-object jsc-value)))
-(export 'jsc_value_object_set-property-at-index)
+(export 'jsc-value_object_set-property-at-index)
 
 (defcfun "jsc_value_object_get_property_at_index" (g-object jsc-value)
   (value (g-object jsc-value))
   (index :uint))
-(export 'jsc_value_object_get-property-at-index)
+(export 'jsc-value_object_get-property-at-index)
 
 (defcfun "jsc_value_object_has_property" :boolean
   (value (g-object jsc-value))
   (name :string))
-(export 'jsc_value-object-has-property)
+(export 'jsc-value-object-has-property)
 
 (defcfun "jsc_value_object_delete_property" :boolean
   (value (g-object jsc-value))
   (name :string))
-(export 'jsc_value-object-delete-property)
+(export 'jsc-value-object-delete-property)
 
 (defcfun "jsc_value_object_enumerate_properties" (:pointer :string)
   (value (g-object jsc-value)))
-(export 'jsc_value-object-enumerate-properties)
+(export 'jsc-value-object-enumerate-properties)
 
 (defcfun "jsc_value_object_invoke_methodv" (g-object jsc-value)
   (value (g-object jsc-value))
@@ -228,7 +228,7 @@
 (defcfun "jsc_value_new_from_json" (g-object jsc-value)
   (context (g-object jsc-context))
   (json :string))
-(export 'jsc_value-new-from-json)
+(export 'jsc-value-new-from-json)
 
 (defcfun "jsc_value_to_json" :string
   (value (g-object jsc-value))
