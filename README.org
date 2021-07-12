@@ -36,6 +36,12 @@ Assuming you have [Quicklisp] installed, do
 2. > lisp
 3. > (ql:quickload :cl-webkit2)
 
+*** Testing
+To run tests, you need to additionally install [[https://github.com/hawkir/calispel][Calispel]],
+[[https://github.com/Shinmera/float-features][float-features]] and [[https://github.com/lispci/fiveam][FiveAM]] (all of these are available via
+Quicklisp). After that, simply running =(asdf:test-system :cl-webkit2)=
+should be enough.
+
 ** Contributing
 Contributing implies an agreement to redistribute the work under the
 project's license (see below); please make sure that you own the
@@ -45,6 +51,17 @@ rights to the work you contribute.
 - [[WebKit2GTK+ Stable API reference]]
 - [[http://common-lisp.net/project/cffi/manual/html_node/index.html][CFFI User Manual]]
 
+** Change Log
+*** 3.0.0
+- Make =webkit-web-view-evaluate-javascript= process the returned values
+  and turn them into the matching Lisp values (see =jsc-value-to-lisp=
+  docstring for transformation rules).
+- The callback to the =webkit-web-view-evaluate-javascript= now accepts
+  two required arguments -- the Lispy data, transformed from the
+  results of code evaluation, and an original [[https://webkitgtk.org/reference/jsc-glib/2.32.1/JSCValue.html][JSCValue]] it was
+  transformed from.
+- Add tests (webkit2/tests/ subdirectory and =cl-webkit2/tests= system),
+  mostly for JS evaluation results.
 ** Copying
 cl-webkit is distributed under the MIT license.
 
