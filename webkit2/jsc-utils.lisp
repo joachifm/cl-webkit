@@ -32,7 +32,8 @@
 (defvar %context nil)
 
 (export 'get-jsc-context)
-(declaim (ftype (function ((or null webkit-web-view) (or null string jsc-context))) get-jsc-context))
+(declaim (ftype (function ((or null webkit-web-view) &optional (or null string jsc-context)))
+                get-jsc-context))
 (defun get-jsc-context (view &optional designator)
   "Get a JSCContext for VIEW, matching DESIGNATOR.
 DESIGNATOR could be:
