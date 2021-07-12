@@ -29,7 +29,7 @@
                                     &body body)
   `(let ((channel (make-instance
                    'calispel:channel
-                   :buffer (make-instance 'jpl-queues:bounded-fifo-queue :capacity 1))))
+                   :buffer (make-instance 'jpl-queues:bounded-fifo-queue :capacity 3))))
      (gtk:within-gtk-thread
        (webkit2:webkit-web-view-evaluate-javascript
         *view* ,js-string
