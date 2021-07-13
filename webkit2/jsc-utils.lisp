@@ -359,3 +359,39 @@ SLOTS are a (possibly empty) list of entries of a form:
                                 0 (make-pointer (g-type-make-fundamental 1)))))
              (jsc-context-set-value ,context ,class-name ,constructor))
            ,class)))))
+
+(defun %make-jsc-method (name class callback n-args)
+  (let ((jsc-value-type (foreign-funcall "jsc_value_get_type" :pointer)))
+    (jsc-class-add-methodv
+     class (or name (null-pointer)) callback
+     (null-pointer) (null-pointer) ;; TODO: Use g-notify-destroy-free?
+     jsc-value-type n-args
+     (if (not (zerop n-args))
+         (foreign-alloc
+          :pointer :initial-contents (loop repeat n-args collect jsc-value-type)
+                   :count n-args)
+         (make-pointer (g-type-make-fundamental 1))))))
+
+(export 'make-jsc-method)
+(defmacro make-jsc-method (name ((class-var class) &rest args)
+                           &body body)
+  "Define a method NAME over CLASS.
+CLASS-VAR is bound to JSCValue of class CLASS when BODY is ran."
+  (let ((method-name (typecase name
+                       (symbol (cffi:translate-camelcase-name name :upper-initial-p nil))
+                       (string name)))
+        (n-args (length args)))
+    (alexandria:with-gensyms (method-callback class-instance user-data)
+      `(progn
+         (defcallback ,method-callback :pointer
+             ((,class-instance :pointer) ,@(loop for arg in args collect `(,arg :pointer))
+              (,user-data :pointer))
+           (declare (ignorable ,user-data ,class-instance ,@args))
+           (let (,@(loop for arg in args collect `(,arg (jsc-value-to-lisp ,arg)))
+                 (,class-var ,class-instance))
+             (declare (ignorable ,class-var))
+             (pointer
+              (lisp-to-jsc-value
+               (progn
+                 ,@body)))))
+         (%make-jsc-method ,method-name ,class (callback ,method-callback) ,n-args)))))
