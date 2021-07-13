@@ -396,6 +396,10 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
         (is (= 222 sum-slot))))))
 
 ;;; Setup function
+(defvar *can-run-tests-channel*
+  (make-instance
+   'calispel:channel
+   :buffer (make-instance 'jpl-queues:bounded-fifo-queue :capacity 1)))
 
 (defun run-tests ()
   (gtk:within-main-loop
@@ -412,7 +416,9 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
                                     (gtk:leave-gtk-main)))
       (gtk:gtk-container-add win view)
       (webkit2:webkit-web-view-load-uri view "http://www.example.com")
-      (setf *view* view)))
-  (run! 'webkit-tests)
-  (gtk:join-gtk-main)
-  (gtk:gtk-main-quit))
+      (setf *view* view)
+      (calispel:! *can-run-tests-channel* t)))
+  (when (calispel:? *can-run-tests-channel*)
+    (run! 'webkit-tests)
+    (gtk:join-gtk-main)
+    (gtk:gtk-main-quit)))
