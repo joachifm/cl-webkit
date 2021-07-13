@@ -311,7 +311,7 @@ See `get-jsc-context' for CONTEXT-DESIGNATOR allowed values."
                                (funcall (function ,writer)
                                         ,instance (jsc-value-to-lisp ,value)))))))))
           into callbacks
-        collect `(list ,@(append (list (typecase slot-name
+        collect `(list ,@(append (list (etypecase slot-name
                                          (symbol (cffi:translate-camelcase-name slot-name))
                                          (string slot-name)))
                                  (when reader (list `(callback ,reader-name)))
