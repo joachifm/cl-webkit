@@ -27,21 +27,11 @@
 (defmacro with-js-transform-result (js-string (var &optional (jsc-var (gensym))
                                                      (context-var (gensym)))
                                     &body body)
-  `(let ((channel (make-instance
-                   'calispel:channel
-                   :buffer (make-instance 'jpl-queues:bounded-fifo-queue :capacity 3))))
-     (gtk:within-gtk-thread
-       (webkit2:webkit-web-view-evaluate-javascript
-        *view* ,js-string
-        (lambda (result jsc-value)
-          (calispel:! channel result)
-          (calispel:! channel jsc-value)
-          (calispel:! channel (webkit:jsc-value-get-context jsc-value)))))
-     (let ((,var (calispel:? channel))
-           (,jsc-var (calispel:? channel))
-           (,context-var (calispel:? channel)))
-       (declare (ignorable ,var ,jsc-var ,context-var))
-       ,@body)))
+  `(let* ((,context-var (webkit:jsc-context-new))
+          (,jsc-var (webkit:jsc-context-evaluate ,context-var ,js-string -1))
+          (,var (webkit:jsc-value-to-lisp ,jsc-var)))
+     (declare (ignorable ,var ,jsc-var ,context-var))
+     ,@body))
 
 ;;; General tests
 
