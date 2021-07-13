@@ -234,11 +234,11 @@ In case no suitable method was found, create a JSCValue for \"undefined\"."))
       context (or name (null-pointer)) callback
       (null-pointer) (null-pointer) ;; TODO: Use g-notify-destroy-free?
       jsc-value-type n-args
-      (if (not (zerop n-args))
+      (if (zerop n-args)
+          (make-pointer (g-type-make-fundamental 1))
           (foreign-alloc
            :pointer :initial-contents (loop repeat n-args collect jsc-value-type)
-                    :count n-args)
-          (make-pointer (g-type-make-fundamental 1)))))))
+                    :count n-args))))))
 
 (export 'make-jsc-function)
 (defmacro make-jsc-function ((view &optional name context-designator) args &body body)
@@ -368,11 +368,11 @@ SLOTS are a (possibly empty) list of entries of a form:
      class (or name (null-pointer)) callback
      (null-pointer) (null-pointer) ;; TODO: Use g-notify-destroy-free?
      jsc-value-type n-args
-     (if (not (zerop n-args))
+     (if (zerop n-args)
+         (make-pointer (g-type-make-fundamental 1))
          (foreign-alloc
           :pointer :initial-contents (loop repeat n-args collect jsc-value-type)
-                   :count n-args)
-         (make-pointer (g-type-make-fundamental 1))))))
+                   :count n-args)))))
 
 (export 'make-jsc-method)
 (defmacro make-jsc-method (name ((class-var class) &rest args)
