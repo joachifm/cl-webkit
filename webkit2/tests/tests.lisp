@@ -336,6 +336,40 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
     (is (functionp hash-to-alist))
     (is (equalp '(("a" 1) ("b" (1 2 3)) ("c" "hello")) (funcall hash-to-alist hash)))))
 
+;;; Classes
+
+(def-test empty-class (:suite js-tests)
+  (let* ((context (webkit:jsc-context-new))
+         (empty-class (webkit:make-jsc-class (nil "Empty" context) () ())))
+    (is (equal 'webkit:jsc-class (type-of empty-class)))
+    (is (equal "Empty" (webkit:jsc-class-get-name empty-class)))
+    (is (null (webkit:jsc-class-get-parent empty-class)))
+    (let ((empty (webkit:jsc-context-evaluate context "var e = new Empty(); e" -1)))
+      (is (equal 'webkit:jsc-value (type-of empty)))
+      (is (webkit:jsc-value-is-object empty))
+      (is (equal t (webkit:jsc-value-object-is-instance-of empty "Empty"))))))
+
+(def-test single-property-class (:suite js-tests)
+  (let* ((context (webkit:jsc-context-new))
+         (five-new-value 5)
+         (single-class (webkit:make-jsc-class (nil "Single" context) ()
+                         ((five :reader (lambda (instance) five-new-value)
+                                :writer (lambda (instance value)
+                                          (setf five-new-value value)))))))
+    (is (equal 'webkit:jsc-class (type-of single-class)))
+    (is (equal "Single" (webkit:jsc-class-get-name single-class)))
+    (is (null (webkit:jsc-class-get-parent single-class)))
+    (let ((single (webkit:jsc-context-evaluate context "var s = new Single(); s" -1)))
+      (is (equal 'webkit:jsc-value (type-of single)))
+      (is (webkit:jsc-value-is-object single))
+      (is (equal t (webkit:jsc-value-object-is-instance-of single "Single")))
+      (is (equal 5 (webkit:jsc-value-to-lisp (webkit:jsc-context-evaluate context "s.five" -1))))
+      (progn
+        (webkit:jsc-context-evaluate context "s.five = 10" -1)
+        (is (= 10 five-new-value))))))
+
+;;; Setup function
+
 (defun run-tests ()
   (gtk:within-main-loop
     (let* ((win (make-instance 'gtk:gtk-window))
