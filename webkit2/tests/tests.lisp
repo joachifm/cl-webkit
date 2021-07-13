@@ -37,22 +37,22 @@
 
 (def-test json-values (:suite js-tests)
   (with-js-transform-result "null"
-      (%result% %jsc-result% %context%)
+      (%result% %jsc-result%)
     (is (equal "null" (webkit:jsc-value-to-json %jsc-result% 0))))
   (with-js-transform-result "true"
-      (%result% %jsc-result% %context%)
+      (%result% %jsc-result%)
     (is (equal "true" (webkit:jsc-value-to-json %jsc-result% 0))))
   (with-js-transform-result "false"
-      (%result% %jsc-result% %context%)
+      (%result% %jsc-result%)
     (is (equal "false" (webkit:jsc-value-to-json %jsc-result% 0))))
   (with-js-transform-result "[1, 2, 3]"
-      (%result% %jsc-result% %context%)
+      (%result% %jsc-result%)
     (is (equalp "[1,2,3]" (webkit:jsc-value-to-json %jsc-result% 0))))
   (with-js-transform-result "var obj = {num: 1.3}; obj"
-      (%result% %jsc-result% %context%)
+      (%result% %jsc-result%)
     (is (equalp "{\"num\":1.3}" (webkit:jsc-value-to-json %jsc-result% 0))))
   (with-js-transform-result "var obj = {arr: [1, 2, 3], num: 1.3, str: \"hello\", obj: {field: null}}; obj"
-      (%result% %jsc-result% %context%)
+      (%result% %jsc-result%)
     (is (equalp "{\"arr\":[1,2,3],\"num\":1.3,\"str\":\"hello\",\"obj\":{\"field\":null}}"
                 (webkit:jsc-value-to-json %jsc-result% 0)))))
 
