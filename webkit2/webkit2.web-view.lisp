@@ -251,8 +251,10 @@
                 webkit-web-view-evaluate-javascript))
 (defun webkit-web-view-evaluate-javascript (web-view javascript
                                             &optional call-back error-call-back world)
-  "Evaluate JAVASCRIPT in WEB-VIEW (and WORLD, if present) calling CALL-BACK upon completion.
-CALL-BACK is called over the result of Lisp transformation of result and original result JSCValue.
+  "Evaluate JAVASCRIPT in WEB-VIEW (and JavaScript world named WORLD, if present) calling CALL-BACK upon completion.
+CALL-BACK is called over two arguments:
+- The Lisp transformation of the result.
+- The untransformed result (a JSCValue).
 ERROR-CALL-BACK is called with the signaled condition."
   (incf callback-counter)
   (push (make-callback :id callback-counter :web-view web-view
