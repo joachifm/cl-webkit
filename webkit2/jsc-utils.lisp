@@ -350,7 +350,7 @@ SLOTS are a (possibly empty) list of entries of a form:
            (defcallback ,constructor-callback :pointer ((,user-data :pointer))
              (declare (ignore ,user-data))
              ,(if (assoc :constructor options)
-                  (cdr (assoc :constructor options))
+                  `(funcall ,(second (assoc :constructor options)) ,class)
                   `(pointer (jsc-value-new-object ,context (null-pointer) ,class))))
            (let ((,constructor (jsc-class-add-constructorv
                                 ,class ,class-name (callback ,constructor-callback)
