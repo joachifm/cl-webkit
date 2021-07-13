@@ -122,7 +122,7 @@ Loads and renders a single web page."
       (gtk:gtk-widget-show-all win))))
 
 (defun js-transform-browser-main ()
-  "A JS transformation-checking version of `simple-browser-main'."
+  "A JS transformation-validating variant of `simple-browser-main'."
   (gtk:within-main-loop
     (let* ((win (make-instance 'gtk:gtk-window))
            (context (make-instance 'webkit:webkit-web-context))
@@ -137,6 +137,7 @@ Loads and renders a single web page."
                                 ,view
                                 ,js-string
                                 (lambda (object jsc-object)
+                                  (declare (ignore jsc-object))
                                   (push (let ((success (equalp ,lisp-value object)))
                                           (list success ,js-string ,lisp-value))
                                         result)
