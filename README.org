@@ -62,6 +62,7 @@ rights to the work you contribute.
   transformed from.
 - Add tests (webkit2/tests/ subdirectory and =cl-webkit2/tests= system),
   mostly for JS evaluation results.
+
 ** Copying
 cl-webkit is distributed under the MIT license.
 
