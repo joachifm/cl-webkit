@@ -43,7 +43,7 @@
   (return-type :pointer)) ;; XXX: GType
 (export 'jsc-class-add-constructor-variadic)
 
-(defcfun "jsc_class_add_methodv" (g-object jsc-value)
+(defcfun "jsc_class_add_methodv" :void
   (class (g-object jsc-class))
   (name :string)
   (callback :pointer) ;; XXX: GCallback
@@ -54,7 +54,7 @@
   (parameter-types (:pointer :pointer)))
 (export 'jsc-class-add-methodv)
 
-(defcfun "jsc_class_add_method_variadic" (g-object jsc-value)
+(defcfun "jsc_class_add_method_variadic" :void
   (class (g-object jsc-class))
   (name :string)
   (callback :pointer) ;; XXX: GCallback
