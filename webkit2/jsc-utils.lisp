@@ -255,19 +255,18 @@ See `get-jsc-context' for what CONTEXT-DESIGNATOR could be."
                     (string name)
                     (null nil)
                     (symbol (cffi:translate-camelcase-name name))))
-         (callback-name (gensym "js-callback"))
-         (n-args (length args))
-         (user-data (gensym)))
-    `(progn
-       (defcallback ,callback-name (g-object jsc-value)
-           (,@(loop for arg in args collect `(,arg :pointer)) (,user-data :pointer))
-         (declare (ignorable ,user-data ,@args))
-         (let (,@(loop for arg in args collect `(,arg (jsc-value-to-lisp ,arg))))
-           (lisp-to-jsc-value
-            (progn
-              ,@body))))
-       (%make-jsc-function (get-jsc-context ,view ,context-designator)
-                           ,js-name (cffi:callback ,callback-name) ,n-args))))
+         (n-args (length args)))
+    (alexandria:with-gensyms (function-callback user-data)
+      `(progn
+         (defcallback ,function-callback :pointer
+             (,@(loop for arg in args collect `(,arg :pointer)) (,user-data :pointer))
+           (declare (ignorable ,user-data ,@args))
+           (let (,@(loop for arg in args collect `(,arg (jsc-value-to-lisp ,arg))))
+             (pointer (lisp-to-jsc-value
+                       (progn
+                         ,@body)))))
+         (%make-jsc-function (get-jsc-context ,view ,context-designator)
+                             ,js-name (cffi:callback ,function-callback) ,n-args)))))
 
 (declaim (ftype (function (jsc-context string (or jsc-class null) (or null (cons (cons string)))))
                 %make-jsc-class))
