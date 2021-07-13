@@ -192,7 +192,7 @@ Translates:
     (declare (ignore value))
     (jsc-value-new-undefined context))
   (:documentation "Transform a provided Lisp value to the most sensible JSCValue counterpart.
-In case no suitable method was found, create a JSCValue for undefined."))
+In case no suitable method was found, create a JSCValue for \"undefined\"."))
 
 (defmethod lisp-to-jsc-value ((number real) &optional (context (jsc-context-get-current)))
   (jsc-value-new-number context (coerce number 'double-float)))
@@ -240,17 +240,17 @@ In case no suitable method was found, create a JSCValue for undefined."))
 
 (export 'make-jsc-function)
 (defmacro make-jsc-function ((view &optional name context-designator) args &body body)
-  "Create a new JSCValue function with a callback having ARGS and BODY.
+  "Create a new JSCValue function.
 
 The function is only defined in the VIEW, in the JSCContext designated
 by CONTEXT-DESIGNATOR, with the NAME assigned to it.
 
 NAME is either a symbol, a string, or nil:
-- Symbol turn into a camelcase JS function name.
-- String names new function directly.
+- Symbol is turned into a camelcase JS function name.
+- String names the new function directly.
 - nil gives no name to the new function, making it anonymous.
 
-See `get-jsc-context' for what CONTEXT-DESIGNATOR could be."
+See `get-jsc-context' for CONTEXT-DESIGNATOR allowed values."
   (let* ((js-name (etypecase name
                     (string name)
                     (null nil)
@@ -324,21 +324,21 @@ See `get-jsc-context' for what CONTEXT-DESIGNATOR could be."
 
 The class is only defined in the VIEW, in the JSCContext designated
 by CONTEXT-DESIGNATOR, with the NAME assigned to it.
-See `get-jsc-context' for what CONTEXT-DESIGNATOR could be.
+See `get-jsc-context' for CONTEXT-DESIGNATOR allowed values.
 
 PARENT-CLASS should be another JSCClass.
 SLOTS are a (possibly empty) list of entries of a form:
 \(SLOT-NAME &KEY READER WRITER), where
-- SLOT-NAME could be a symbol or a string. Either way, it's passed to
+- SLOT-NAME can be a symbol or a string. Either way, it's passed to
   JSCClass as string. In case it's a symbol, it's transformed to a
   camelcase property name.
-- READER should be funcall-able, so it should either be:
+- READER must be funcall-able, so it should either be:
   - A symbol for a function with one argument (an instance of the
     class, as JSCValue).
-  - A lambda with one argument.
+  - A lambda of one argument.
 - WRITER follows the same convention except that it should have a
-  second argument -- the value to set (the value is lispy)."
-  (let ((class-name (typecase name
+  second argument -- the Lispy value to set."
+  (let ((class-name (etypecase name
                       (symbol (cffi:translate-camelcase-name name :upper-initial-p t))
                       (string name)))
         (slot-values (multiple-value-list (%process-class-slots slots))))
@@ -376,8 +376,8 @@ SLOTS are a (possibly empty) list of entries of a form:
 (defmacro make-jsc-method (name ((class-var class) &rest args)
                            &body body)
   "Define a method NAME over CLASS.
-CLASS-VAR is bound to JSCValue of class CLASS when BODY is ran."
-  (let ((method-name (typecase name
+CLASS-VAR is bound to JSCValue of class CLASS when BODY is run."
+  (let ((method-name (etypecase name
                        (symbol (cffi:translate-camelcase-name name :upper-initial-p nil))
                        (string name)))
         (n-args (length args)))
