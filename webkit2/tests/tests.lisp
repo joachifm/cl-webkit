@@ -351,11 +351,16 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
 
 (def-test single-property-class (:suite js-tests)
   (let* ((context (webkit:jsc-context-new))
-         (five-new-value 5)
+         (five-new-value 0)
          (single-class (webkit:make-jsc-class (nil "Single" context) ()
                          ((five :reader (lambda (instance) five-new-value)
                                 :writer (lambda (instance value)
-                                          (setf five-new-value value)))))))
+                                          (setf five-new-value value))))
+                         (:constructor (lambda (class)
+                                         (setf five-new-value 5)
+                                         (g:pointer
+                                          (webkit:jsc-value-new-object
+                                           context (cffi:null-pointer) class)))))))
     (is (equal 'webkit:jsc-class (type-of single-class)))
     (is (equal "Single" (webkit:jsc-class-get-name single-class)))
     (is (null (webkit:jsc-class-get-parent single-class)))
