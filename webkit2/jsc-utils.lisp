@@ -319,7 +319,7 @@ See `get-jsc-context' for what CONTEXT-DESIGNATOR could be."
 
 (export 'make-jsc-class)
 (defmacro make-jsc-class ((view name &optional context-designator) (&optional parent-class)
-                          slots &rest options)
+                          &body (slots . options))
   "Create a JSCClass named NAME with SLOTS and inheriting from PARENT-CLASS.
 
 The class is only defined in the VIEW, in the JSCContext designated
