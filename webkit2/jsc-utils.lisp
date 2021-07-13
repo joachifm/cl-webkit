@@ -45,15 +45,13 @@ DESIGNATOR could be:
             (lambda (result jsc-value)
               (declare (ignore result))
               (setf %context (jsc-value-get-context jsc-value)))))
-      (if view
-          (gtk:within-gtk-thread
-            (etypecase designator
-              (jsc-context (setf %context designator))
-              (string (webkit:webkit-web-view-evaluate-javascript
-                       view "null" context-callback nil designator))
-              (null (webkit:webkit-web-view-evaluate-javascript
-                     view "null" context-callback))))
-          (jsc-context-new))
+      (gtk:within-gtk-thread
+        (typecase designator
+          (jsc-context (setf %context designator))
+          (string (webkit:webkit-web-view-evaluate-javascript
+                   view "null" context-callback nil designator))
+          (null (webkit:webkit-web-view-evaluate-javascript
+                 view "null" context-callback))))
       (loop until %context
             finally (return (prog1 %context
                               (setf %context nil)))))))
