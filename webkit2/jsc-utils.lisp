@@ -267,3 +267,95 @@ See `get-jsc-context' for what CONTEXT-DESIGNATOR could be."
             (progn
               ,@body))))
        (%make-jsc-function ,view ,context-designator ,js-name (cffi:callback ,callback-name) ,n-args))))
+
+(declaim (ftype (function (jsc-context string (or jsc-class null) (or null (cons (cons string)))))
+                %make-jsc-class))
+(defun %make-jsc-class (context name parent-class properties)
+  (let* ((class (jsc-context-register-class
+                 context name (or parent-class (null-pointer))
+                 (null-pointer) (null-pointer))))
+    (dolist (property properties)
+      (destructuring-bind (property-name &optional getter-callback setter-callback)
+          (uiop:ensure-list property)
+        (jsc-class-add-property
+         class property-name (foreign-funcall "jsc_value_get_type" :pointer)
+         (or getter-callback (null-pointer)) (or setter-callback (null-pointer))
+         (null-pointer) (null-pointer))))
+    class))
+
+(defun %process-class-slots (slots)
+  (loop for (slot-name . rest) in slots
+        for (reader . writer) = (destructuring-bind (&key reader writer) rest
+                                  (cons reader writer))
+        for reader-name = (when reader
+                            (intern (symbol-name (gensym (format nil "~a-READER" slot-name)))))
+        for writer-name = (when writer
+                            (intern (symbol-name (gensym (format nil "~a-WRITER" slot-name)))))
+        collect (alexandria:with-gensyms (instance user-data value)
+                  `(progn
+                     ,@(when reader
+                         `((defcallback ,reader-name
+                               :pointer ((,instance :pointer) (,user-data :pointer))
+                             (declare (ignorable ,instance ,user-data))
+                             (pointer
+                              (lisp-to-jsc-value
+                               (funcall (function ,reader) ,instance))))))
+                     ,@(when writer
+                         `((defcallback ,writer-name :pointer
+                               ((,instance :pointer) (,value :pointer) (,user-data :pointer))
+                             (declare (ignorable ,instance ,value ,user-data))
+                             (pointer
+                              (lisp-to-jsc-value
+                               (funcall (function ,writer)
+                                        ,instance (jsc-value-to-lisp ,value)))))))))
+          into callbacks
+        collect `(list ,@(append (list (typecase slot-name
+                                         (symbol (cffi:translate-camelcase-name slot-name))
+                                         (string slot-name)))
+                                 (when reader (list `(callback ,reader-name)))
+                                 (when writer (list `(callback ,writer-name)))))
+          into property-lists
+        finally (return (values callbacks property-lists))))
+
+(export 'make-jsc-class)
+(defmacro make-jsc-class ((view name &optional context-designator) (&optional parent-class)
+                          slots &rest options)
+  "Create a JSCClass named NAME with SLOTS and inheriting from PARENT-CLASS.
+
+The class is only defined in the VIEW, in the JSCContext designated
+by CONTEXT-DESIGNATOR, with the NAME assigned to it.
+See `get-jsc-context' for what CONTEXT-DESIGNATOR could be.
+
+PARENT-CLASS should be another JSCClass.
+SLOTS are a (possibly empty) list of entries of a form:
+\(SLOT-NAME &KEY READER WRITER), where
+- SLOT-NAME could be a symbol or a string. Either way, it's passed to
+  JSCClass as string. In case it's a symbol, it's transformed to a
+  camelcase property name.
+- READER should be funcall-able, so it should either be:
+  - A symbol for a function with one argument (an instance of the
+    class, as JSCValue).
+  - A lambda with one argument.
+- WRITER follows the same convention except that it should have a
+  second argument -- the value to set (the value is lispy)."
+  (let ((class-name (typecase name
+                      (symbol (cffi:translate-camelcase-name name :upper-initial-p t))
+                      (string name)))
+        (slot-values (multiple-value-list (%process-class-slots slots))))
+    (alexandria:with-gensyms (context class constructor-callback user-data constructor)
+      `(progn
+         ,@(first slot-values)
+         (let* ((,context (get-jsc-context ,view ,context-designator))
+                (,class (%make-jsc-class ,context ,class-name ,parent-class (list ,@(second slot-values)))))
+           (defcallback ,constructor-callback :pointer ((,user-data :pointer))
+             (declare (ignore ,user-data))
+             ,(if (assoc :constructor options)
+                  (cdr (assoc :constructor options))
+                  `(pointer (jsc-value-new-object ,context (null-pointer) ,class))))
+           (let ((,constructor (jsc-class-add-constructorv
+                                ,class ,class-name (callback ,constructor-callback)
+                                (null-pointer) (null-pointer)
+                                (foreign-funcall "jsc_value_get_type" :pointer)
+                                0 (make-pointer (g-type-make-fundamental 1)))))
+             (jsc-context-set-value ,context ,class-name ,constructor))
+           ,class)))))
