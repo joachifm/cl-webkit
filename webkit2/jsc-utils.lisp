@@ -73,11 +73,13 @@ DESIGNATOR could be:
 (export '*js-true-value*)
 
 (defvar *js-array-type* :list
-  "The Lisp data type used when translating arrays from JavaScript to Lisp.")
+  "The Lisp data type used when translating arrays from JavaScript to Lisp.
+Either :LIST or :VECTOR.")
 (export '*js-array-type*)
 
 (defvar *js-object-type* :hash-table
-  "The Lisp data type used when translating objects from JavaScript to Lisp.")
+  "The Lisp data type used when translating objects from JavaScript to Lisp.
+One of :HASH-TABLE, :ALIST, :PLIST.")
 (export '*js-object-type*)
 
 (export 'jsc-value-to-lisp)
@@ -85,8 +87,8 @@ DESIGNATOR could be:
                              (:undefined-value t)
                              (:false-value t)
                              (:true-value t)
-                             (:array-type (or null (member :list :vector)))
-                             (:object-type (or null (member :alist :plist :hash-table)))))
+                             (:array-type (member :list :vector))
+                             (:object-type (member :alist :plist :hash-table))))
                 jsc-value-to-lisp))
 (defun jsc-value-to-lisp (jsc-value &key (null-value *js-null-value*)
                                       (undefined-value *js-undefined-value*)
