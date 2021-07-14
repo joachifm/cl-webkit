@@ -82,11 +82,20 @@ Either :LIST or :VECTOR.")
 One of :HASH-TABLE, :ALIST, :PLIST.")
 (export '*js-object-type*)
 
+(defvar *js-number-rounding* :smart
+  "The number rounding model used when translating from JavaScript floats to Lisp.
+Possible values:
+- :SMART -- Truncate floats to integers whenever they are
+  integers (only under 10^22 -- it gets chaotic after).
+- :FLOAT -- Always use floats.
+- :INTEGER -- Always truncate to integers.")
+
 (export 'jsc-value-to-lisp)
 (declaim (ftype (function (t &key (:null-value t)
                              (:undefined-value t)
                              (:false-value t)
                              (:true-value t)
+                             (:number-rounding (member :float :integer :smart))
                              (:array-type (member :list :vector))
                              (:object-type (member :alist :plist :hash-table))))
                 jsc-value-to-lisp))
@@ -94,14 +103,18 @@ One of :HASH-TABLE, :ALIST, :PLIST.")
                                       (undefined-value *js-undefined-value*)
                                       (false-value *js-false-value*)
                                       (true-value *js-true-value*)
+                                      (number-rounding *js-number-rounding*)
                                       (array-type *js-array-type*)
                                       (object-type *js-object-type*))
   "Translate a JSC-VALUE to a lisp value.
 Translates:
 - JS strings to strings.
 - JS numbers:
-  - to integers if the absolute value is less than 1.0d22,
-  - floating-point numbers otherwise.
+  - If NUMBER-ROUNDING is :smart (default):
+    - to integers if the absolute value is less than 1.0d22,
+    - floating-point numbers otherwise.
+  - If NUMBER-ROUNDING is :integer -- always `truncate' to integer.
+  - If NUMBER-ROUNDING is :float -- always return floats.
 - true to TRUE-VALUE (t by default). Also see `*js-true-value*'.
 - false to FALSE-VALUE (nil by default). Also see `*js-false-value*'.
 - null to NULL-VALUE (:null by default). Also see `*js-null-value*'.
@@ -139,11 +152,13 @@ Translates:
       ((jsc-value-is-undefined jsc-value) undefined-value)
       ((jsc-value-is-number jsc-value) (let ((num (jsc-value-to-double jsc-value)))
                                          (handler-case
-                                             ;; Floats get too chaotic after 1.0d22.
-                                             ;; Looking at floating part doesn't help there.
-                                             (if (and (< (abs num) 1.0d22) (zerop (rem num 1.0)))
-                                                 (truncate num)
-                                                 num)
+                                             (case number-rounding
+                                               (:integer (truncate num))
+                                               (:float num)
+                                               (:smart (if (and (< (abs num) 1.0d22)
+                                                                (zerop (rem num 1.0)))
+                                                           (truncate num)
+                                                           num)))
                                            ;; Truncation/comparison can error out on infinity/NaN.
                                            (error (c) (declare (ignore c)) num))))
       ((jsc-value-is-string jsc-value) (jsc-value-to-string jsc-value))
