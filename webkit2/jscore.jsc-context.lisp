@@ -53,7 +53,7 @@
   (length :int)
   (uri :string)
   (line-number :int))
-(export 'jsc_context_evaluate-with-source-uri)
+(export 'jsc-context-evaluate-with-source-uri)
 
 (defcfun "jsc_context_evaluate_in_object" (g-object jsc-value)
   (context (g-object jsc-context))
@@ -64,13 +64,13 @@
   (uri :string)
   (line-number :int)
   (object (:pointer (g-object jsc-value))))
-(export 'jsc_context-evaluate-in-object)
+(export 'jsc-context-evaluate-in-object)
 
 ;; TODO: JSCCheckSyntaxResult	jsc_context_check_syntax ()
 
 (defcfun "jsc_context_get_global_object" (g-object jsc-value)
   (context (g-object jsc-context)))
-(export 'jsc_context-get-global-object)
+(export 'jsc-context-get-global-object)
 
 (defcfun "jsc_context_set_value" :void
   (context (g-object jsc-context))
