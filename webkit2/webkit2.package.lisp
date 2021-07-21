@@ -10,9 +10,9 @@
 
 (in-package :cl-user)
 
-(defpackage #:cl-webkit2
+(uiop:define-package #:cl-webkit2
   (:nicknames :webkit2 :webkit)
   (:use :cl :cffi :gtk :gobject))
 
-(defpackage #:jscore
+(uiop:define-package #:jscore
   (:use :cl :cffi))

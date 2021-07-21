@@ -10,5 +10,5 @@
 
 (in-package :cl-user)
 
-(defpackage #:webkit2/tests
+(uiop:define-package #:webkit2/tests
   (:use #:cl #:fiveam #:cffi #:gtk #:gobject))
