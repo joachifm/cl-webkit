@@ -21,17 +21,17 @@
 (defcfun "webkit_user_message_error_quark" glib:g-quark)
 
 (defcfun "webkit_user_message_new" (g-object webkit-user-message)
-  (name :pointer)  ; XXX: const char *
+  (name :string)  ; XXX: const char *
   (parameters (:pointer (:struct glib:g-variant))))
 (export 'webkit-user-message-new)
 
 (defcfun "webkit_user_message_new_with_fd_list" (g-object webkit-user-message)
-  (name :pointer)  ; XXX: const char *
+  (name :string)  ; XXX: const char *
   (parameters (:pointer (:struct glib:g-variant)))
   (fd-list :pointer)) ; fd_list *
 (export 'webkit-user-message-new-with-fd-list)
 
-(defcfun "webkit_user_message_get_name" :pointer ; XXX: const char *
+(defcfun "webkit_user_message_get_name" :string ; XXX: const char *
   (message (g-object webkit-user-message)))
 (export 'webkit-user-message-get-name)
 
