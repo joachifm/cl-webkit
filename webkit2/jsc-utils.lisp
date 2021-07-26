@@ -243,17 +243,18 @@ In case no suitable method was found, create a JSCValue for \"undefined\"."))
 
 (declaim (ftype (function (jsc-context (or string null) t integer)) %make-jsc-function))
 (defun %make-jsc-function (context name callback n-args)
-  (let ((jsc-value-type (foreign-funcall "jsc_value_get_type" :pointer)))
-    (jsc-value-to-lisp
-     (jsc-value-new-functionv
-      context (or name (null-pointer)) callback
-      (null-pointer) (null-pointer) ;; TODO: Use g-notify-destroy-free?
-      jsc-value-type n-args
-      (if (zerop n-args)
-          (make-pointer (g-type-make-fundamental 1))
-          (foreign-alloc
-           :pointer :initial-contents (loop repeat n-args collect jsc-value-type)
-                    :count n-args))))))
+  (let* ((jsc-value-type (foreign-funcall "jsc_value_get_type" :pointer))
+         (function (jsc-value-new-functionv
+                    context (or name (null-pointer)) callback
+                    (null-pointer) (null-pointer) ;; TODO: Use g-notify-destroy-free?
+                    jsc-value-type n-args
+                    (if (zerop n-args)
+                        (make-pointer (g-type-make-fundamental 1))
+                        (foreign-alloc
+                         :pointer :initial-contents (loop repeat n-args collect jsc-value-type)
+                                  :count n-args)))))
+    (values (jsc-value-to-lisp function)
+            function)))
 
 (export 'make-jsc-function)
 (defmacro make-jsc-function ((view &optional name context-designator) args &body body)
