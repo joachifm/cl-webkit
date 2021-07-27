@@ -415,7 +415,7 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
                                     (declare (ignore widget))
                                     (gtk:leave-gtk-main)))
       (gtk:gtk-container-add win view)
-      (webkit2:webkit-web-view-load-uri view "http://www.example.com")
+      (webkit2:webkit-web-view-load-uri view "about:blank")
       (setf *view* view)
       (calispel:! *can-run-tests-channel* t)))
   (when (calispel:? *can-run-tests-channel*)
