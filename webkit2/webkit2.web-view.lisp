@@ -493,3 +493,50 @@ ERROR-CALL-BACK is called with the signaled condition."
 (defcfun "webkit_javascript_result_get_js_value" js-value-ref
   (js-result webkit-javascript-result))
 (export 'webkit-javascript-result-get-js-value)
+
+(defcfun "webkit_web_view_send_message_to_page" :void
+  (view (g-object webkit-web-view))
+  (message (g-object webkit-user-message))
+  (cancellable :pointer)
+  (callback g-async-ready-callback)
+  (user-data :pointer))
+(export 'webkit-web-view-send-message-to-page)
+
+(defcfun ("webkit_web_view_send_message_to_page_finish" %webkit-web-view-send-message-to-page-finish)
+    (g-object webkit-user-message)
+  (view (g-object webkit-web-view))
+  (result g-async-result)
+  (g-error :pointer))
+
+(defun webkit-web-view-send-message-to-page-finish (view result)
+  (glib:with-g-error (err)
+    (%webkit-web-view-send-message-to-page-finish view result err)))
+(export 'webkit-web-view-send-message-to-page-finish)
+
+(cffi:defcallback message-replied-to
+    :void ((source-object :pointer) (result :pointer) (user-data :pointer))
+  (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
+    (handler-case
+        (let ((reply (webkit-web-view-send-message-to-page-finish source-object result)))
+          (setf callbacks (delete callback callbacks))
+          (when (callback-function callback)
+            (funcall (callback-function callback) reply)))
+      (error (c)
+        (when callback
+          (when (callback-error-function callback)
+            (funcall (callback-error-function callback) c))
+          (setf callbacks (delete callback callbacks)))))))
+
+(defun webkit-web-view-send-message-to-page* (web-view message &optional call-back error-call-back)
+  "Send MESSAGE to the WEB-VIEW corresponding page calling CALL-BACK upon completion and ERROR-CALL-BACK on error."
+  (incf callback-counter)
+  (push (make-callback :id callback-counter :web-view web-view
+                       :function call-back
+                       :error-function error-call-back)
+        callbacks)
+  (webkit-web-view-send-message-to-page
+   web-view message
+   (cffi:null-pointer)
+   (cffi:callback message-replied-to)
+   (cffi:make-pointer callback-counter)))
+(export 'webkit-web-view-send-message-to-page*)
