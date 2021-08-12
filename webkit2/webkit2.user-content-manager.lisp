@@ -20,6 +20,11 @@
   (stylesheet webkit-user-style-sheet))
 (export 'webkit-user-content-manager-add-style-sheet)
 
+(defcfun "webkit_user_content_manager_remove_style_sheet" :void
+  (manager (g-object webkit-user-content-manager))
+  (stylesheet webkit-user-style-sheet))
+(export 'webkit-user-content-manager-remove-style-sheet)
+
 (defcfun "webkit_user_content_manager_remove_all_style_sheets" :void
   (manager (g-object webkit-user-content-manager)))
 (export 'webkit-user-content-manager-remove-all-style-sheets)
@@ -28,6 +33,11 @@
   (manager (g-object webkit-user-content-manager))
   (script webkit-user-script))
 (export 'webkit-user-content-manager-add-script)
+
+(defcfun "webkit_user_content_manager_remove_script" :void
+  (manager (g-object webkit-user-content-manager))
+  (script webkit-user-script))
+(export 'webkit-user-content-manager-remove-script)
 
 (defcfun "webkit_user_content_manager_remove_all_scripts" :void
   (manager (g-object webkit-user-content-manager)))
