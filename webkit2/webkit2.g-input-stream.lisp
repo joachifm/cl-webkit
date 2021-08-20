@@ -39,6 +39,13 @@
   (length :long)
   (destroy :pointer))
 
+(defcfun "g_memory_input_stream_new_from_bytes" (g-object g-memory-input-stream)
+  (bytes :pointer))
+
+(defcfun "g_bytes_new" :pointer
+  (data (:pointer :uchar))
+  (size :uint))
+
 (cffi:defcallback g-notify-destroy-null :void ((data :pointer))
   (declare (ignore data)))
 (cffi:defcallback g-notify-destroy-free :void ((data :pointer))

@@ -61,15 +61,21 @@
       (destructuring-bind (data &optional (data-type "text/html"))
           (multiple-value-list (funcall (callback-function callback) request))
         (handler-case
-            (multiple-value-bind (ffi-string ffi-string-length)
-                (cffi:foreign-string-alloc data)
-              (unwind-protect
-                   (let* ((stream (g-memory-input-stream-new-from-data
-                                   ffi-string -1 ; -1 is for auto-detection based on NULL character
-                                   (callback g-notify-destroy-null))))
-                     (webkit-uri-scheme-request-finish request stream ffi-string-length data-type)
-                     (gobject:g-object-unref (pointer stream)))
-                (cffi:foreign-string-free ffi-string)))
+            (typecase data
+              (string (multiple-value-bind (ffi-string ffi-string-length)
+                          (cffi:foreign-string-alloc data)
+                        (unwind-protect
+                             (let* ((stream (g-memory-input-stream-new-from-data
+                                             ffi-string -1 ; -1 is for auto-detection based on NULL character
+                                             (callback g-notify-destroy-null))))
+                               (webkit-uri-scheme-request-finish request stream ffi-string-length data-type)
+                               (gobject:g-object-unref (pointer stream)))
+                          (cffi:foreign-string-free ffi-string))))
+              (array (let* ((arr (cffi:foreign-alloc :uchar :initial-contents data :count (length data)))
+                            (stream (g-memory-input-stream-new-from-bytes (g-bytes-new arr (length data)))))
+                       (webkit-uri-scheme-request-finish request stream (length data) data-type)
+                       (gobject:g-object-unref (pointer stream))
+                       (cffi:foreign-free arr))))
           (error (c)
             (webkit-uri-scheme-request-finish-error
              request (format nil "The custom request for URI ~a failed with ~a: ~a"
@@ -77,7 +83,7 @@
             (when (and callback (callback-error-function callback))
               (funcall (callback-error-function callback) c))))))))
 
-(defun webkit-web-context-register-uri-scheme-callback (context scheme &optional call-back error-call-back)
+(defun webkit-web-context-register-uri-scheme-callback (context scheme &optional call-back error-call-back from-file-p)
   "Register the custom scheme.
 Hide all the implementation details (callbacks, WebKit functions, C objects
 allocation) from the Lisp-side.
