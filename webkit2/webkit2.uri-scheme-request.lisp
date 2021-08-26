@@ -83,7 +83,7 @@
             (when (and callback (callback-error-function callback))
               (funcall (callback-error-function callback) c))))))))
 
-(defun webkit-web-context-register-uri-scheme-callback (context scheme &optional call-back error-call-back from-file-p)
+(defun webkit-web-context-register-uri-scheme-callback (context scheme &optional call-back error-call-back)
   "Register the custom scheme.
 Hide all the implementation details (callbacks, WebKit functions, C objects
 allocation) from the Lisp-side.
