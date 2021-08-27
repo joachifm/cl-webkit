@@ -156,7 +156,7 @@
 
 (defcfun "webkit_web_context_set_web_extensions_initialization_user_data" :void
   (webkit-web-context (g-object webkit-web-context))
-  (user_data :pointer))
+  (user_data (:pointer (:struct glib:g-variant))))
 (export 'webkit-web-context-set-web-extensions-initialization-user-data)
 
 (defcfun "webkit_web_context_prefetch_dns" :void
