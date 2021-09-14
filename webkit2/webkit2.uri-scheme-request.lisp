@@ -61,7 +61,7 @@
       (destructuring-bind (data &optional (data-type "text/html"))
           (multiple-value-list (funcall (callback-function callback) request))
         (handler-case
-            (typecase data
+            (etypecase data
               (string (multiple-value-bind (ffi-string ffi-string-length)
                           (cffi:foreign-string-alloc data)
                         (unwind-protect
