@@ -28,3 +28,4 @@ If it's NULL, return nil."
        (unless (or (null maybe) (cffi:null-pointer-p maybe))
          (glib:g-variant-get-string maybe))))
     (t (glib:g-variant-get-string variant))))
+(export 'g-variant-get-maybe-string)
