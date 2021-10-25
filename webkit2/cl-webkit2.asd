@@ -57,6 +57,7 @@
                (:file "webkit2.security-manager")
                (:file "webkit2.settings")
                (:file "webkit2.uri-request")
+               (:file "webkit2.uri-response")
                (:file "webkit2.policy-decision")
                (:file "webkit2.navigation-policy-decision")
                (:file "webkit2.response-policy-decision")
