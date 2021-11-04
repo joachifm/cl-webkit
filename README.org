@@ -52,6 +52,25 @@ rights to the work you contribute.
 - [[http://common-lisp.net/project/cffi/manual/html_node/index.html][CFFI User Manual]]
 
 ** Change Log
+*** 3.1.0
+Additions:
+- =webkit-web-view-send-message-to-page*= to send =WebKitUserMesssages= in
+  a nicer Lispy way.
+- More =WebKitSettings= settings.
+- Bind all the subtypes of =WebKitPermissionRequest=.
+- Bindings for:
+  - =webkit_user_content_manager_remove_script=
+  - =webkit_user_content_manager_remove_style_sheet=
+- New =g-variant-get-maybe-string=: checks =GVariant= for nullness and returns
+  a contained string if possible.
+- The =WebKitURISchemeRequest= callbacks run on separate thread now.
+- =make-jsc-function= should return the original =JSCValue= as a second value.
+Minor API-breaking changes:
+- =webkit-web-context-register-uri-scheme-callback= now has one less optional arguments.
+Bug Fixes:
+- Fix mistyped JSC-related exports.
+- Use :string type instead of :pointer for =WebKitUserMessage= names.
+- webkit2.uri-response is not loaded in cl-webkit.asd.
 *** 3.0.0
 - Make =webkit-web-view-evaluate-javascript= process the returned values
   and turn them into the matching Lisp values (see =jsc-value-to-lisp=
