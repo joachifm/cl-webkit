@@ -467,7 +467,7 @@ ERROR-CALL-BACK is called with the signaled condition."
 (defcfun "webkit_web_view_execute_editing_command" :void
   (web-view (g-object webkit-web-view))
   (command :string))
-(export 'webkit-web-view-can-execute-editing-command)
+(export 'webkit-web-view-execute-editing-command)
 
 (defcfun "webkit_web_view_get_javascript_global_context" js-global-context-ref
   (web-view (g-object webkit-web-view)))
