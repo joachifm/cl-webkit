@@ -469,6 +469,34 @@ ERROR-CALL-BACK is called with the signaled condition."
   (command :string))
 (export 'webkit-web-view-execute-editing-command)
 
+(cffi:defcallback can-execute-command-checked
+    :void ((source-object :pointer) (result :pointer) (user-data :pointer))
+  (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
+    (handler-case
+        (let ((reply (webkit-web-view-can-execute-editing-command-finish source-object result)))
+          (setf callbacks (delete callback callbacks))
+          (when (callback-function callback)
+            (funcall (callback-function callback) reply)))
+      (error (c)
+        (when callback
+          (when (callback-error-function callback)
+            (funcall (callback-error-function callback) c))
+          (setf callbacks (delete callback callbacks)))))))
+
+(defun webkit-web-view-can-execute-editing-command* (web-view command &optional call-back error-call-back)
+  "Execute the editing command in the WEB-VIEW calling CALL-BACK upon completion and ERROR-CALL-BACK on error."
+  (incf callback-counter)
+  (push (make-callback :id callback-counter :web-view web-view
+                       :function call-back
+                       :error-function error-call-back)
+        callbacks)
+  (webkit-web-view-can-execute-editing-command
+   web-view command
+   (cffi:null-pointer)
+   (cffi:callback can-execute-command-checked)
+   (cffi:make-pointer callback-counter)))
+(export 'webkit-web-view-can-execute-editing-command*)
+
 (defcfun "webkit_web_view_get_javascript_global_context" js-global-context-ref
   (web-view (g-object webkit-web-view)))
 (export 'webkit-web-view-get-javascript-global-context)
