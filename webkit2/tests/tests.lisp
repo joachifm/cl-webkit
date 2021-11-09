@@ -420,4 +420,4 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
       (calispel:! *can-run-tests-channel* t)))
   (when (calispel:? *can-run-tests-channel*)
     (run! 'webkit-tests)
-    (gtk:gtk-main-quit)))
+    (gtk:leave-gtk-main)))
