@@ -77,7 +77,8 @@
                (:file "webkit2.uri-utilities")
                (:file "webkit2.user-message")
                (:file "webkit2.web-extension")
-               (:file "jsc-utils"))
+               (:file "jsc-utils")
+               (:file "webkit2.notification"))
   :depends-on (:cffi :cl-cffi-gtk)
   :in-order-to ((test-op (test-op :cl-webkit2/test))))
 
