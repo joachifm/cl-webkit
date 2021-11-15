@@ -446,13 +446,12 @@ ERROR-CALL-BACK is called with the signaled condition."
   (dialog webkit-script-dialog))
 (export 'webkit-script-dialog-close)
 
-(defcfun "webkit_web_view_can_execute_editing_command" :void
+(defcfun ("webkit_web_view_can_execute_editing_command" %webkit-web-view-can-execute-editing-command) :void
   (web-view (g-object webkit-web-view))
   (command :string)
   (cancellable :pointer) ; XXX: GCancellable
   (callback g-async-ready-callback)
   (user-data :pointer))
-(export 'webkit-web-view-can-execute-editing-command)
 
 (defcfun ("webkit_web_view_can_execute_editing_command_finish" %webkit-web-view-can-execute-editing-command-finish) :boolean
   (web-view (g-object webkit-web-view))
@@ -483,19 +482,19 @@ ERROR-CALL-BACK is called with the signaled condition."
             (funcall (callback-error-function callback) c))
           (setf callbacks (delete callback callbacks)))))))
 
-(defun webkit-web-view-can-execute-editing-command* (web-view command &optional call-back error-call-back)
+(defun webkit-web-view-can-execute-editing-command (web-view command &optional call-back error-call-back)
   "Execute the editing command in the WEB-VIEW calling CALL-BACK upon completion and ERROR-CALL-BACK on error."
   (incf callback-counter)
   (push (make-callback :id callback-counter :web-view web-view
                        :function call-back
                        :error-function error-call-back)
         callbacks)
-  (webkit-web-view-can-execute-editing-command
+  (%webkit-web-view-can-execute-editing-command
    web-view command
    (cffi:null-pointer)
    (cffi:callback can-execute-command-checked)
    (cffi:make-pointer callback-counter)))
-(export 'webkit-web-view-can-execute-editing-command*)
+(export 'webkit-web-view-can-execute-editing-command)
 
 (defcfun "webkit_web_view_get_javascript_global_context" js-global-context-ref
   (web-view (g-object webkit-web-view)))
@@ -522,13 +521,12 @@ ERROR-CALL-BACK is called with the signaled condition."
   (js-result webkit-javascript-result))
 (export 'webkit-javascript-result-get-js-value)
 
-(defcfun "webkit_web_view_send_message_to_page" :void
+(defcfun ("webkit_web_view_send_message_to_page" %webkit-web-view-send-message-to-page) :void
   (view (g-object webkit-web-view))
   (message (g-object webkit-user-message))
   (cancellable :pointer)
   (callback g-async-ready-callback)
   (user-data :pointer))
-(export 'webkit-web-view-send-message-to-page)
 
 (defcfun ("webkit_web_view_send_message_to_page_finish" %webkit-web-view-send-message-to-page-finish)
     (g-object webkit-user-message)
@@ -555,16 +553,16 @@ ERROR-CALL-BACK is called with the signaled condition."
             (funcall (callback-error-function callback) c))
           (setf callbacks (delete callback callbacks)))))))
 
-(defun webkit-web-view-send-message-to-page* (web-view message &optional call-back error-call-back)
+(defun webkit-web-view-send-message-to-page (web-view message &optional call-back error-call-back)
   "Send MESSAGE to the WEB-VIEW corresponding page calling CALL-BACK upon completion and ERROR-CALL-BACK on error."
   (incf callback-counter)
   (push (make-callback :id callback-counter :web-view web-view
                        :function call-back
                        :error-function error-call-back)
         callbacks)
-  (webkit-web-view-send-message-to-page
+  (%webkit-web-view-send-message-to-page
    web-view message
    (cffi:null-pointer)
    (cffi:callback message-replied-to)
    (cffi:make-pointer callback-counter)))
-(export 'webkit-web-view-send-message-to-page*)
+(export 'webkit-web-view-send-message-to-page)
