@@ -52,6 +52,12 @@ rights to the work you contribute.
 - [[http://common-lisp.net/project/cffi/manual/html_node/index.html][CFFI User Manual]]
 
 ** Change Log
+*** 3.3.0
+- Add full bindings for =WebKitURIRequest= and =WebKitNotification=.
+- Support libwebkit2gtk-4.1.
+- Rename starred functions to non-starred for consistency:
+  - =webkit-web-view-can-execute-editing-command*= -> =webkit-web-view-can-execute-editing-command=.
+  - =webkit-web-view-send-message-to-page*= -> =webkit-web-view-send-message-to-page=
 *** 3.2.0
 - Add =webkit-web-view-can-execute-editing-command*= for easier execution command checking.
 *** 3.1.1
