@@ -566,3 +566,7 @@ ERROR-CALL-BACK is called with the signaled condition."
    (cffi:callback message-replied-to)
    (cffi:make-pointer callback-counter)))
 (export 'webkit-web-view-send-message-to-page)
+
+(defcfun "webkit_web_view_try_close" :void
+  (view (g-object webkit-web-view)))
+(export 'webkit-web-view-try-close)
