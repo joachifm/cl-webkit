@@ -52,6 +52,8 @@ rights to the work you contribute.
 - [[http://common-lisp.net/project/cffi/manual/html_node/index.html][CFFI User Manual]]
 
 ** Change Log
+*** 3.4.0
+- Add a binding for =webkit_web_view_try_close=.
 *** 3.3.0
 - Add full bindings for =WebKitURIRequest= and =WebKitNotification=.
 - Support libwebkit2gtk-4.1.
