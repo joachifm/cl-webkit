@@ -42,6 +42,9 @@
       (when (uiop:version<= "2.30" version)
         (dolist (sym '("WEBKIT2-MUTE" "WEBKIT2-TRACKING" "WEBKIT2-PASTE-PLAINTEXT"))
           (pushnew (intern sym :keyword) *features*)))
+      (when (uiop:version<= "2.34" version)
+        (dolist (sym '("WEBKIT2-CORS-ALLOWLIST"))
+          (pushnew (intern sym :keyword) *features*)))
       (pushnew versym *features*)))
 
   (pushnew :WEBKIT2 *features*))

@@ -570,3 +570,17 @@ ERROR-CALL-BACK is called with the signaled condition."
 (defcfun "webkit_web_view_try_close" :void
   (view (g-object webkit-web-view)))
 (export 'webkit-web-view-try-close)
+
+#+webkit2-cors-allowlist
+(defcfun ("webkit_web_view_set_cors_allowlist" %webkit-web-view-set-cors-allowlist) :void
+  (view (g-object webkit-web-view))
+  (allowlist (:pointer :string)))
+#+webkit2-cors-allowlist
+(defun webkit-web-view-set-cors-allowlist (view allowlist)
+  "Set CORS allowlist for the VIEW to be ALLOWLIST.
+ALLOWLIST should be a list of strings of a form \"[protocol]://[host]/[path]\"."
+  (let ((ffi-allowlist (cffi:foreign-alloc :string :initial-contents allowlist
+                                                   :count (length allowlist))))
+    (%webkit-web-view-set-cors-allowlist view ffi-allowlist)))
+#+webkit2-cors-allowlist
+(export 'webkit-web-view-set-cors-allowlist)
