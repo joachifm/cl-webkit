@@ -52,6 +52,9 @@ rights to the work you contribute.
 - [[http://common-lisp.net/project/cffi/manual/html_node/index.html][CFFI User Manual]]
 
 ** Change Log
+*** 3.5.0
+- Add webkit-web-view-set-cors-allowlist, a binding for a recently (2.34.1) introduced =webkit_web_view_set_cors_allowlist=.
+- Bug Fix: Catch any condition in C callbacks to avoid crashing the whole Lisp process due to unhandled conditions.
 *** 3.4.0
 - Add a binding for =webkit_web_view_try_close=.
 *** 3.3.0
