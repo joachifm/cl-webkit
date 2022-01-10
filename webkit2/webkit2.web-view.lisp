@@ -235,7 +235,7 @@
           (when (callback-function callback)
             (funcall (callback-function callback) (jsc-value-to-lisp value) value))
           (webkit-javascript-result-unref js-result))
-      (error (c)
+      (condition (c)
         (when callback
           (when  (callback-error-function callback)
             ;; We don't ignore errors when running the callback: this way the
@@ -476,7 +476,7 @@ ERROR-CALL-BACK is called with the signaled condition."
           (setf callbacks (delete callback callbacks))
           (when (callback-function callback)
             (funcall (callback-function callback) reply)))
-      (error (c)
+      (condition (c)
         (when callback
           (when (callback-error-function callback)
             (funcall (callback-error-function callback) c))
@@ -547,7 +547,7 @@ ERROR-CALL-BACK is called with the signaled condition."
           (setf callbacks (delete callback callbacks))
           (when (callback-function callback)
             (funcall (callback-function callback) reply)))
-      (error (c)
+      (condition (c)
         (when callback
           (when (callback-error-function callback)
             (funcall (callback-error-function callback) c))
