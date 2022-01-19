@@ -20,6 +20,12 @@
 (defparameter +webkit-editing-command-paste+ "Paste") ; XXX: WEBKIT_EDITING_COMMAND_PASTE
 (export '+webkit-editing-command-paste+)
 
+;; XXX: WEBKIT_EDITING_COMMAND_PASTE_AS_PLAIN_TEXT
+#+webkit2-paste-plaintext
+(defparameter +webkit-editing-command-paste-as-plain-text+ "PasteAsPlainText")
+#+webkit2-paste-plaintext
+(export '+webkit-editing-command-paste-as-plain-text+)
+
 (defparameter +webkit-editing-command-select-all+ "SelectAll") ; XXX: WEBKIT_EDITING_COMMAND_SELECT_ALL
 (export '+webkit-editing-command-select-all+)
 
@@ -28,6 +34,12 @@
 
 (defparameter +webkit-editing-command-redo+ "Redo") ; XXX: WEBKIT_EDITING_COMMAND_REDO
 (export '+webkit-editing-command-redo+)
+
+(defparameter +webkit-editing-command-insert-image+ "InsertImage") ; XXX: WEBKIT_EDITING_COMMAND_INSERT_IMAGE
+(export '+webkit-editing-command-insert-image+)
+
+(defparameter +webkit-editing-command-create-link+ "CreateLink") ; XXX: WEBKIT_EDITING_COMMAND_CREATE_LINK
+(export '+webkit-editing-command-create-link+)
 
 (define-webkit-class "WebKitWebView"
   (:superclass gtk-widget
@@ -467,6 +479,12 @@ ERROR-CALL-BACK is called with the signaled condition."
   (web-view (g-object webkit-web-view))
   (command :string))
 (export 'webkit-web-view-execute-editing-command)
+
+(defcfun "webkit_web_view_execute_editing_command_with_argument" :void
+  (web-view (g-object webkit-web-view))
+  (command :string)
+  (argument :string))
+(export 'webkit-web-view-execute-editing-command-with-arguments)
 
 (cffi:defcallback can-execute-command-checked
     :void ((source-object :pointer) (result :pointer) (user-data :pointer))
