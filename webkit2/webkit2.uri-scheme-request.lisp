@@ -61,7 +61,7 @@
          ;; Callback function returns data-string as a first value
          ;; and data type (e.g., "text/html") as an optional second
          ;; value.
-         (destructuring-bind (data &optional (data-type "text/html"))
+         (destructuring-bind (data &optional (data-type "text/html;charset=utf8"))
              (multiple-value-list (funcall (callback-function callback) request))
            (handler-case
                (etypecase data
