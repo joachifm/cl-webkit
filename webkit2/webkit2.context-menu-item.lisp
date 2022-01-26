@@ -61,7 +61,7 @@
   :webkit-context-menu-action-insert-emoji
   #+webkit2-paste-plaintext
   :webkit-context-menu-action-paste-as-plain-text
-  :webkit-context-menu-action-action-custom)
+  (:webkit-context-menu-action-action-custom 1000))
 
 (defcfun "webkit_context_menu_item_new" (g-object webkit-context-menu-item)
   (action (g-object gtk:gtk-action)))
