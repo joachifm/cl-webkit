@@ -15,17 +15,17 @@
 
 (defcfun "webkit_color_chooser_request_get_rgba" :void
   (request (g-object webkit-color-chooser-request))
-  (rgba (g-object gdk:gdk-rgba)))
+  (rgba (g-boxed-foreign gdk:gdk-rgba)))
 (export 'webkit-color-chooser-request-get-rgba)
 
 (defcfun "webkit_color_chooser_request_set_rgba" :void
   (request (g-object webkit-color-chooser-request))
-  (rgba (g-object gdk:gdk-rgba)))
+  (rgba (g-boxed-foreign gdk:gdk-rgba)))
 (export 'webkit-color-chooser-request-set-rgba)
 
 (defcfun "webkit_color_chooser_request_get_element_rectangle" :void
   (request (g-object webkit-color-chooser-request))
-  (rectangle (g-object gdk:gdk-rectangle))) ;; XXX: GdkRectangle *
+  (rectangle (g-boxed-foreign gdk:gdk-rectangle))) ;; XXX: GdkRectangle *
 (export 'webkit-color-chooser-request-get-element-rectangle)
 
 (defcfun "webkit_color_chooser_request_finish" :void
