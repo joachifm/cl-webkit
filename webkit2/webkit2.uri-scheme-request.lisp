@@ -78,7 +78,10 @@
                                (stream (g-memory-input-stream-new-from-bytes (g-bytes-new arr (length data)))))
                           (webkit-uri-scheme-request-finish request stream (length data) data-type)
                           (gobject:g-object-unref (pointer stream))
-                          (cffi:foreign-free arr))))
+                          (cffi:foreign-free arr)))
+                 (null (webkit-uri-scheme-request-finish-error
+                        request (format nil "The custom request for URI ~a canceled"
+                                        (webkit-uri-scheme-request-get-uri request)))))
              (condition (c)
                (webkit-uri-scheme-request-finish-error
                 request (format nil "The custom request for URI ~a failed with ~a: ~a"
