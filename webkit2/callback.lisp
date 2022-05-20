@@ -17,13 +17,33 @@
   `(cffi:defcallback ,name :void ((source-object :pointer)
                                   (result g-async-result)
                                   (user-data :pointer))
-                     ,@body))
+     ,@body))
 
-(defmacro with-g-async-ready-callback ((var &body callback-body) &body body)
+(export 'with-g-async-ready-callback)
+(defmacro with-g-async-ready-callback ((var callback) &body body)
+  "Example:
+
+\(let ((result-channel (make-instance 'calispel:channel)))
+  (bt:make-thread
+   (gtk:within-gtk-thread
+     (let* ((context (webkit:webkit-web-view-web-context view))
+            (cookie-manager (webkit:webkit-web-context-get-cookie-manager context)))
+       (webkit:with-g-async-ready-callback (callback (lambda (source result user-data)
+                                                       (declare (ignore source user-data))
+                                                       (calispel:! result-channel
+                                                                   (webkit:webkit-cookie-manager-get-accept-policy-finish
+                                                                    cookie-manager
+                                                                    result))))
+         (webkit:webkit-cookie-manager-get-accept-policy
+          cookie-manager
+          (cffi:null-pointer)
+          callback
+          (cffi:null-pointer))))))
+  (calispel:? result-channel))"
   (let ((g (gensym "CALLBACK")))
     `(progn
        (define-g-async-ready-callback ,g
-           ,@callback-body)
+         (funcall ,callback source-object result user-data))
        (let ((,var (callback ,g)))
          ,@body)
        (fmakunbound ',g))))
