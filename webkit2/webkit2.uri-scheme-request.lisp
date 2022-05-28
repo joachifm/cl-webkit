@@ -65,12 +65,10 @@
              (multiple-value-list (funcall (callback-function callback) request))
            (handler-case
                (etypecase data
-                 (array (let* ((arr (cffi:foreign-alloc
-                                     :uchar
-                                     :initial-contents (if (stringp data)
-                                                           (babel:string-to-octets data)
-                                                           data)
-                                     :count (length data)))
+                 (array (let* ((data (if (stringp data)
+                                         (babel:string-to-octets data)
+                                         data))
+                               (arr (cffi:foreign-alloc :uchar :initial-contents data :count (length data)))
                                (stream (g-memory-input-stream-new-from-bytes (g-bytes-new arr (length data)))))
                           (webkit-uri-scheme-request-finish request stream (length data) data-type)
                           (gobject:g-object-unref (pointer stream))
