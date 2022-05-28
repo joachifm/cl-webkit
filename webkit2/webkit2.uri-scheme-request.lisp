@@ -65,16 +65,12 @@
              (multiple-value-list (funcall (callback-function callback) request))
            (handler-case
                (etypecase data
-                 (string (multiple-value-bind (ffi-string ffi-string-length)
-                             (cffi:foreign-string-alloc data)
-                           (unwind-protect
-                                (let* ((stream (g-memory-input-stream-new-from-data
-                                                ffi-string -1 ; -1 is for auto-detection based on NULL character
-                                                (callback g-notify-destroy-null))))
-                                  (webkit-uri-scheme-request-finish request stream ffi-string-length data-type)
-                                  (gobject:g-object-unref (pointer stream)))
-                             (cffi:foreign-string-free ffi-string))))
-                 (array (let* ((arr (cffi:foreign-alloc :uchar :initial-contents data :count (length data)))
+                 (array (let* ((arr (cffi:foreign-alloc
+                                     :uchar
+                                     :initial-contents (if (stringp data)
+                                                           (babel:string-to-octets data)
+                                                           data)
+                                     :count (length data)))
                                (stream (g-memory-input-stream-new-from-bytes (g-bytes-new arr (length data)))))
                           (webkit-uri-scheme-request-finish request stream (length data) data-type)
                           (gobject:g-object-unref (pointer stream))
