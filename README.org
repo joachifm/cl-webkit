@@ -52,6 +52,8 @@ rights to the work you contribute.
 - [[http://common-lisp.net/project/cffi/manual/html_node/index.html][CFFI User Manual]]
 
 ** Change Log
+*** 3.5.2
+- Fix string processing for custom URLs -- no longer segfaulting on long strings.
 *** 3.5.1
 - Add support for libwebkit2gtk-5.0.
 - Add advanced editing commands with =webkit-web-view-execute-editing-command-with-arguments= as the way to execute those.
