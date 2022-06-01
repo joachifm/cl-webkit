@@ -20,7 +20,7 @@
   :description "An FFI binding to WebKit2GTK+"
   :author "Joachim Fasting <joachifm@fastmail.fm>"
   :licence "MIT"
-  :version "3.5.2"
+  :version "3.5.3"
   :serial t
   :components ((:file "webkit2.package")
                (:file "util")
