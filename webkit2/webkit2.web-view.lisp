@@ -233,30 +233,6 @@
   (function nil :type (or function null))
   (error-function nil :type (or function null)))
 
-(cffi:defcallback javascript-evaluation-complete
-    :void ((source-object :pointer) (result :pointer) (user-data :pointer))
-  (declare (ignore source-object))
-  (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
-    (handler-case
-        (let* ((js-result (webkit-web-view-run-javascript-finish (callback-web-view callback) result))
-               (value (webkit-javascript-result-get-js-value js-result))
-               (exception (jsc-context-get-exception (jsc-value-get-context value))))
-          (when exception
-            (signal 'jsc-exception-condition :exception exception))
-          (setf callbacks (delete callback callbacks))
-          (when (callback-function callback)
-            (funcall (callback-function callback) (jsc-value-to-lisp value) value))
-          (webkit-javascript-result-unref js-result))
-      (condition (c)
-        (when callback
-          (when  (callback-error-function callback)
-            ;; We don't ignore errors when running the callback: this way the
-            ;; caller can run code that can (possibly intentionally) raise a
-            ;; condition.  It's up to the caller to make the error callback
-            ;; condition-less or not.
-            (funcall (callback-error-function callback) c))
-          (setf callbacks (delete callback callbacks)))))))
-
 (declaim (ftype (function (webkit-web-view string &optional
                                            (or null (function (t t)))
                                            (or null (function (condition))) string))
@@ -268,22 +244,36 @@ CALL-BACK is called over two arguments:
 - The Lisp transformation of the result.
 - The untransformed result (a JSCValue).
 ERROR-CALL-BACK is called with the signaled condition."
-  (incf callback-counter)
-  (push (make-callback :id callback-counter :web-view web-view
-                       :function call-back
-                       :error-function error-call-back)
-        callbacks)
-  (if world
-      (webkit-web-view-run-javascript-in-world
-       web-view javascript world
-       (cffi:null-pointer)
-       (cffi:callback javascript-evaluation-complete)
-       (cffi:make-pointer callback-counter))
-      (webkit-web-view-run-javascript
-       web-view javascript
-       (cffi:null-pointer)
-       (cffi:callback javascript-evaluation-complete)
-       (cffi:make-pointer callback-counter))))
+  (with-g-async-ready-callback
+      (callback-wrapper
+        (lambda (source-object result user-data)
+          (declare (ignore source-object user-data))
+          (handler-case
+              (let* ((js-result (webkit-web-view-run-javascript-finish web-view result))
+                     (value (webkit-javascript-result-get-js-value js-result))
+                     (exception (jsc-context-get-exception (jsc-value-get-context value))))
+                (when exception
+                  (signal 'jsc-exception-condition :exception exception))
+                (when call-back
+                  (funcall call-back (jsc-value-to-lisp value) value))
+                (webkit-javascript-result-unref js-result))
+            (condition (c)
+              (when call-back
+                (when error-call-back
+                  ;; We don't ignore errors when running the callback: this way the
+                  ;; caller can run code that can (possibly intentionally) raise a
+                  ;; condition.  It's up to the caller to make the error callback
+                  ;; condition-less or not.
+                  (funcall error-call-back c)))))))
+    (if world
+        (webkit-web-view-run-javascript-in-world web-view javascript world
+                                                 (cffi:null-pointer)
+                                                 callback-wrapper
+                                                 (cffi:null-pointer))
+        (webkit-web-view-run-javascript web-view javascript
+                                        (cffi:null-pointer)
+                                        callback-wrapper
+                                        (cffi:null-pointer)))))
 (export 'webkit-web-view-evaluate-javascript)
 
 (defcfun ("webkit_web_view_run_javascript_finish" %webkit-web-view-run-javascript-finish) webkit-javascript-result
