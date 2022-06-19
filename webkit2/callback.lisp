@@ -27,3 +27,11 @@
        (let ((,var (callback ,g)))
          ,@body)
        (fmakunbound ',g))))
+
+(defvar callback-counter 0)
+(defvar callbacks ())
+(defstruct callback
+  (id callback-counter :type number)
+  web-view
+  (function nil :type (or function null))
+  (error-function nil :type (or function null)))
