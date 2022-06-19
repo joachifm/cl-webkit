@@ -56,7 +56,7 @@
                        :error-function error-call-back)
         callbacks)
   (%webkit-web-resource-get-data
-   web-view message
+   resource
    (cffi:null-pointer)
    (cffi:callback resource-data-received)
    (cffi:make-pointer callback-counter)))
