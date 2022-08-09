@@ -72,6 +72,7 @@
                (:file "webkit2.web-inspector")
                (:file "webkit2.web-view")
                (:file "webkit2.g-input-stream")
+               (:file "webkit2.uri-scheme-response")
                (:file "webkit2.uri-scheme-request")
                (:file "webkit2.window-properties")
                (:file "webkit2.uri-utilities")

@@ -32,12 +32,25 @@
   (request (g-object webkit-uri-scheme-request)))
 (export 'webkit-uri-scheme-request-get-web-view)
 
+(defcfun "webkit_uri_scheme_request_get_http_method" :string
+  (request (g-object webkit-uri-scheme-request)))
+(export 'webkit-uri-scheme-request-get-http-method)
+
+(defcfun "webkit_uri_scheme_request_get_http_headers" :pointer ;; XXX: SoupMessageHeaders
+  (request (g-object webkit-uri-scheme-request)))
+(export 'webkit-uri-scheme-request-get-http-headers)
+
 (defcfun "webkit_uri_scheme_request_finish" :void
   (request (g-object webkit-uri-scheme-request))
   (stream (g-object g-memory-input-stream))
   (stream-length :long)
   (content-type :string))
 (export 'webkit-uri-scheme-request-finish)
+
+(defcfun "webkit_uri_scheme_request_finish_with_response" :void
+  (request (g-object webkit-uri-scheme-request))
+  (response (g-object webkit-uri-scheme-response)))
+(export 'webkit-uri-scheme-request-finish-with-response)
 
 (defcfun ("webkit_uri_scheme_request_finish_error" %webkit-uri-scheme-request-finish-error) :void
   (request (g-object webkit-uri-scheme-request))
@@ -58,10 +71,11 @@
    (lambda ()
      (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
        (when (callback-function callback)
-         ;; Callback function returns data-string as a first value
-         ;; and data type (e.g., "text/html") as an optional second
-         ;; value.
-         (destructuring-bind (data &optional (data-type "text/html;charset=utf8"))
+         ;; Callback function returns three values:
+         ;; - Data string.
+         ;; - Data type (e.g., "text/html").
+         ;; - Status of the response.
+         (destructuring-bind (data &optional (data-type "text/html;charset=utf8") (status 200))
              (multiple-value-list (funcall (callback-function callback) request))
            (handler-case
                (etypecase data
@@ -69,10 +83,15 @@
                                          (babel:string-to-octets data)
                                          data))
                                (arr (cffi:foreign-alloc :uchar :initial-contents data :count (length data)))
-                               (stream (g-memory-input-stream-new-from-bytes (g-bytes-new arr (length data)))))
-                          (webkit-uri-scheme-request-finish request stream (length data) data-type)
+                               (stream (g-memory-input-stream-new-from-bytes (g-bytes-new arr (length data))))
+                               (response (webkit-uri-scheme-response-new stream (length data))))
+                          (webkit-uri-scheme-response-set-content-type response data-type)
+                          (webkit-uri-scheme-response-set-status response status (cffi:null-pointer))
+                          ;; TODO: Headers.
+                          (webkit-uri-scheme-request-finish-with-response request response)
                           (gobject:g-object-unref (pointer stream))
                           (cffi:foreign-free arr)))
+                 ;; TODO: Use WebKitURISchemeResponse here too.
                  (null (webkit-uri-scheme-request-finish-error
                         request (format nil "The custom request for URI ~a canceled"
                                         (webkit-uri-scheme-request-get-uri request)))))
