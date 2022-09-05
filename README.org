@@ -52,6 +52,10 @@ rights to the work you contribute.
 - [[http://common-lisp.net/project/cffi/manual/html_node/index.html][CFFI User Manual]]
 
 ** Change Log
+*** 3.5.4
+- Add WebKitWebResource bindings.
+- Add WebKitUriSchemeResponse bindings and use them in scheme callbacks by default.
+- Add GAction-related functions for WebKitContextMenuAction.
 *** 3.5.3
 - Fix typing for context menu item-related functions.
 *** 3.5.2
