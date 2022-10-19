@@ -71,23 +71,42 @@
    (lambda ()
      (let ((callback (find (cffi:pointer-address user-data) callbacks :key (function callback-id))))
        (when (callback-function callback)
-         ;; Callback function returns three values:
+         ;; Callback function returns up to five values:
          ;; - Data string.
          ;; - Data type (e.g., "text/html").
          ;; - Status of the response.
-         (destructuring-bind (data &optional (data-type "text/html;charset=utf8") (status 200))
+         ;; - Headers alist.
+         ;; - Status reason string.
+         (destructuring-bind (data &optional (data-type "text/html;charset=utf8") (status 200)
+                                     headers-alist status-reason)
              (multiple-value-list (funcall (callback-function callback) request))
            (handler-case
                (etypecase data
-                 (array (let* ((data (if (stringp data)
+                 (array (let* ((body (if (stringp data)
                                          (babel:string-to-octets data)
                                          data))
-                               (arr (cffi:foreign-alloc :uchar :initial-contents data :count (length data)))
-                               (stream (g-memory-input-stream-new-from-bytes (g-bytes-new arr (length data))))
-                               (response (webkit-uri-scheme-response-new stream (length data))))
-                          (webkit-uri-scheme-response-set-content-type response data-type)
-                          (webkit-uri-scheme-response-set-status response status (cffi:null-pointer))
-                          ;; TODO: Headers.
+                               (arr (cffi:foreign-alloc :uchar :initial-contents body :count (length body)))
+                               (stream (g-memory-input-stream-new-from-bytes (g-bytes-new arr (length body))))
+                               (response (webkit-uri-scheme-response-new stream (length body)))
+                               (headers (soup-message-headers-new :soup-message-headers-response)))
+                          (unless (uiop:emptyp data-type)
+                            (webkit-uri-scheme-response-set-content-type response data-type))
+                          (webkit-uri-scheme-response-set-status
+                           response status (or status-reason (cffi:null-pointer)))
+                          (loop for (header . value)
+                                  in (soup-message-headers-get-headers
+                                      (webkit-uri-scheme-request-get-http-headers request))
+                                do (soup-message-headers-append headers header value))
+                          (loop for (header . value) in headers-alist
+                                if (uiop:emptyp (soup-message-headers-get-one headers header))
+                                  do (soup-message-headers-append headers header value)
+                                else
+                                  do (soup-message-headers-replace headers header value))
+                          (when (and (<= 300 status 399)
+                                     (stringp data)
+                                     (uiop:emptyp (soup-message-headers-get-one headers "Location")))
+                            (soup-message-headers-append headers "Location" data))
+                          (webkit-uri-scheme-response-set-http-headers response headers)
                           (webkit-uri-scheme-request-finish-with-response request response)
                           (gobject:g-object-unref (pointer stream))
                           (cffi:foreign-free arr)))
