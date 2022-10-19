@@ -30,6 +30,6 @@
   (request (g-object webkit-uri-request)))
 (export 'webkit-uri-request-get-http-method)
 
-(defcfun "webkit_uri_request_get_http_headers" :pointer
+(defcfun "webkit_uri_request_get_http_headers" (:pointer (:struct soup-message-headers))
   (request (g-object webkit-uri-request)))
 (export 'webkit-uri-request-get-http-headers)

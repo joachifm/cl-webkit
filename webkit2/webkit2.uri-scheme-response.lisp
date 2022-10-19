@@ -29,4 +29,4 @@
 
 (defcfun "webkit_uri_scheme_response_set_http_headers" :void
   (response (g-object webkit-uri-scheme-response))
-  (headers :pointer)) ;; XXX: SoupMessageHeaders
+  (headers (:pointer (:struct soup-message-headers))))

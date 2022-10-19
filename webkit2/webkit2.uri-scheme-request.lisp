@@ -36,7 +36,7 @@
   (request (g-object webkit-uri-scheme-request)))
 (export 'webkit-uri-scheme-request-get-http-method)
 
-(defcfun "webkit_uri_scheme_request_get_http_headers" :pointer ;; XXX: SoupMessageHeaders
+(defcfun "webkit_uri_scheme_request_get_http_headers" (:pointer (:struct soup-message-headers))
   (request (g-object webkit-uri-scheme-request)))
 (export 'webkit-uri-scheme-request-get-http-headers)
 
