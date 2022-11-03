@@ -12,8 +12,11 @@
 
 (define-webkit-class "WebKitURIResponse" ()
   (("content-length" "guint")
-   ("http-headers" soup-message-headers)
    ("mime-type" "gchararray")
    ("status-code" "guint")
    ("suggested-filename" "gchararray")
    ("uri" "gchararray")))
+
+(defcfun "webkit_uri_response_get_http_headers" (:pointer (:struct soup-message-headers))
+  (response (g-object webkit-uri-response)))
+(export 'webkit-uri-response-get-http-headers)
