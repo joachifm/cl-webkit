@@ -24,4 +24,5 @@
   :webkit-hit-test-result-context-image
   :webkit-hit-test-result-context-media
   :webkit-hit-test-result-context-editable
-  :webkit-hit-test-result-context-scrollbar)
+  :webkit-hit-test-result-context-scrollbar
+  :webkit-hit-test-result-context-selection)
