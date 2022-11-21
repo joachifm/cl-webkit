@@ -81,7 +81,7 @@
                (:file "webkit2.web-extension")
                (:file "jsc-utils")
                (:file "webkit2.notification"))
-  :depends-on (:cffi :cl-cffi-gtk)
+  :depends-on (:alexandria :cffi :cl-cffi-gtk)
   :in-order-to ((test-op (test-op :cl-webkit2/test))))
 
 (defsystem :cl-webkit2/test
