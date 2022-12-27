@@ -86,7 +86,7 @@
 
 (defsystem :cl-webkit2/test
   :description "CL-WebKit tests, mainly to check JS result conversion."
-  :depends-on (:fiveam :calispel :float-features)
+  :depends-on (:cl-webkit2 :fiveam :calispel :float-features)
   :pathname "tests/"
   :components ((:file "package")
                (:file "tests"))
