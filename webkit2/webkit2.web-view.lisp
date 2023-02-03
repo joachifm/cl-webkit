@@ -41,22 +41,47 @@
 (defparameter +webkit-editing-command-create-link+ "CreateLink") ; XXX: WEBKIT_EDITING_COMMAND_CREATE_LINK
 (export '+webkit-editing-command-create-link+)
 
+(define-g-enum "WebKitAutomationBrowsingContextPresentation" webkit-automation-browsing-context-presentation ()
+  :web-kit-automation-browsing-context-presentation-window
+  :web-kit-automation-browsing-context-presentation-tab)
+
+(define-g-enum "WebKitMediaCaptureState" webkit-media-capture-state ()
+  :webkit-media-capture-state-none
+  :webkit-media-capture-state-active
+  :webkit-media-capture-state-muted)
+
+(define-g-enum "WebKitWebExtensionMode" webkit-web-extension-mode ()
+  :webkit-web-extension-mode-none
+  :webkit-web-extension-mode-manifest-v2
+  :webkit-web-extension-mode-manifest-v3)
+
 (define-webkit-class "WebKitWebView"
-  (:superclass gtk-widget
-   :interfaces ("AtkImplementorIface" "GtkBuildable"))
-  (("estimated-load-progress" "gdouble")
-   ("favicon" "gpointer")
-   ("is-ephemeral" "gboolean")
-   ("is-loading" "gboolean")
-   #+webkit2-mute
-   ("is-muted" "gboolean")
-   ("is-playing-audio" "gboolean")
-   ("page-id" "guint64")
-   ("title" "gchararray")
-   ("uri" "gchararray")
-   ("user-content-manager" "WebKitUserContentManager")
-   ("web-context" "WebKitWebContext" t t)
-   ("zoom-level" "gdouble" t t)))
+    (:superclass gtk-widget
+     :interfaces ("AtkImplementorIface" "GtkBuildable"))
+    (("automation-presentation-type" "WebKitAutomationBrowsingContextPresentation")
+     ("default-content-security-policy" "gchararray")
+     ("camera-capture-state" "WebKitMediaCaptureState" t t)
+     ("display-capture-state" "WebKitMediaCaptureState" t t)
+     ("microphone-capture-state" "WebKitMediaCaptureState" t t)
+     ("editable" "gboolean")
+     ("estimated-load-progress" "gdouble")
+     ("favicon" "gpointer")
+     ("is-controlled-by-automation" "gboolean")
+     ("is-ephemeral" "gboolean")
+     ("is-loading" "gboolean")
+     #+webkit2-mute
+     ("is-muted" "gboolean")
+     ("is-playing-audio" "gboolean")
+     ("is-web-process-responsive" "gboolean")
+     ("page-id" "guint64")
+     ("settings" "WebKitSettings")
+     ("title" "gchararray")
+     ("uri" "gchararray")
+     ("user-content-manager" "WebKitUserContentManager")
+     ("web-context" "WebKitWebContext" t t)
+     ("web-extension-mode" "WebKitWebExtensionMode")
+     ;; TODO: "website-policies"
+     ("zoom-level" "gdouble" t t)))
 
 (defctype webkit-script-dialog :pointer) ; XXX: GBoxed WebScriptDialog
 
