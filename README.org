@@ -52,6 +52,11 @@ rights to the work you contribute.
 - [[http://common-lisp.net/project/cffi/manual/html_node/index.html][CFFI User Manual]]
 
 ** Change Log
+*** 3.5.7
+- Add bindings for WebKitUserContentFilterStore.
+- Add more properties for WebKitWebView.
+- Add WEBKIT_HIT_TEST_RESULT_CONTEXT_SELECTION value for WebKitHitTestResult enum.
+- Fix several implicit dependency issues.
 *** 3.5.6
 - Fix SoapMessageHeaders' access from WebKitURIResponse.
 *** 3.5.5
