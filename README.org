@@ -52,6 +52,8 @@ rights to the work you contribute.
 - [[http://common-lisp.net/project/cffi/manual/html_node/index.html][CFFI User Manual]]
 
 ** Change Log
+*** 3.5.9
+- Add micro Webkit version to =*features*=.
 *** 3.5.8
 - Remove support for Webkit shared lib version 5.0 due to libsoup conflicts.
 *** 3.5.7
