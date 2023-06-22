@@ -65,6 +65,12 @@
   (world-name :string))
 (export 'webkit-user-content-manager-unregister-script-message-handler-in-world)
 
+(defcfun "webkit_user_content_manager_register_script_message_handler_with_reply" :boolean
+  (manager (g-object webkit-user-content-manager))
+  (name :string)
+  (world-name :string))
+(export 'webkit-user-content-manager-register-script-message-handler-with-reply)
+
 (defcfun "webkit_user_content_manager_add_filter" :void
   (manager (g-object webkit-user-content-manager))
   (filter webkit-user-content-filter))
