@@ -18,10 +18,11 @@
               "libwebkit2gtk-4.0.37.dylib"
               "libwebkit2gtk-4.0.dylib"))
     (:unix (:or
+            "libwebkit2gtk-4.1.so.0"
             "libwebkit2gtk-4.1.so"
-            "libwebkit2gtk-4.0.so"
-            ;; Fedora only has this one?
-            "libwebkit2gtk-4.0.so.37")))
+            "libwebkit2gtk-4.0.so.37"
+            "libwebkit2gtk-4.0.so"))
+    (t (:default "libwebkit2gtk")))
   (use-foreign-library libwebkit2))
 
 (defcfun "webkit_get_major_version" :int)
