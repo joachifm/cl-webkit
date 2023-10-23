@@ -207,3 +207,8 @@
     (path :string)
     (read-only :boolean))
   (export 'webkit-web-context-add-path-to-sandbox))
+
+(defcfun "webkit_web_context_send_message_to_all_extensions" :void
+  (webkit-web-context (g-object webkit-web-context))
+  (message (g-object webkit-user-message)))
+(export 'webkit-web-context-send-message-to-all-extensions)
