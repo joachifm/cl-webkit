@@ -52,6 +52,10 @@ rights to the work you contribute.
 - [[http://common-lisp.net/project/cffi/manual/html_node/index.html][CFFI User Manual]]
 
 ** Change Log
+*** 3.5.10
+- Add message sending to all extensions in WebkitWebWebContext.
+- Add user script handlers support.
+- Fix the type passed to language-related functions.
 *** 3.5.9
 - Add micro Webkit version to =*features*=.
 *** 3.5.8
