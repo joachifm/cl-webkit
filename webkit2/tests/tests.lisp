@@ -397,9 +397,7 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
 
 ;;; Setup function
 (defvar *can-run-tests-channel*
-  (make-instance
-   'calispel:channel
-   :buffer (make-instance 'jpl-queues:bounded-fifo-queue :capacity 1)))
+  (lparallel.queue:make-queue :fixed-capacity 1))
 
 (defun run-tests ()
   (gtk:within-main-loop
@@ -417,7 +415,7 @@ arr: [true, false, undefined, null, 100000, \"hello\", {one: 1}]}; obj"
       (gtk:gtk-container-add win view)
       (webkit2:webkit-web-view-load-uri view "about:blank")
       (setf *view* view)
-      (calispel:! *can-run-tests-channel* t)))
-  (when (calispel:? *can-run-tests-channel*)
+      (lparallel.queue:push-queue t *can-run-tests-channel*)))
+  (when (lparallel.queue:pop-queue *can-run-tests-channel*)
     (run! 'webkit-tests)
     (gtk:leave-gtk-main)))
